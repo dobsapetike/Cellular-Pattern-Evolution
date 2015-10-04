@@ -1,0 +1,25 @@
+<LatticeSettings>
+  <LatticeWidth>10</LatticeWidth>
+  <LatticeHeight>10</LatticeHeight>
+  <CellType>Regular</CellType>
+  <PhenotypeSettings>
+    <NeighbourhoodType>VonNeumann</NeighbourhoodType>
+  </PhenotypeSettings>
+  <TargetPattern>target.svg</TargetPattern>
+  <InitPattern>
+    TODO
+  </InitPattern>
+  <Controller>
+    <Type>FeedForwardANNController</Type>
+    <HiddenNeuronCount>1</HiddenNeuronCount>
+    <ColorType>grayscale</ColorType>
+  </Controller>
+  <StopCriterion>
+    
+  </StopCriterion>
+  <State>
+    <InternalCount>1</InternalCount>
+    <ExternalCount>1</ExternalCount>
+    <InitialValues>0.66</InitialValues>
+  </State>
+</LatticeSettings>

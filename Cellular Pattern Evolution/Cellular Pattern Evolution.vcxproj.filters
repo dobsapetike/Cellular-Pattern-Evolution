@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Main">
+      <UniqueIdentifier>{e755ed6b-45c5-422b-951c-cdcd9a1e55f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lattice">
+      <UniqueIdentifier>{ada13a51-4684-47b0-a592-e1c47f2dfe62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lattice">
+      <UniqueIdentifier>{357d1546-d12e-405b-b063-15edc53e57e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lattice\Halting">
+      <UniqueIdentifier>{0056afe7-d39d-40f7-bd22-b833d90f6b3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lattice\Phenotypes">
+      <UniqueIdentifier>{2b6eb240-464a-468c-adb2-8d4069c30f1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lattice\Phenotypes\Cell">
+      <UniqueIdentifier>{ab7c4c19-48b3-484c-aea1-d5e3ca108e57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lattice\Genotype">
+      <UniqueIdentifier>{6abb6ef2-109f-46f2-b8d2-61fd49b3a0dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lattice\Controllers">
+      <UniqueIdentifier>{58eed362-4340-43b1-8bbe-0139ceacb2d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lattice\Phenotype">
+      <UniqueIdentifier>{9488d041-2372-4959-a5e4-79ab7cc600f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lattice\Phenotype\Cell">
+      <UniqueIdentifier>{fe359dd2-6e68-4dfa-9a11-337a4ac4876e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lattice\Genotype">
+      <UniqueIdentifier>{6d31afa7-e667-4f3a-952a-eb05cde06557}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lattice\Controllers">
+      <UniqueIdentifier>{dea1f6ba-691f-421b-a125-8ee0859eb36f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main\Main.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\LatticeSettings.cpp">
+      <Filter>Source Files\Lattice</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Phenotype\Cell\CellType.cpp">
+      <Filter>Source Files\Lattice\Phenotype\Cell</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Lattice.cpp">
+      <Filter>Source Files\Lattice</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Phenotype\Phenotype.cpp">
+      <Filter>Source Files\Lattice\Phenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Phenotype\RegularStructurePhenotype.cpp">
+      <Filter>Source Files\Lattice\Phenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Phenotype\Cell\Cell.cpp">
+      <Filter>Source Files\Lattice\Phenotype\Cell</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Genotype\Genotype.cpp">
+      <Filter>Source Files\Lattice\Genotype</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Controllers\FeedForwardANNController.cpp">
+      <Filter>Source Files\Lattice\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Controllers\StateController.cpp">
+      <Filter>Source Files\Lattice\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\State.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\CommonTypes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Lattice\Headers\Lattice.h">
+      <Filter>Header Files\Lattice</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\LatticeSettings.h">
+      <Filter>Header Files\Lattice</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\State.h">
+      <Filter>Header Files\Lattice</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Halting\StopCriterion.h">
+      <Filter>Header Files\Lattice\Halting</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\Cell\Cell.h">
+      <Filter>Header Files\Lattice\Phenotypes\Cell</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\Cell\CellType.h">
+      <Filter>Header Files\Lattice\Phenotypes\Cell</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Controllers\StateController.h">
+      <Filter>Header Files\Lattice\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Headers\CommonTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Genotype\Genotype.h">
+      <Filter>Header Files\Lattice\Genotype</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\RegularStructurePhenotype.h">
+      <Filter>Header Files\Lattice\Phenotypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Controllers\FeedForwardANNController.h">
+      <Filter>Header Files\Lattice\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\Cell\RegularCell.h">
+      <Filter>Header Files\Lattice\Phenotypes\Cell</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\Phenotype.h">
+      <Filter>Header Files\Lattice\Phenotypes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Config\confLattice.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+  </ItemGroup>
+</Project>
