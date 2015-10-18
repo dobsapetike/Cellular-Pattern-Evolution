@@ -8,66 +8,77 @@ namespace lattice
 		feedforward_ann_controller::feedforward_ann_controller(lattice_settings const& settings)
 			: state_controller(settings.stateSettings)
 		{
+			// find out the number of neurons on different layers
 			auto init_config = *settings.controller;
 			_hidden_neuron_count = atoi(init_config.FirstChildElement("HiddenNeuronCount")->GetText());
-			
+			_chemical_neuron_count = 
+				// internal + external chemicals		
+				state_params.internal_chemical_count + state_params.external_chemical_count;
 			_color_neuron_count = common_types::parse_color_type(
 				init_config.FirstChildElement("ColorType")->GetText()) == common_types::rgb ? 3 : 1;
 
-			// initialize weight matrices
-			// TODO be able to read weight values from config
 
-			arma::arma_rng::set_seed_random();
-			_hidden_weights = arma::mat(
-				// row number -> internals + externals of (4) neighbours + bias 
-				state_params.internal_chemical_count + 4 * state_params.external_chemical_count + 1,
+			_hidden_weight_count = 
+				// row number -> intput: internals + externals of (4) neighbours + bias 
+				(state_params.internal_chemical_count + 4 * state_params.external_chemical_count + 1)
 				// column number -> hidden units
-				_hidden_neuron_count,
-				arma::fill::randu
-			);
-			_chemical_weights = arma::mat(
-				_hidden_neuron_count + 1,
+				* _hidden_neuron_count;
+			_chemical_weight_count =
+				(_hidden_neuron_count + 1)	// +bias
 				// column number -> the new chemicals of the cell
-				state_params.internal_chemical_count + state_params.external_chemical_count,
-				arma::fill::randu
-			);
-			_color_weights = arma::mat(
-				state_params.internal_chemical_count + state_params.external_chemical_count + 1,
-				// the resulting color
-				_color_neuron_count,	
-				arma::fill::randu
-			);
+				* _chemical_neuron_count;
+			_color_weight_count =
+				(_chemical_neuron_count + 1) // +bias
+				// column number -> the resulting color
+				* _color_neuron_count;
 
 			// the number of parameters of optimization is the number of weights
-			_param_count = _hidden_weights.n_elem +
-				_chemical_weights.n_elem + _color_weights.n_elem;
+			param_count = _hidden_weight_count + _chemical_weight_count + _color_weight_count;
+
+			// randonly initialize weights
+			// TODO be able to read weight values from config
+			_params = common_types::real_vector(param_count);
+			for (unsigned int i = 0; i < _params.size(); ++i)
+			{
+				_params[i] = (double)rand() / RAND_MAX;
+			}
 		}
 
-		common_types::real_vector feedforward_ann_controller::get_params() const
+		real_vector feedforward_ann_controller::get_params() const
 		{
-			common_types::real_vector params(_param_count);
-			
-			matrix_into_vector(_hidden_weights, params.begin());
-			unsigned int index(_hidden_weights.n_elem);
-			matrix_into_vector(_chemical_weights, params.begin() + index);
-			index += _chemical_weights.n_elem;
-			matrix_into_vector(_color_weights, params.begin() + index);
-
-			return params;
+			return _params;
 		}
 
 		/**
 			Sets new parameters by filling the weight matrices  
 		*/
-		void feedforward_ann_controller::set_params(common_types::real_vector const& p)
+		void feedforward_ann_controller::set_params(real_vector const& p) const
 		{
-			if (p.size() != _param_count)
+			if (p.size() != param_count)
 				throw invalid_argument("Param number mismatch");
 
-			vector_into_matrix(_hidden_weights, p.begin());
-			vector_into_matrix(_chemical_weights, p.begin() + _hidden_weights.n_elem);
-			vector_into_matrix(_color_weights, p.begin() + 
-				_hidden_weights.n_elem + _chemical_weights.n_elem);
+			_params = p;
+		}
+
+		/**
+			Used in the forward pass, linear combination (output) of a layer (input) 
+			with the respective weights (given as the weightIndex)
+		*/
+		void feedforward_ann_controller::execute_linear_combination(
+			unsigned int resSize, unsigned int& weightIndex,
+			real_vector const& input, real_vector& output) const
+		{
+			output = real_vector(resSize);
+			for (unsigned int i = 0; i < resSize; ++i)
+			{
+				double linComb = .0;
+				for (unsigned int j = 0; j < input.size(); ++j)
+				{
+					linComb += _params[weightIndex++] * input[j];
+				}
+				// use hyperbolic tangent as activation
+				output[i] = tanh(linComb);
+			}
 		}
 
 		/**
@@ -75,28 +86,35 @@ namespace lattice
 			Each of them is received as an output parameter.
 		*/
 		void feedforward_ann_controller::forward_pass (
-			common_types::real_vector& input,
-			common_types::real_vector& inner,
-			common_types::real_vector& external,
-			common_types::real_vector& color) const
+			real_vector& input,
+			real_vector& inner,
+			real_vector& external,
+			real_vector& color) const
 		{
-			// compute chemicals
-			arma::mat matInput(input);
-			arma::mat hidden = matInput.t() * _hidden_weights;
-			hidden.set_size(1, hidden.n_cols + 1);
-			hidden(0, hidden.n_cols - 1) = -1;			// append bias	
-			arma::mat output = hidden * _chemical_weights;
+			unsigned int weightIndex = 0;
+
+			// compute hidden neuron values
+			real_vector hidden;
+			execute_linear_combination(_hidden_neuron_count, weightIndex, input, hidden);
+			hidden.push_back(BIAS);	// append bias
+
+			// compute output values
+			real_vector output;
+			execute_linear_combination(_chemical_neuron_count, weightIndex, hidden, output);
 
 			// extract chemical values
-			auto row = arma::conv_to<vector<double>>::from(output.row(0));
-			inner = common_types::real_vector(row.begin(), row.begin() + state_params.external_chemical_count);
-			external = common_types::real_vector(row.begin() + state_params.external_chemical_count, row.end());
+			inner = common_types::real_vector(output.begin(), output.begin() + state_params.external_chemical_count);
+			external = common_types::real_vector(output.begin() + state_params.external_chemical_count, output.end());
 
-			output.set_size(1, output.n_cols + 1);
-			output(0, output.n_cols - 1) = -1;
 			// now, compute the color
-			arma::mat colorLayer = output * _color_weights;
-			color = arma::conv_to<vector<double>>::from(colorLayer.row(0));
+			output.push_back(BIAS);
+			execute_linear_combination(_color_neuron_count, weightIndex, output, color);
+
+			// compute color level
+			for (unsigned int i = 0; i < color.size(); ++i)
+			{
+				color[i] = (1.0 + color[i]) / 2.0;
+			}
 		}
 
 		void feedforward_ann_controller::set_next_state(phenotypes::lattice_cell& cell) const
@@ -138,46 +156,16 @@ namespace lattice
 			annInp.push_back((double) BIAS);
 
 			// compute and set new state
-			common_types::real_vector newInternals, newExternals, newColor;
+			real_vector newInternals, newExternals, newColor;
 			forward_pass(annInp, newInternals, newExternals, newColor);
 
 			state newState = {
 				newInternals,
 				newExternals,
+				color_level_to_rgb(newColor)
 			};
+
 			cell.set_state(newState);
-		}
-
-		/**
-			Conversion for the optimizer, inserts all the elements
-			if the given matrix row by row into the output vector using the iterator
-		*/
-		void matrix_into_vector(arma::mat const& matrix, 
-			common_types::real_vector::iterator& iterator)
-		{
-			for (unsigned int row = 0; row < matrix.n_rows; ++row)
-			{
-				for (unsigned int col = 0; col < matrix.n_cols; ++col)
-				{
-					*iterator++ = matrix(row, col);
-				}
-			}
-		}
-
-		/**
-			Conversion for the optimizer, copies all the elements
-			of the given vector based on the iterator into the output matrix row by row
-		*/
-		void vector_into_matrix(arma::mat& matrix, 
-			common_types::real_vector::const_iterator& iterator)
-		{
-			for (unsigned int row = 0; row < matrix.n_rows; ++row)
-			{
-				for (unsigned int col = 0; col < matrix.n_cols; ++col)
-				{
-					matrix(row, col) = *iterator++;
-				}
-			}
 		}
 	}
 }

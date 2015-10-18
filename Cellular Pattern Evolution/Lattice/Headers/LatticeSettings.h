@@ -3,6 +3,7 @@
 
 #include "Phenotypes\Cell\CellType.h"
 #include "State.h"
+#include "TargetPattern.h"
 #include <string>
 #include <tinyxml/tinyxml.h>
 #include <memory>
@@ -28,15 +29,14 @@ namespace lattice
 		// the form depends on the cell type
 		string init_pattern;
 
-		// a (relative) path to an external SVG file, describing the target pattern
-		string target;
+		// field describing the target pattern
+		unique_ptr<target_pattern> target;
 
 		// !!! settings with properties that are not fixed are stored 
 		// as xml elements for the respective class to parse 
 		unique_ptr<TiXmlElement> stop_criterion;
 		unique_ptr<TiXmlElement> controller;
 		unique_ptr<TiXmlElement> phenotype_settings;
-		// TODO	objective function
 	};
 
 	/**

@@ -16,15 +16,19 @@ namespace lattice
 		{
 		protected:
 			state_settings state_params;
+			// number of parameters for optimization
+			unsigned int param_count;
 		public:
 			state_controller(state_settings settings) : state_params(settings) { };
 			// getter and setter for the parameters
 			// regardless of the controller type, the main structure of each controller is a
 			// vector of real numbers - it's values are altered by the optimizer
 			virtual common_types::real_vector get_params() const = 0;
-			virtual void set_params(common_types::real_vector const& p) = 0;
+			virtual void set_params(common_types::real_vector const& p) const = 0;
 			// sets the next state of the given cell
 			virtual void set_next_state(phenotypes::lattice_cell& cell) const = 0;
+
+			unsigned int get_param_count() const { return param_count; }
 		};
 
 		/**

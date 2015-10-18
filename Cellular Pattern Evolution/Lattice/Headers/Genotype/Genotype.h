@@ -13,10 +13,12 @@ namespace lattice
 		*/
 		class genotype
 		{
-		// TODO grammar, methods
+			unique_ptr<controllers::state_controller> _controller;
+			// TODO grammar, methods
 		public:
-			unique_ptr<controllers::state_controller> _controller;	// to private
 			genotype(lattice_settings const& settings);
+			// getters
+			const controllers::state_controller& get_controller() const { return *_controller; };
 		};
 	}
 }

@@ -9,20 +9,20 @@ using namespace std;
 
 namespace lattice
 {
-	class lattice
+	class lattice final
 	{
 	private:
 		unique_ptr<lattice_settings> _settings;
-	protected:
-		unique_ptr<genotype::genotype> genotype;
-		unique_ptr<phenotypes::phenotype> phenotype;
+		unique_ptr<genotype::genotype> _genotype;
+		unique_ptr<phenotypes::phenotype> _phenotype;
 	public:
 		lattice(unique_ptr<lattice_settings> ls);
+		// getters
 		lattice_settings const& get_settings() const { return *_settings; }
-		// static method, which gets the settings of a lattice and an 
-		// evolved controller (TODO), and simulates the computation of 
-		// the CA, returning the resulting svg (TODO)
-		static void simulate(lattice_settings ls);
+		genotype::genotype const& get_genotype() const { return *_genotype; }
+		phenotypes::phenotype const& get_phenotype() const { return *_phenotype; }
+		// simulates the computation of the CA
+		void simulate();
 	};
 }
 

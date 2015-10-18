@@ -2,15 +2,16 @@
 #include <memory>
 #include <boost/program_options.hpp>
 
-#include "../Lattice/Headers/LatticeSettings.h"
-#include "../Lattice/Headers/Lattice.h"
+#include "Headers/Task.h"
 
 using namespace std;
 using namespace boost::program_options;
 
 void start_regime(string regime)
 {
-	/*if (regime == "master") {
+	/* TODO
+
+	if (regime == "master") {
 		cout << "TODO start master regime" << endl;
 	}
 	else if (regime == "slave") {
@@ -20,8 +21,8 @@ void start_regime(string regime)
 		cout << "TODO start simulation regime" << endl;
 	}*/
 
-	auto s = lattice::load_settings("config/confLattice.xml");
-	lattice::lattice* l = new lattice::lattice(std::move(s));
+	task::task t("Config/confTask.xml");
+	t.execute();
 }
 
 int main(int argc, char* argv[])
@@ -59,4 +60,5 @@ int main(int argc, char* argv[])
 
 	cout << "DONE" << endl;
 	getchar();
+	return (EXIT_SUCCESS);
 }

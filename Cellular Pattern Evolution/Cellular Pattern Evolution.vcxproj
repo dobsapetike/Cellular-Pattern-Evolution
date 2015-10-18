@@ -84,15 +84,16 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Boost\include\boost-1_59;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Boost\include\boost-1_59;C:\Program Files %28x86%29\GnuWin32\include</AdditionalIncludeDirectories>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Boost\lib;C:\Program Files %28x86%29\GnuWin32\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libblas.lib;liblapack.lib;tinyxml.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Boost\lib;C:\Program Files %28x86%29\GnuWin32\lib\shark;C:\Program Files %28x86%29\GnuWin32\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>tinyxml.lib;libboost_program_options-vc120-mt-gd-1_59.lib</AdditionalDependencies>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -121,17 +122,18 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>ARMA_USE_LAPACK;ARMA_USE_BLAS;WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\GnuWin32\include;C:\Boost\include\boost-1_59;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Boost\include\boost-1_59;C:\Program Files %28x86%29\GnuWin32\include</AdditionalIncludeDirectories>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Boost\lib;C:\Program Files %28x86%29\GnuWin32\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libblas.lib;liblapack.lib;tinyxml.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Boost\lib;C:\Program Files %28x86%29\GnuWin32\lib\shark;C:\Program Files %28x86%29\GnuWin32\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>tinyxml.lib;libboost_program_options-vc120-mt-gd-1_59.lib</AdditionalDependencies>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -157,6 +159,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Lattice\TargetPattern.cpp" />
+    <ClCompile Include="Main\Task.cpp" />
+    <ClCompile Include="ObjectiveFunctions\ObjectiveFunction.cpp" />
     <ClCompile Include="Lattice\Controllers\FeedForwardANNController.cpp" />
     <ClCompile Include="Lattice\Controllers\StateController.cpp" />
     <ClCompile Include="Lattice\Genotype\Genotype.cpp" />
@@ -169,8 +174,17 @@
     <ClCompile Include="Main\CommonTypes.cpp" />
     <ClCompile Include="Main\Main.cpp" />
     <ClCompile Include="Lattice\Phenotype\Phenotype.cpp" />
+    <ClCompile Include="ObjectiveFunctions\CAMultiObjectiveFunction.cpp" />
+    <ClCompile Include="ObjectiveFunctions\ObjectiveSettings.cpp" />
+    <ClCompile Include="Optimizer\MultiObjCMAES.cpp" />
+    <ClCompile Include="Optimizer\Optimizer.cpp" />
+    <ClCompile Include="Optimizer\OptimizerSettings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Lattice\Headers\TargetPattern.h" />
+    <ClInclude Include="Main\Headers\Task.h" />
+    <ClInclude Include="ObjectiveFunctions\Headers\CAMultiObjectiveFunction.h" />
+    <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveFunction.h" />
     <ClInclude Include="Lattice\Headers\Controllers\FeedForwardANNController.h" />
     <ClInclude Include="Lattice\Headers\Genotype\Genotype.h" />
     <ClInclude Include="Lattice\Headers\Phenotypes\Cell\RegularCell.h" />
@@ -184,11 +198,20 @@
     <ClInclude Include="Lattice\Headers\Halting\StopCriterion.h" />
     <ClInclude Include="Lattice\Headers\State.h" />
     <ClInclude Include="Lattice\Headers\Controllers\StateController.h" />
+    <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveFunctionCellCount.h" />
+    <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveFunctionColorDistance.h" />
+    <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveSettings.h" />
+    <ClInclude Include="Optimizer\Headers\MultiObjCMAES.h" />
+    <ClInclude Include="Optimizer\Headers\Optimizer.h" />
+    <ClInclude Include="Optimizer\Headers\OptimizerSettings.h" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="Config\confLattice.xml">
+    <Xml Include="Config\confTask.xml">
       <SubType>Designer</SubType>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Target\twoband90_10.target" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

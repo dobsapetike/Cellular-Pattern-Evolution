@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Main">
-      <UniqueIdentifier>{e755ed6b-45c5-422b-951c-cdcd9a1e55f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Lattice">
       <UniqueIdentifier>{ada13a51-4684-47b0-a592-e1c47f2dfe62}</UniqueIdentifier>
     </Filter>
@@ -49,11 +46,20 @@
     <Filter Include="Source Files\Lattice\Controllers">
       <UniqueIdentifier>{dea1f6ba-691f-421b-a125-8ee0859eb36f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ObjectiveFunctions">
+      <UniqueIdentifier>{8abd3ca0-5d76-47f6-9a41-772bb3c9c9af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ObjectiveFunctions">
+      <UniqueIdentifier>{f4c0103a-1b2e-4cee-8ce0-25cb08942711}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Optimizer">
+      <UniqueIdentifier>{734ac51f-082b-49c3-bbe1-eb3cb39227fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Optimizer">
+      <UniqueIdentifier>{bf4a45bb-f4b0-488d-86f8-c9566c8caf1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main\Main.cpp">
-      <Filter>Source Files\Main</Filter>
-    </ClCompile>
     <ClCompile Include="Lattice\LatticeSettings.cpp">
       <Filter>Source Files\Lattice</Filter>
     </ClCompile>
@@ -81,10 +87,37 @@
     <ClCompile Include="Lattice\Controllers\StateController.cpp">
       <Filter>Source Files\Lattice\Controllers</Filter>
     </ClCompile>
-    <ClCompile Include="Lattice\State.cpp">
+    <ClCompile Include="Main\CommonTypes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Main\CommonTypes.cpp">
+    <ClCompile Include="Lattice\State.cpp">
+      <Filter>Source Files\Lattice</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectiveFunctions\CAMultiObjectiveFunction.cpp">
+      <Filter>Source Files\ObjectiveFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectiveFunctions\ObjectiveFunction.cpp">
+      <Filter>Source Files\ObjectiveFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Optimizer\MultiObjCMAES.cpp">
+      <Filter>Source Files\Optimizer</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectiveFunctions\ObjectiveSettings.cpp">
+      <Filter>Source Files\ObjectiveFunctions</Filter>
+    </ClCompile>
+    <ClCompile Include="Optimizer\OptimizerSettings.cpp">
+      <Filter>Source Files\Optimizer</Filter>
+    </ClCompile>
+    <ClCompile Include="Optimizer\Optimizer.cpp">
+      <Filter>Source Files\Optimizer</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\Task.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\TargetPattern.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,10 +161,45 @@
     <ClInclude Include="Lattice\Headers\Phenotypes\Phenotype.h">
       <Filter>Header Files\Lattice\Phenotypes</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectiveFunctions\Headers\CAMultiObjectiveFunction.h">
+      <Filter>Header Files\ObjectiveFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveFunction.h">
+      <Filter>Header Files\ObjectiveFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="Optimizer\Headers\Optimizer.h">
+      <Filter>Header Files\Optimizer</Filter>
+    </ClInclude>
+    <ClInclude Include="Optimizer\Headers\OptimizerSettings.h">
+      <Filter>Header Files\Optimizer</Filter>
+    </ClInclude>
+    <ClInclude Include="Optimizer\Headers\MultiObjCMAES.h">
+      <Filter>Header Files\Optimizer</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveSettings.h">
+      <Filter>Header Files\ObjectiveFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Headers\Task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveFunctionCellCount.h">
+      <Filter>Header Files\ObjectiveFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveFunctionColorDistance.h">
+      <Filter>Header Files\ObjectiveFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\TargetPattern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="Config\confLattice.xml">
+    <Xml Include="Config\confTask.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Target\twoband90_10.target">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

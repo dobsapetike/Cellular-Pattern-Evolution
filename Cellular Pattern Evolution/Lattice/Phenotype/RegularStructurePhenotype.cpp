@@ -1,7 +1,5 @@
 #include <algorithm>
-
 #include "../Headers/Phenotypes/RegularStructurePhenotype.h"
-
 #include "../Headers/Phenotypes/Cell/RegularCell.h"
 
 namespace lattice
@@ -29,16 +27,40 @@ namespace lattice
 				_grid.push_back(row);
 			}
 
+			// initialize states
+			set_init_pattern(settings.init_pattern, settings.stateSettings);
+
 			// set neighbourhood type
 			_neighbourhood_type = von_neumann; // default
 			if (TiXmlElement* elem = settings.phenotype_settings.get()) 
 			{
-				TiXmlElement* nbTypeElem = elem->FirstChildElement("NeighbourhoodType");
+				auto nbTypeElem = elem->FirstChildElement("NeighbourhoodType");
 				if (nbTypeElem) 
 				{
 					_neighbourhood_type = parse_neighbourhood_type(nbTypeElem->GetText());
 				}
 			}
+		}
+
+		void regular_structure_phenotype::set_init_pattern(string init_pattern, state_settings state_set)
+		{
+			for (unsigned int y = 0; y < _grid.size(); ++y)
+			{
+				for (unsigned int x = 0; x < _grid[0].size(); ++x)
+				{
+					state s = init_state(state_set);
+					// TODO set colors
+					_grid[y][x].get()->set_state(s);
+				}
+			}
+		}
+
+		shared_ptr<lattice_cell> regular_structure_phenotype::cell_at(unsigned int x, unsigned int y) const
+		{
+			if (x < 0 || x >= _grid.size() || y < 0 || y >= _grid.size())
+				throw invalid_argument("Out of bounds error at regular structure phenotype cell getter!");
+
+			return _grid[y][x];
 		}
 
 		neighbourhood regular_structure_phenotype::get_neighbours(lattice_cell const& c) const
@@ -55,7 +77,7 @@ namespace lattice
 					n[common_types::left].push_back(_grid[y - 1][x - 1]);
 				}
 				n[common_types::upper].push_back(_grid[y - 1][x]);
-				if (x < _grid[0].size() && nt == moore)
+				if (x < _grid[0].size() - 1 && nt == moore)
 				{
 					n[common_types::upper].push_back(_grid[y - 1][x + 1]);
 					n[common_types::right].push_back(_grid[y - 1][x + 1]);
@@ -64,10 +86,10 @@ namespace lattice
 
 			// middle
 			if (x > 0) n[common_types::left].push_back(_grid[y][x - 1]);
-			if (x < _grid[0].size()) n[common_types::right].push_back(_grid[y][x + 1]);
+			if (x < _grid[0].size() - 1) n[common_types::right].push_back(_grid[y][x + 1]);
 
 			// bottom
-			if (y < _grid.size())
+			if (y < _grid.size() - 1)
 			{
 				if (x > 0 && nt == moore)
 				{
@@ -75,7 +97,7 @@ namespace lattice
 					n[common_types::lower].push_back(_grid[y + 1][x - 1]);
 				}
 				n[common_types::lower].push_back(_grid[y + 1][x]);
-				if (x < _grid[0].size() && nt == moore)
+				if (x < _grid[0].size() - 1 && nt == moore)
 				{
 					n[common_types::right].push_back(_grid[y + 1][x + 1]);
 					n[common_types::lower].push_back(_grid[y + 1][x + 1]);

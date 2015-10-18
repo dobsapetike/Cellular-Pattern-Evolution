@@ -10,21 +10,22 @@ namespace lattice
 	{
 		TiXmlDocument doc(filepath.c_str());
 		if (!doc.LoadFile())
-		{
 			throw std::invalid_argument("Could not parse file: " + filepath);
-		}
 		
 		unique_ptr<lattice_settings> settings = std::make_unique<lattice_settings>();
-		auto settingsElem = doc.FirstChild("LatticeSettings");
+		auto settingsElem = doc.FirstChild("Settings")->FirstChild("LatticeSettings");
 
 		settings->width = atoi(settingsElem->FirstChildElement("LatticeWidth")->GetText());
 		settings->height = atoi(settingsElem->FirstChildElement("LatticeHeight")->GetText());
 
 		settings->cellType = phenotypes::parse_cell_type(
 			settingsElem->FirstChildElement("CellType")->GetText());
-		settings->target = settingsElem->FirstChildElement("TargetPattern")->GetText();
 		settings->init_pattern = settingsElem->FirstChildElement("InitPattern")->GetText();
 
+		string target_path = settingsElem->FirstChildElement("TargetPattern")->GetText();
+		settings->target = unique_ptr<target_pattern>(
+			new target_pattern(settings->width, settings->height, target_path));
+	
 		settings->controller = unique_ptr<TiXmlElement>(
 			settingsElem->FirstChildElement("Controller")->Clone()->ToElement());
 		settings->stop_criterion = unique_ptr<TiXmlElement>(
