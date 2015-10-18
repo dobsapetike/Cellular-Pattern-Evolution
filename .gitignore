@@ -46,4 +46,11 @@ Temporary Items
 *.user
 *.obj
 Release/
+Debug/
 Cellular Pattern Evolution/Release/
+Cellular Pattern Evolution/Debug/
+TargetPatternCreator/bin/
+TargetPatternCreator/obj/
+*.pdb
+*.idb
+*.opensdf
