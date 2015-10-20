@@ -120,6 +120,12 @@
     <ClCompile Include="Lattice\TargetPattern.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Lattice\Halting\EvalNumberCriterion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Halting\StopCriterion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lattice\Headers\Lattice.h">
@@ -189,6 +195,12 @@
       <Filter>Header Files\ObjectiveFunctions</Filter>
     </ClInclude>
     <ClInclude Include="Lattice\Headers\TargetPattern.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\LatticeStatistics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Halting\EvalNumberCriterion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

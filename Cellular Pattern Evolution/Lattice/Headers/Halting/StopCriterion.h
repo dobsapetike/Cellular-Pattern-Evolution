@@ -2,6 +2,8 @@
 #define STOP_CRITERION_H
 
 #include <tinyxml/tinyxml.h>
+#include "../LatticeStatistics.h"
+#include "../LatticeSettings.h"
 
 namespace lattice
 {
@@ -14,12 +16,14 @@ namespace lattice
 		class stop_criterion
 		{
 		public:
-			// constructor receives the configuration XML, which is parsed in the subclasses
-			stop_criterion(TiXmlElement init_config) { initialize(init_config); };
-			virtual void initialize(TiXmlElement init_config);
-			// TODO decides whether the simulation should stop
-			virtual bool should_stop();
+			// decides whether the simulation should stop
+			virtual bool should_stop(lattice_statistics const& statistics) const = 0;
 		};
+
+		/**
+			Criterion factory method, constructing a stop criterion instance based on settings
+		*/
+		unique_ptr<stop_criterion> create_stop_criterion(lattice_settings const& settings);
 	}
 }
 

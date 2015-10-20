@@ -16,7 +16,8 @@
       <ColorType>grayscale</ColorType>
     </Controller>
     <StopCriterion>
-
+      <Criterion>EvalNums</Criterion>
+      <Limit>100</Limit>
     </StopCriterion>
     <State>
       <InternalCount>2</InternalCount>

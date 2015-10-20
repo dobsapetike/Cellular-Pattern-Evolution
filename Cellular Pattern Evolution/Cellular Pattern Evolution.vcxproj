@@ -159,6 +159,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Lattice\Halting\EvalNumberCriterion.cpp" />
+    <ClCompile Include="Lattice\Halting\StopCriterion.cpp" />
     <ClCompile Include="Lattice\TargetPattern.cpp" />
     <ClCompile Include="Main\Task.cpp" />
     <ClCompile Include="ObjectiveFunctions\ObjectiveFunction.cpp" />
@@ -181,6 +183,8 @@
     <ClCompile Include="Optimizer\OptimizerSettings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Lattice\Headers\Halting\EvalNumberCriterion.h" />
+    <ClInclude Include="Lattice\Headers\LatticeStatistics.h" />
     <ClInclude Include="Lattice\Headers\TargetPattern.h" />
     <ClInclude Include="Main\Headers\Task.h" />
     <ClInclude Include="ObjectiveFunctions\Headers\CAMultiObjectiveFunction.h" />

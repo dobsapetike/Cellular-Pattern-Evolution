@@ -2,6 +2,7 @@
 #define LATTICE_H
 
 #include "LatticeSettings.h"
+#include "LatticeStatistics.h"
 #include "Phenotypes\Phenotype.h"
 #include "Genotype\Genotype.h"
 
@@ -12,6 +13,7 @@ namespace lattice
 	class lattice final
 	{
 	private:
+		unique_ptr<lattice_statistics> _statistics;
 		unique_ptr<lattice_settings> _settings;
 		unique_ptr<genotype::genotype> _genotype;
 		unique_ptr<phenotypes::phenotype> _phenotype;
