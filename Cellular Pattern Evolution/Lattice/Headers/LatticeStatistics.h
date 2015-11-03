@@ -6,8 +6,8 @@ namespace lattice
 	class lattice_statistics
 	{
 	public:
-		unsigned int _eval_count = 0;
-		void reset() { _eval_count = 0; }
+		unsigned int eval_count = 0;
+		void reset() { eval_count = 0; }
 	};
 }
 

@@ -88,6 +88,12 @@
       <AdditionalIncludeDirectories>C:\Boost\include\boost-1_59;C:\Program Files %28x86%29\GnuWin32\include</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,6 +132,12 @@
       <AdditionalIncludeDirectories>C:\Boost\include\boost-1_59;C:\Program Files %28x86%29\GnuWin32\include</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -159,10 +171,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Lattice\Halting\EnergyCriterion.cpp" />
     <ClCompile Include="Lattice\Halting\EvalNumberCriterion.cpp" />
     <ClCompile Include="Lattice\Halting\StopCriterion.cpp" />
     <ClCompile Include="Lattice\TargetPattern.cpp" />
-    <ClCompile Include="Main\Task.cpp" />
+    <ClCompile Include="Lattice\TargetPatternSvg.cpp" />
+    <ClCompile Include="Main\Logger.cpp" />
+    <ClCompile Include="Task\ExperimentCollection.cpp" />
+    <ClCompile Include="Task\Task.cpp" />
     <ClCompile Include="ObjectiveFunctions\ObjectiveFunction.cpp" />
     <ClCompile Include="Lattice\Controllers\FeedForwardANNController.cpp" />
     <ClCompile Include="Lattice\Controllers\StateController.cpp" />
@@ -183,10 +199,15 @@
     <ClCompile Include="Optimizer\OptimizerSettings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Lattice\Headers\Halting\EnergyCriterion.h" />
     <ClInclude Include="Lattice\Headers\Halting\EvalNumberCriterion.h" />
     <ClInclude Include="Lattice\Headers\LatticeStatistics.h" />
     <ClInclude Include="Lattice\Headers\TargetPattern.h" />
-    <ClInclude Include="Main\Headers\Task.h" />
+    <ClInclude Include="Lattice\Headers\TargetPatternSvg.h" />
+    <ClInclude Include="Main\Headers\Logger.h" />
+    <ClInclude Include="Task\Headers\Experiment.h" />
+    <ClInclude Include="Task\Headers\ExperimentCollection.h" />
+    <ClInclude Include="Task\Headers\Task.h" />
     <ClInclude Include="ObjectiveFunctions\Headers\CAMultiObjectiveFunction.h" />
     <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveFunction.h" />
     <ClInclude Include="Lattice\Headers\Controllers\FeedForwardANNController.h" />
@@ -210,9 +231,14 @@
     <ClInclude Include="Optimizer\Headers\OptimizerSettings.h" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="Config\confTask.xml">
+    <Xml Include="Config\confExperiment.xml">
       <SubType>Designer</SubType>
     </Xml>
+    <Xml Include="Config\confStopCriterion.xml" />
+    <Xml Include="Config\confObjective.xml" />
+    <Xml Include="Config\confOptimizer.xml" />
+    <Xml Include="Config\confLattice.xml" />
+    <Xml Include="Config\confController.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Target\twoband90_10.target" />

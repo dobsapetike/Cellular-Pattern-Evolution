@@ -12,7 +12,7 @@ namespace optimizer
 			throw std::invalid_argument("Could not parse file: " + filepath);
 
 		std::unique_ptr<optimizer_settings> settings = std::make_unique<optimizer_settings>();
-		auto settingsElem = doc.FirstChild("Settings")->FirstChild("OptimizerSettings");
+		auto settingsElem = doc.FirstChild("OptimizerSettings");
 
 		settings->algorithm = settingsElem->FirstChildElement("Algorithm")->GetText();
 		settings->params = std::unique_ptr<TiXmlElement>(

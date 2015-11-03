@@ -20,9 +20,10 @@ namespace lattice
 			unique_ptr<controllers::state_controller> _controller;
 		public:
 			genotype(lattice_settings const& settings);
+			void reset();
 			// getters
-			const halting::stop_criterion& get_criterion() const { return *_stop_criterion; }
-			const controllers::state_controller& get_controller() const { return *_controller; };
+			halting::stop_criterion& get_criterion() { return *_stop_criterion; }
+			controllers::state_controller& get_controller() { return *_controller; };
 		};
 	}
 }

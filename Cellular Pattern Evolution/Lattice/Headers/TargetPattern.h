@@ -8,7 +8,7 @@ using namespace std;
 namespace lattice
 {
 	/**
-		Structure describing the target pattern
+		Structure describing the target pattern as a raster -- NOT USED
 	*/
 	struct target_pattern
 	{

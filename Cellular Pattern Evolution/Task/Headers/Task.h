@@ -1,6 +1,8 @@
-#include <string>
+#ifndef TASK_H
+#define TASK_H
+
+#include "Experiment.h"
 #include "../../Lattice/Headers/Lattice.h"
-#include "../../ObjectiveFunctions/Headers/ObjectiveFunction.h"
 #include "../../Optimizer/Headers/Optimizer.h"
 
 namespace task
@@ -11,8 +13,12 @@ namespace task
 		std::unique_ptr<optimizer::optimizer> _optimizer;
 		std::shared_ptr<objective_functions::ca_multiobj_func> _obj_func;
 		std::shared_ptr<lattice::lattice> _lattice;
+
+		unique_ptr<experiment> _experiment;
 	public:
-		task(std::string configPath);
+		explicit task(experiment const& exp);
 		void execute();
 	};
 }
+
+#endif

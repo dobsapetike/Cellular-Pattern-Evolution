@@ -40,9 +40,10 @@ namespace lattice
 	};
 
 	/**
-		Loads the lattice settings from the given XML file
+		Loads the lattice settings from the given XML files
 	*/
-	unique_ptr<lattice_settings> load_settings(string const& filepath);
+	unique_ptr<lattice_settings> load_settings(string const& lattice_config, 
+		string const& controller_config, string const& stopcrit_config);
 }
 
 #endif

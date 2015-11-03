@@ -1,5 +1,5 @@
 #include "Headers/MultiObjCMAES.h"
-#include <iostream>
+#include "../Main/Headers/Logger.h"
 
 namespace optimizer
 {
@@ -32,16 +32,20 @@ namespace optimizer
 
 	void mo_cmaes_optimizer::init()
 	{
+		logger::get_logger().log_evol_stat("Initializing optimizer!");
+
 		_mocma.init(*objective_func);
 		_current_step_count = 0;
-		cout << "Started evolution " << endl;
+		
+		logger::get_logger().log_evol_stat("Initialization complete! Starting evolution!");
 	}
 
 	void mo_cmaes_optimizer::step()
 	{
+		logger::get_logger().log_evol_stat("Generation: " + _current_step_count + 1);
+
 		_mocma.step(*objective_func);
 		++_current_step_count;
-		cout << "Current step count: " << _current_step_count << endl;
 	}
 
 	/**

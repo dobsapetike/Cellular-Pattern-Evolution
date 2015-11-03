@@ -1,6 +1,7 @@
 #include <algorithm>
 #include "../Headers/Halting/StopCriterion.h"
 #include "../Headers/Halting/EvalNumberCriterion.h"
+#include "../Headers/Halting/EnergyCriterion.h"
 
 namespace lattice
 {
@@ -15,7 +16,9 @@ namespace lattice
 			transform(type.begin(), type.end(), type.begin(), ::tolower);
 
 			if (type == "evalnums")
-				return unique_ptr<eval_num_halting>(new eval_num_halting(settings));
+				return std::make_unique<eval_num_halting>(settings);
+			if (type == "energy")
+				return std::make_unique<energy_halting>(settings);
 
 			throw invalid_argument("Unknown stop criterion type: " + type);
 		}

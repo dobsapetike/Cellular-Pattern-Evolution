@@ -1,0 +1,18 @@
+<LatticeSettings>
+  <LatticeWidth>10</LatticeWidth>
+  <LatticeHeight>10</LatticeHeight>
+  <CellType>Regular</CellType>
+  <PhenotypeSettings>
+    <NeighbourhoodType>VonNeumann</NeighbourhoodType>
+  </PhenotypeSettings>
+  <TargetPattern>Target/twoband90_10.target</TargetPattern>
+  <InitPattern>
+    TODO
+  </InitPattern>
+  <State>
+    <InternalCount>2</InternalCount>
+    <ExternalCount>2</ExternalCount>
+    <InitialValues>0.66</InitialValues>
+  </State>
+</LatticeSettings>
+ 

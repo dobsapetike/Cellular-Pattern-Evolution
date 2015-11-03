@@ -2,11 +2,12 @@
 #define STOP_CRITERION_H
 
 #include <tinyxml/tinyxml.h>
-#include "../LatticeStatistics.h"
 #include "../LatticeSettings.h"
 
 namespace lattice
 {
+	class lattice; // forward declaration of the lattice
+
 	namespace halting
 	{
 		/*
@@ -17,7 +18,9 @@ namespace lattice
 		{
 		public:
 			// decides whether the simulation should stop
-			virtual bool should_stop(lattice_statistics const& statistics) const = 0;
+			virtual bool should_stop(lattice& statistics) = 0;
+			// resets inner state befre simulation
+			virtual void reset() = 0;
 		};
 
 		/**

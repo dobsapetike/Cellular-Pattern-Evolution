@@ -1,0 +1,11 @@
+<Experiments>
+  <Experiment>
+    <Name>Experiment1</Name>
+    <Id>1</Id>
+    <Controller>Config/confController.xml</Controller>
+    <Lattice>Config/confLattice.xml</Lattice>
+    <Objective>Config/confObjective.xml</Objective>
+    <Optimizer>Config/confOptimizer.xml</Optimizer>
+    <StopCriterion>Config/confStopCriterion.xml</StopCriterion>
+  </Experiment>
+</Experiments>

@@ -1,8 +1,9 @@
-#include <iostream>
-#include <memory>
 #include <boost/program_options.hpp>
 
-#include "Headers/Task.h"
+#include "Headers/Logger.h"
+#include "../Task/Headers/Task.h"
+#include "../Lattice/Headers/TargetPatternSvg.h"
+#include "../Task/Headers/ExperimentCollection.h"
 
 using namespace std;
 using namespace boost::program_options;
@@ -21,7 +22,9 @@ void start_regime(string regime)
 		cout << "TODO start simulation regime" << endl;
 	}*/
 
-	task::task t("Config/confTask.xml");
+	task::experiments e("config/confExperiment.xml");
+	task::task t(*e[1]);
+
 	t.execute();
 }
 
@@ -54,11 +57,12 @@ int main(int argc, char* argv[])
 		start_regime(regime);
 	}
 	catch (const error &ex)
-	{
-		cerr << ex.what() << endl;
+	{	
+		logger::get_logger().log_error(ex.what());
 	}
 
-	cout << "DONE" << endl;
+	logger::get_logger().log_info("DONE! Aplication closes.");
+	
 	getchar();
-	return (EXIT_SUCCESS);
+	return EXIT_SUCCESS;
 }

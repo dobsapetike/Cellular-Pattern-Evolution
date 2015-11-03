@@ -1,3 +1,4 @@
+#include "../Headers/Lattice.h"
 #include "../Headers/Halting/EvalNumberCriterion.h"
 
 namespace lattice
@@ -15,9 +16,9 @@ namespace lattice
 		/*
 			Simple haling criterion: stop after a predefined number of steps
 		*/
-		bool eval_num_halting::should_stop(lattice_statistics const& statistics) const
+		bool eval_num_halting::should_stop(lattice& lattice)
 		{
-			return statistics._eval_count >= _eval_limit;
+			return lattice.get_statistics().eval_count >= _eval_limit;
 		}
 	}
 }

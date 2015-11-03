@@ -1,0 +1,8 @@
+<ObjectiveSettings>
+  <MinValue>-1</MinValue>
+  <MaxValue>1</MaxValue>
+  <ObjectiveFunctions>
+    <Function Name="ColorDist"/>
+  </ObjectiveFunctions>
+</ObjectiveSettings>
+

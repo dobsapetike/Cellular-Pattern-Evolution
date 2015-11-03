@@ -1,16 +1,13 @@
 #include "../Lattice/Headers/Lattice.h"
-#include "../ObjectiveFunctions/Headers/CAMultiObjectiveFunction.h"
-
-#include <iostream>
 
 namespace lattice
 {
 	lattice::lattice(unique_ptr<lattice_settings> ls)
 	{
 		_settings = move(ls);
-		_statistics = unique_ptr<lattice_statistics>(new lattice_statistics());
+		_statistics = make_unique<lattice_statistics>();
 		_phenotype = phenotypes::create_phenotype(get_settings());
-		_genotype = unique_ptr<genotype::genotype>(new genotype::genotype(get_settings()));
+		_genotype = make_unique<genotype::genotype>(get_settings());
 	}
 
 	/**
@@ -19,17 +16,19 @@ namespace lattice
 	void lattice::simulate()
 	{
 		_statistics->reset();
-		_phenotype.get()->set_init_pattern(get_settings().init_pattern, get_settings().stateSettings);
+		_genotype->reset();
+		_phenotype->set_init_pattern(get_settings().init_pattern, get_settings().stateSettings);
 
-		while (!_genotype->get_criterion().should_stop(*_statistics))
+		while (!_genotype->get_criterion().should_stop(*this))
 		{
-			auto cells = _phenotype.get()->expose_cells();
-			for (auto cell : cells)
+			auto cells = _phenotype->expose_cells();
+			for (auto& cell : cells)
 			{
-				_genotype.get()->get_controller().set_next_state(*cell);
+				_genotype->get_controller().set_next_state(*cell);
 			}
 
-			_statistics->_eval_count++;
+			_statistics->eval_count++;
+			// cout << "Eval num: " << _statistics->eval_count << endl;
 		}
 	}
 }

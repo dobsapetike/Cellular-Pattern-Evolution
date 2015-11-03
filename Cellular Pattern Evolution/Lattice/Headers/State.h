@@ -54,6 +54,8 @@ namespace lattice
 	*/
 	rgb color_level_to_rgb(double const& cl);
 	rgb color_level_to_rgb(common_types::real_vector const& cl);
+
+	rgb parse_rgb(std::string s);
 }
 
 #endif

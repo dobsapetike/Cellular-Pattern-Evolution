@@ -1,7 +1,6 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include <iostream>
 #include <algorithm>
 #include "Headers/TargetPattern.h"
 
@@ -17,6 +16,7 @@ namespace lattice
 		ifstream infile;
 		infile.open(filepath.c_str(), ios::in);
 
+
 		if (!infile)
 			throw invalid_argument("Could not open target pattern file: " + filepath);
 
@@ -27,7 +27,7 @@ namespace lattice
 
 		string line, token;
 		istringstream istline, isttoken;
-		unsigned int r, g, b;
+		unsigned char r, g, b;
 
 		getline(infile, line);
 		while (getline(infile, line))

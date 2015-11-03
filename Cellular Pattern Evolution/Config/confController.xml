@@ -1,0 +1,5 @@
+<Controller>
+  <Type>FeedForwardANNController</Type>
+  <HiddenNeuronCount>1</HiddenNeuronCount>
+  <ColorType>grayscale</ColorType>
+</Controller>

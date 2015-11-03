@@ -1,7 +1,5 @@
 #include "Headers/CAMultiObjectiveFunction.h"
 
-#include <iostream>
-
 namespace objective_functions
 {
 	ca_multiobj_func::ca_multiobj_func(
@@ -12,10 +10,10 @@ namespace objective_functions
 	{
 		// iterate and remember objective functions
 		TiXmlNode* nextChild = settings.objfunc_settings->FirstChild();
-		if (nextChild == NULL)
+		if (nextChild == nullptr)
 			throw invalid_argument("No objective function specified!");
 
-		while (nextChild != NULL)
+		while (nextChild != nullptr)
 		{
 			TiXmlElement elem = *nextChild->ToElement();
 			if (strcmpi(elem.Value(), "Function")) 
@@ -51,6 +49,7 @@ namespace objective_functions
 		{
 			result[i] = _objectives[i].get()->eval();
 		}
+
 		return result;
 	}
 }

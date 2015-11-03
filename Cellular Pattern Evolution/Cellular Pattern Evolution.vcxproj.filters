@@ -114,9 +114,6 @@
     <ClCompile Include="Optimizer\Optimizer.cpp">
       <Filter>Source Files\Optimizer</Filter>
     </ClCompile>
-    <ClCompile Include="Main\Task.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Lattice\TargetPattern.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -124,6 +121,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Lattice\Halting\StopCriterion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Task\Task.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Task\ExperimentCollection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Halting\EnergyCriterion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\TargetPatternSvg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -185,9 +197,6 @@
     <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveSettings.h">
       <Filter>Header Files\ObjectiveFunctions</Filter>
     </ClInclude>
-    <ClInclude Include="Main\Headers\Task.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveFunctionCellCount.h">
       <Filter>Header Files\ObjectiveFunctions</Filter>
     </ClInclude>
@@ -203,11 +212,42 @@
     <ClInclude Include="Lattice\Headers\Halting\EvalNumberCriterion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Main\Headers\Logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Task\Headers\Task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Task\Headers\ExperimentCollection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Task\Headers\Experiment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Halting\EnergyCriterion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\TargetPatternSvg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="Config\confTask.xml">
+    <Xml Include="Config\confController.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+    <Xml Include="Config\confLattice.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="Config\confObjective.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="Config\confOptimizer.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="Config\confStopCriterion.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="Config\confExperiment.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Target\twoband90_10.target">

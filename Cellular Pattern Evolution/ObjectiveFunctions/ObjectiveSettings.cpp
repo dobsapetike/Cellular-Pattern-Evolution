@@ -12,7 +12,7 @@ namespace objective_functions
 			throw std::invalid_argument("Could not parse file: " + filepath);
 
 		std::unique_ptr<objective_settings> settings = std::make_unique<objective_settings>();
-		auto settingsElem = doc.FirstChild("Settings")->FirstChild("ObjectiveSettings");
+		auto settingsElem = doc.FirstChild("ObjectiveSettings");
 
 		settings->min_value = atof(settingsElem->FirstChildElement("MinValue")->GetText());
 		settings->max_value = atof(settingsElem->FirstChildElement("MaxValue")->GetText());

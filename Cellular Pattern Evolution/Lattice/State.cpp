@@ -1,5 +1,6 @@
 #include "Headers\State.h"
-#include <iostream>
+#include <sstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -32,7 +33,7 @@ namespace lattice
 		if (cl < 0.0 || cl > 1.0)
 			throw invalid_argument("Color level should be a real value between 0 and 1!");
 
-		int color = (int)(cl * 255);
+		auto color = static_cast<unsigned int>(cl * 255);
 		return rgb {
 			color, color, color
 		};
@@ -45,16 +46,35 @@ namespace lattice
 		if (cl.size() != 3)
 			throw invalid_argument("Vector length mismatch at color level to RGB conversion! RGB has three values!");
 
-		int vals[3];
+		unsigned int vals[3];
 		for (unsigned int i = 0; i < 3; ++i)
 		{
 			double d = cl[i];
 			if (d < 0.0 || d > 1.0)
 				throw invalid_argument("Color level should be a real value between 0 and 1!");
-			vals[i] = (int)(d * 255);
+			vals[i] = static_cast<unsigned int>(d * 255);
 		}
 		return rgb {
 			vals[0], vals[1], vals[2]
 		};
+	}
+
+	rgb parse_rgb(std::string s)
+	{
+		// format: rgb(iR, iG, iB)
+		// remove whitespace
+		s.erase(std::remove_if(s.begin(), s.end(),
+			[](char c){ return c == ' '; }), s.end());
+
+		unsigned int start = s.find('(') + 1;
+		unsigned int end = s.find(')');
+		string cols = s.substr(start, end- start);
+
+		replace(cols.begin(), cols.end(), ',', ' ');
+		istringstream ist(cols);
+
+		unsigned int r, g, b;
+		ist >> r >> g >> b;
+		return rgb { r, g, b };
 	}
 }

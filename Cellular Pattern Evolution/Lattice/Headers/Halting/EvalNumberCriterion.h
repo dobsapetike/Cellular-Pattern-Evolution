@@ -16,8 +16,9 @@ namespace lattice
 			unsigned int _eval_limit;
 		public:
 			eval_num_halting(lattice_settings const& settings);
+			virtual void reset() override { };
 			// decides whether the simulation should stop
-			virtual bool should_stop(lattice_statistics const& statistics) const override;
+			virtual bool should_stop(lattice& lattice) override;
 		};
 	}
 }

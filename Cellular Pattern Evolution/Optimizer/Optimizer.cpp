@@ -13,7 +13,7 @@ namespace optimizer
 		)
 	{
 		if (strcmpi(settings.algorithm.c_str(), "mocmaes") == 0)
-			return unique_ptr<mo_cmaes_optimizer>(new mo_cmaes_optimizer(objfunc, settings));
+			return std::make_unique<mo_cmaes_optimizer>(objfunc, settings);
 
 		throw invalid_argument(
 			"Unknown optimizer: " + settings.algorithm);

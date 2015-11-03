@@ -18,11 +18,12 @@ namespace lattice
 		unique_ptr<genotype::genotype> _genotype;
 		unique_ptr<phenotypes::phenotype> _phenotype;
 	public:
-		lattice(unique_ptr<lattice_settings> ls);
+		explicit lattice(unique_ptr<lattice_settings> ls);
 		// getters
 		lattice_settings const& get_settings() const { return *_settings; }
-		genotype::genotype const& get_genotype() const { return *_genotype; }
-		phenotypes::phenotype const& get_phenotype() const { return *_phenotype; }
+		lattice_statistics const& get_statistics() const { return *_statistics; }
+		genotype::genotype& get_genotype() const { return *_genotype; }
+		phenotypes::phenotype& get_phenotype() const { return *_phenotype; }
 		// simulates the computation of the CA
 		void simulate();
 	};

@@ -1,0 +1,8 @@
+<OptimizerSettings>
+  <Algorithm>MOCMAES</Algorithm>
+  <Params>
+    <InitStepSize>1.0</InitStepSize>
+    <ParentSelectionCount>25</ParentSelectionCount>
+    <EvolutionStepCount>50</EvolutionStepCount>
+  </Params>
+</OptimizerSettings>

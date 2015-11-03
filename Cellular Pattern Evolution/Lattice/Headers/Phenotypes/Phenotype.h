@@ -25,7 +25,7 @@ namespace lattice
 			virtual const cell_type get_cell_type() const = 0;
 			virtual void set_init_pattern(string init_pattern, state_settings state_set) = 0;
 			virtual shared_ptr<lattice_cell> cell_at(unsigned int x, unsigned int y) const = 0;
-			virtual vector<shared_ptr<lattice_cell>> expose_cells() const = 0;
+			virtual const vector<shared_ptr<lattice_cell>>& expose_cells() const = 0;
 			virtual neighbourhood get_neighbours(lattice_cell const& c) const = 0;
 		};
 

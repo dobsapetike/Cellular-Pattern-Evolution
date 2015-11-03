@@ -44,13 +44,6 @@ namespace optimizer
 		virtual opt_solution get_solution() = 0;
 	};
 
-	//for (std::size_t i = 0; i < 1; i++) { // mocma.solution().size()
-	//	for (std::size_t j = 0; j < tf.numberOfObjectives(); j++) {
-	//		cout << mocma.solution()[0].point[0] << " || " << mocma.solution()[0].point[1] << endl;
-	//		std::cout << mocma.solution()[i].value[j] << endl;
-	//	}
-	//}
-
 	/**
 		Optimizer factory method, constructing an optimizer instance based on settings
 	*/
