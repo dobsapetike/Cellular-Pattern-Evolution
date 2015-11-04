@@ -27,7 +27,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -85,7 +85,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Boost\include\boost-1_59;C:\Program Files %28x86%29\GnuWin32\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\s\cpp;C:\s\shark\include;C:\s\cpp\boost_1_59_0;C:\Boost\include\boost-1_59;C:\Program Files %28x86%29\GnuWin32\include</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -98,7 +98,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Boost\lib;C:\Program Files %28x86%29\GnuWin32\lib\shark;C:\Program Files %28x86%29\GnuWin32\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\s\cpp\boost_1_59_0\bin.v2\libs\serialization\build\msvc-14.0\debug\link-static\threading-multi;C:\s\cpp\boost_1_59_0\bin.v2\libs\system\build\msvc-14.0\debug\link-static\threading-multi;C:\s\cpp\boost_1_59_0\bin.v2\libs\filesystem\build\msvc-14.0\debug\link-static\threading-multi;C:\s\cpp\boost_1_59_0\bin.v2\libs\program_options\build\msvc-14.0\debug\link-static\threading-multi;C:\s\cpp\tinyxml\Debugtinyxml;C:\s\shark\lib\Debug;C:\s\cpp\boost_1_59_0\libs;C:\Boost\lib;C:\Program Files %28x86%29\GnuWin32\lib\shark;C:\Program Files %28x86%29\GnuWin32\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>tinyxml.lib;libboost_program_options-vc120-mt-gd-1_59.lib</AdditionalDependencies>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>

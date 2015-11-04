@@ -33,7 +33,7 @@ namespace lattice
 		if (cl < 0.0 || cl > 1.0)
 			throw invalid_argument("Color level should be a real value between 0 and 1!");
 
-		auto color = static_cast<unsigned int>(cl * 255);
+		auto color = static_cast<unsigned char>(cl * 255);
 		return rgb {
 			color, color, color
 		};
@@ -46,13 +46,13 @@ namespace lattice
 		if (cl.size() != 3)
 			throw invalid_argument("Vector length mismatch at color level to RGB conversion! RGB has three values!");
 
-		unsigned int vals[3];
+		unsigned char vals[3];
 		for (unsigned int i = 0; i < 3; ++i)
 		{
 			double d = cl[i];
 			if (d < 0.0 || d > 1.0)
 				throw invalid_argument("Color level should be a real value between 0 and 1!");
-			vals[i] = static_cast<unsigned int>(d * 255);
+			vals[i] = static_cast<unsigned char>(d * 255);
 		}
 		return rgb {
 			vals[0], vals[1], vals[2]
@@ -73,7 +73,7 @@ namespace lattice
 		replace(cols.begin(), cols.end(), ',', ' ');
 		istringstream ist(cols);
 
-		unsigned int r, g, b;
+		unsigned char r, g, b;
 		ist >> r >> g >> b;
 		return rgb { r, g, b };
 	}

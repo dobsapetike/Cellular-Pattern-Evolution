@@ -20,7 +20,7 @@ namespace lattice
 			*/
 			virtual neighbourhood_compatibility get_neighbourhood_compatibility() const override 
 			{
-				throw bad_function_call("Compatibility: regular grid doesn't support split/merge!");
+				throw invalid_argument("Compatibility: regular grid doesn't support split/merge!");
 			};
 		};
 	}
