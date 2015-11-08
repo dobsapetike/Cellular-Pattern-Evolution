@@ -15,7 +15,7 @@ namespace task
 				*objective_functions::load_settings(exp.objective_file),
 				_lattice->get_genotype().get_controller().get_param_count(),
 				_lattice
-			);
+				);
 			_optimizer = std::unique_ptr<optimizer::optimizer>(
 				optimizer::create_optimizer(
 					*optimizer::load_settings(exp.optimizer_file),
@@ -23,7 +23,7 @@ namespace task
 				)
 			);
 
-			_experiment = make_unique<experiment>(exp);
+			_experiment = std::make_unique<experiment>(exp);
 		}
 		catch (std::invalid_argument& ia)
 		{
@@ -31,9 +31,13 @@ namespace task
 		}
 	}
 
+
 	void task::execute()
 	{
 		logger::get_logger().log_experiment_start(_experiment->name);
+
+		// create plot
+		_plotter = std::make_unique<plotter>();
 
 		_optimizer->init();
 		while (!_optimizer->should_stop())
@@ -48,6 +52,7 @@ namespace task
 				min = std::min(min, sol[i].second[0]);
 			}
 
+			_plotter->add_point(sol[0].second[0]);
 			logger::get_logger().log_evol_stat("Fitness: " + to_string(sol[0].second[0]));
 		}
 

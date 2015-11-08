@@ -42,7 +42,7 @@ namespace optimizer
 
 	void mo_cmaes_optimizer::step()
 	{
-		logger::get_logger().log_evol_stat("Generation: " + _current_step_count + 1);
+		logger::get_logger().log_evol_stat("Generation: " + to_string(_current_step_count + 1));
 
 		_mocma.step(*objective_func);
 		++_current_step_count;
