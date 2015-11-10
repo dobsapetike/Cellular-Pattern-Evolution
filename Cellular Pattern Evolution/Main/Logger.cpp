@@ -1,5 +1,4 @@
 #include "Headers/Logger.h"
-#include <iostream>
 #include <boost/filesystem.hpp>
 
 logger::logger()

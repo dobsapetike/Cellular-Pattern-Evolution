@@ -49,7 +49,6 @@ Release/
 Debug/
 Cellular Pattern Evolution/Release/
 Cellular Pattern Evolution/Debug/
-Cellular Pattern Evolution/logs/
 TargetPatternCreator/bin/
 TargetPatternCreator/obj/
 *.pdb
