@@ -1,5 +1,4 @@
 #include "../Headers/Controllers/FeedForwardANNController.h"
-#include <iostream>
 
 namespace lattice
 {
@@ -14,8 +13,9 @@ namespace lattice
 			_chemical_neuron_count = 
 				// internal + external chemicals		
 				state_params.internal_chemical_count + state_params.external_chemical_count;
-			_color_neuron_count = common_types::parse_color_type(
-				init_config.FirstChildElement("ColorType")->GetText()) == common_types::rgb ? 3 : 1;
+
+			_color_neuron_count = parse_color_type(
+				init_config.FirstChildElement("ColorType")->GetText()) == color_type::rgb ? 3 : 1;
 
 
 			_hidden_weight_count = 
@@ -37,10 +37,10 @@ namespace lattice
 
 			// randonly initialize weights
 			// TODO be able to read weight values from config
-			_params = common_types::real_vector(param_count);
+			_params = real_vector(param_count);
 			for (unsigned int i = 0; i < _params.size(); ++i)
 			{
-				_params[i] = (double)rand() / RAND_MAX;
+				_params[i] = static_cast<double>(rand()) / RAND_MAX;
 			}
 		}
 
@@ -103,8 +103,8 @@ namespace lattice
 			execute_linear_combination(_chemical_neuron_count, weightIndex, hidden, output);
 
 			// extract chemical values
-			inner = common_types::real_vector(output.begin(), output.begin() + state_params.external_chemical_count);
-			external = common_types::real_vector(output.begin() + state_params.external_chemical_count, output.end());
+			inner = real_vector(output.begin(), output.begin() + state_params.external_chemical_count);
+			external = real_vector(output.begin() + state_params.external_chemical_count, output.end());
 
 			// now, compute the color
 			output.push_back(BIAS);
@@ -120,7 +120,7 @@ namespace lattice
 		void feedforward_ann_controller::set_next_state(phenotypes::lattice_cell& cell) const
 		{
 			// first, create the neural network input
-			common_types::real_vector annInp;
+			real_vector annInp;
 			
 			// insert internals
 			auto internals = cell.get_state().internal_chemicals;
@@ -129,13 +129,13 @@ namespace lattice
 			// insert neighbour externals
 			auto nbh = cell.get_neighbours();
 			// TODO apply blur
-			for (unsigned int i = common_types::upper; i <= common_types::lower; ++i)
+			for (unsigned int i = upper; i <= lower; ++i)
 			{
-				common_types::direction dir = static_cast<common_types::direction>(i);
+				direction dir = static_cast<direction>(i);
 				if (nbh[dir].size() == 0)
 				{
-					// fill with zeroes values
-					auto zeros = vector<double>(state_params.external_chemical_count, 0.8);
+					// fill with zeroes
+					auto zeros = vector<double>(state_params.external_chemical_count, 0.0);
 					annInp.insert(annInp.end(), zeros.begin(), zeros.end());
 					continue;
 				}
@@ -153,7 +153,7 @@ namespace lattice
 			}
 
 			// also append a bias unit
-			annInp.push_back((double) BIAS);
+			annInp.push_back(static_cast<double>(BIAS));
 
 			// compute and set new state
 			real_vector newInternals, newExternals, newColor;

@@ -8,8 +8,6 @@
             StepLimit: int - optional, -1 - turned off
           )
    -->
-  <Criterion>Energy</Criterion>
-  <WindowSize>10</WindowSize>
-  <Threshold>10e-2</Threshold>
-  <StepLimit>200</StepLimit>
+  <Criterion>EvalNums</Criterion>
+  <Limit>100</Limit>
 </StopCriterion>

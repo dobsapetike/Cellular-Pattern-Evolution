@@ -1,18 +1,18 @@
 <LatticeSettings>
-  <LatticeWidth>10</LatticeWidth>
-  <LatticeHeight>10</LatticeHeight>
+  <LatticeWidth>2</LatticeWidth>
+  <LatticeHeight>2</LatticeHeight>
   <CellType>Regular</CellType>
   <PhenotypeSettings>
     <NeighbourhoodType>VonNeumann</NeighbourhoodType>
   </PhenotypeSettings>
-  <TargetPattern>Target/twoband90_10.target</TargetPattern>
+  <TargetPattern>Target/test.svg</TargetPattern>
   <InitPattern>
     TODO
   </InitPattern>
   <State>
-    <InternalCount>2</InternalCount>
-    <ExternalCount>2</ExternalCount>
-    <InitialValues>0.66</InitialValues>
+    <InternalCount>8</InternalCount>
+    <ExternalCount>8</ExternalCount>
+    <InitialValues>0</InitialValues>
   </State>
 </LatticeSettings>
  

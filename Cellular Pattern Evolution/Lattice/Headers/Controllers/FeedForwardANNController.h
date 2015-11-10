@@ -3,8 +3,6 @@
 
 #include "StateController.h"
 
-using namespace common_types;
-
 namespace lattice
 {
 	namespace controllers

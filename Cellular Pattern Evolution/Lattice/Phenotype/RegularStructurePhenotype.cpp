@@ -7,6 +7,7 @@ namespace lattice
 	namespace phenotypes
 	{
 		regular_structure_phenotype::regular_structure_phenotype(lattice_settings const& settings)
+			: phenotype(settings)
 		{
 			shared_ptr<regular_structure_phenotype> selfPtr(this);
 			
@@ -49,18 +50,9 @@ namespace lattice
 				for (unsigned int x = 0; x < _grid[0].size(); ++x)
 				{
 					state s = init_state(state_set);
-					// TODO set colors
 					_grid[y][x].get()->set_state(s);
 				}
 			}
-		}
-
-		shared_ptr<lattice_cell> regular_structure_phenotype::cell_at(unsigned int x, unsigned int y) const
-		{
-			if (x < 0 || x >= _grid.size() || y < 0 || y >= _grid.size())
-				throw invalid_argument("Out of bounds error at regular structure phenotype cell getter!");
-
-			return _grid[y][x];
 		}
 
 		neighbourhood regular_structure_phenotype::get_neighbours(lattice_cell const& c) const
@@ -73,34 +65,34 @@ namespace lattice
 			{
 				if (x > 0 && nt == moore)
 				{
-					n[common_types::upper].push_back(_grid[y - 1][x - 1]);
-					n[common_types::left].push_back(_grid[y - 1][x - 1]);
+					n[upper].push_back(_grid[y - 1][x - 1]);
+					n[direction::left].push_back(_grid[y - 1][x - 1]);
 				}
-				n[common_types::upper].push_back(_grid[y - 1][x]);
+				n[upper].push_back(_grid[y - 1][x]);
 				if (x < _grid[0].size() - 1 && nt == moore)
 				{
-					n[common_types::upper].push_back(_grid[y - 1][x + 1]);
-					n[common_types::right].push_back(_grid[y - 1][x + 1]);
+					n[upper].push_back(_grid[y - 1][x + 1]);
+					n[direction::right].push_back(_grid[y - 1][x + 1]);
 				}
 			}
 
 			// middle
-			if (x > 0) n[common_types::left].push_back(_grid[y][x - 1]);
-			if (x < _grid[0].size() - 1) n[common_types::right].push_back(_grid[y][x + 1]);
+			if (x > 0) n[direction::left].push_back(_grid[y][x - 1]);
+			if (x < _grid[0].size() - 1) n[direction::right].push_back(_grid[y][x + 1]);
 
 			// bottom
 			if (y < _grid.size() - 1)
 			{
 				if (x > 0 && nt == moore)
 				{
-					n[common_types::left].push_back(_grid[y + 1][x - 1]);
-					n[common_types::lower].push_back(_grid[y + 1][x - 1]);
+					n[direction::left].push_back(_grid[y + 1][x - 1]);
+					n[lower].push_back(_grid[y + 1][x - 1]);
 				}
-				n[common_types::lower].push_back(_grid[y + 1][x]);
+				n[lower].push_back(_grid[y + 1][x]);
 				if (x < _grid[0].size() - 1 && nt == moore)
 				{
-					n[common_types::right].push_back(_grid[y + 1][x + 1]);
-					n[common_types::lower].push_back(_grid[y + 1][x + 1]);
+					n[direction::right].push_back(_grid[y + 1][x + 1]);
+					n[lower].push_back(_grid[y + 1][x + 1]);
 				}
 			}
 

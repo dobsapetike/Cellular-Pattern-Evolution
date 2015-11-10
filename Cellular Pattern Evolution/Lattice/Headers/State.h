@@ -23,8 +23,8 @@ namespace lattice
 	*/
 	struct state
 	{
-		common_types::real_vector internal_chemicals;
-		common_types::real_vector external_chemicals;
+		real_vector internal_chemicals;
+		real_vector external_chemicals;
 		rgb color;
 	};
 
@@ -53,9 +53,10 @@ namespace lattice
 		Getting the color level of grayscale/rgb values, returns rgb struct
 	*/
 	rgb color_level_to_rgb(double const& cl);
-	rgb color_level_to_rgb(common_types::real_vector const& cl);
+	rgb color_level_to_rgb(real_vector const& cl);
 
 	rgb parse_rgb(std::string s);
+	unsigned int compute_rgb_distance(rgb col1, rgb col2);
 }
 
 #endif

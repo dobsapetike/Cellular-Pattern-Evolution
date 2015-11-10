@@ -23,8 +23,8 @@ namespace lattice
 			// getter and setter for the parameters
 			// regardless of the controller type, the main structure of each controller is a
 			// vector of real numbers - it's values are altered by the optimizer
-			virtual common_types::real_vector get_params() const = 0;
-			virtual void set_params(common_types::real_vector const& p) const = 0;
+			virtual real_vector get_params() const = 0;
+			virtual void set_params(real_vector const& p) const = 0;
 			// sets the next state of the given cell
 			virtual void set_next_state(phenotypes::lattice_cell& cell) const = 0;
 

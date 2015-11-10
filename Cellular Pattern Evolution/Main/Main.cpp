@@ -2,7 +2,6 @@
 
 #include "Headers/Logger.h"
 #include "../Task/Headers/Task.h"
-#include "../Lattice/Headers/TargetPatternSvg.h"
 #include "../Task/Headers/ExperimentCollection.h"
 
 using namespace std;
@@ -23,9 +22,9 @@ void start_regime(string regime)
 	}*/
 
 	task::experiments e("config/confExperiment.xml");
-	task::task t(*e[1]);
-
-	t.execute();
+	unique_ptr<task::task> t = make_unique<task::task>(*e[1]);
+	t->execute();
+	t->finalize();
 }
 
 int main(int argc, char* argv[])

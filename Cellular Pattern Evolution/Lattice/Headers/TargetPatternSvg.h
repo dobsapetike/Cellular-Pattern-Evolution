@@ -7,8 +7,6 @@
 #include <boost/geometry/geometries/polygon.hpp>
 #include <boost/geometry/io/wkt/wkt.hpp>
 
-typedef boost::geometry::model::polygon<boost::geometry::model::d2::point_xy<double>> polygon;
-
 using namespace std;
 
 namespace lattice
@@ -25,8 +23,10 @@ namespace lattice
 	struct target_pattern_svg
 	{
 	private:
+		rgb _background;
 		vector<shared_ptr<color_polygon>> _polygons;
 	public:
+		rgb const& get_backcolor() const { return _background; }
 		vector<shared_ptr<color_polygon>> const& get_polygons() const { return _polygons; }
 		// Constructor fills the inner structure based on a file
 		target_pattern_svg(unsigned int desired_width, unsigned int desired_height, string filepath);

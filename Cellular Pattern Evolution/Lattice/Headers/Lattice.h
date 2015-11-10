@@ -25,7 +25,7 @@ namespace lattice
 		genotype::genotype& get_genotype() const { return *_genotype; }
 		phenotypes::phenotype& get_phenotype() const { return *_phenotype; }
 		// simulates the computation of the CA
-		void simulate();
+		void simulate(function<void(phenotypes::phenotype&)> = nullptr);
 	};
 }
 

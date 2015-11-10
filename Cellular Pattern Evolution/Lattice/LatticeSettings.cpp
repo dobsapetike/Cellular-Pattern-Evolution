@@ -1,4 +1,4 @@
-#include "Headers\LatticeSettings.h"
+#include "Headers/LatticeSettings.h"
 
 namespace lattice
 {
@@ -23,7 +23,7 @@ namespace lattice
 		settings->init_pattern = settingsElem->FirstChildElement("InitPattern")->GetText();
 
 		string target_path = settingsElem->FirstChildElement("TargetPattern")->GetText();
-		settings->target = make_unique<target_pattern>(settings->width, settings->height, target_path);
+		settings->target = make_unique<target_pattern_svg>(settings->width, settings->height, target_path);
 	
 		settings->phenotype_settings = unique_ptr<TiXmlElement>(
 			settingsElem->FirstChildElement("PhenotypeSettings")->Clone()->ToElement());

@@ -37,7 +37,7 @@ namespace objective_functions
 	*/
 	RealVector ca_multiobj_func::eval(const RealVector& x) const
 	{
-		common_types::real_vector params;
+		real_vector params;
 		params.insert(params.end(), x.begin(), x.end());
 
 		// set new controller parameters and simulate run
@@ -47,7 +47,7 @@ namespace objective_functions
 		ResultType result(numberOfObjectives());
 		for (unsigned int i = 0; i < numberOfObjectives(); ++i)
 		{
-			result[i] = _objectives[i].get()->eval();
+			result[i] = _objectives[i]->eval();
 		}
 
 		return result;

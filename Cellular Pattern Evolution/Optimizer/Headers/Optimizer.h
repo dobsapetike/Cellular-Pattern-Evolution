@@ -8,8 +8,6 @@
 #include "../../ObjectiveFunctions/Headers/CAMultiObjectiveFunction.h"
 #include "../../Main/Headers/CommonTypes.h"
 
-using namespace common_types;
-
 namespace optimizer
 {
 	// type for the evolution result: the solution is the pareto front (vector of possible results)

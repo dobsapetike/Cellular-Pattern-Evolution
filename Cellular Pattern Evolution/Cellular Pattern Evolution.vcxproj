@@ -100,7 +100,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\s\cpp\boost_1_59_0\bin.v2\libs\serialization\build\msvc-14.0\debug\link-static\threading-multi;C:\s\cpp\boost_1_59_0\bin.v2\libs\system\build\msvc-14.0\debug\link-static\threading-multi;C:\s\cpp\boost_1_59_0\bin.v2\libs\filesystem\build\msvc-14.0\debug\link-static\threading-multi;C:\s\cpp\boost_1_59_0\bin.v2\libs\program_options\build\msvc-14.0\debug\link-static\threading-multi;C:\s\cpp\tinyxml\Debugtinyxml;C:\s\shark\lib\Debug;C:\s\cpp\boost_1_59_0\libs;C:\Boost\lib;C:\Program Files %28x86%29\GnuWin32\lib\shark;C:\Program Files %28x86%29\GnuWin32\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>tinyxml.lib;libboost_program_options-vc120-mt-gd-1_59.lib</AdditionalDependencies>
+      <AdditionalDependencies>tinyxml.lib;libboost_program_options-vc120-mt-gd-1_59.lib;FreeImage.lib</AdditionalDependencies>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -146,7 +146,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>C:\Boost\lib;C:\Program Files %28x86%29\GnuWin32\lib\shark;C:\Program Files %28x86%29\GnuWin32\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>tinyxml.lib;libboost_program_options-vc120-mt-gd-1_59.lib</AdditionalDependencies>
+      <AdditionalDependencies>tinyxml.lib;libboost_program_options-vc120-mt-gd-1_59.lib;FreeImage.lib</AdditionalDependencies>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -177,7 +177,10 @@
     <ClCompile Include="Lattice\Halting\StopCriterion.cpp" />
     <ClCompile Include="Lattice\TargetPattern.cpp" />
     <ClCompile Include="Lattice\TargetPatternSvg.cpp" />
+    <ClCompile Include="Main\gnuplot_i.cpp" />
     <ClCompile Include="Main\Logger.cpp" />
+    <ClCompile Include="Main\Painter.cpp" />
+    <ClCompile Include="Main\Plotter.cpp" />
     <ClCompile Include="Task\ExperimentCollection.cpp" />
     <ClCompile Include="Task\Task.cpp" />
     <ClCompile Include="ObjectiveFunctions\ObjectiveFunction.cpp" />
@@ -205,7 +208,10 @@
     <ClInclude Include="Lattice\Headers\LatticeStatistics.h" />
     <ClInclude Include="Lattice\Headers\TargetPattern.h" />
     <ClInclude Include="Lattice\Headers\TargetPatternSvg.h" />
+    <ClInclude Include="Main\Headers\gnuplot_i.h" />
     <ClInclude Include="Main\Headers\Logger.h" />
+    <ClInclude Include="Main\Headers\Painter.h" />
+    <ClInclude Include="Main\Headers\Plotter.h" />
     <ClInclude Include="Task\Headers\Experiment.h" />
     <ClInclude Include="Task\Headers\ExperimentCollection.h" />
     <ClInclude Include="Task\Headers\Task.h" />
@@ -242,6 +248,7 @@
     <Xml Include="Config\confController.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Target\test.svg" />
     <None Include="Target\twoband90_10.target" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

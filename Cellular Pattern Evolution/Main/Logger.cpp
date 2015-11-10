@@ -35,6 +35,14 @@ void logger::log_info(string const& info)
 }
 
 /**
+	Log warning information
+*/
+void logger::log_warning(string const& info)
+{
+	dump("[WARNING] " + info, _outfile_info);
+}
+
+/**
 	Log error message
 */
 void logger::log_error(string const& error)

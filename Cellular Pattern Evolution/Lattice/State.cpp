@@ -1,5 +1,6 @@
 #include "Headers\State.h"
 #include <sstream>
+#include <iostream>
 #include <algorithm>
 
 using namespace std;
@@ -13,9 +14,9 @@ namespace lattice
 	{
 		state state;
 
-		state.external_chemicals = common_types::real_vector(settings.external_chemical_count);
+		state.external_chemicals = real_vector(settings.external_chemical_count);
 		fill(state.external_chemicals.begin(), state.external_chemicals.end(), settings.init_val);
-		state.internal_chemicals = common_types::real_vector(settings.internal_chemical_count);
+		state.internal_chemicals = real_vector(settings.internal_chemical_count);
 		fill(state.internal_chemicals.begin(), state.internal_chemicals.end(), settings.init_val);
 
 		state.color = {
@@ -39,7 +40,7 @@ namespace lattice
 		};
 	}
 
-	rgb color_level_to_rgb(common_types::real_vector const& cl)
+	rgb color_level_to_rgb(real_vector const& cl)
 	{
 		if (cl.size() == 1)
 			return color_level_to_rgb(cl[0]);
@@ -73,8 +74,18 @@ namespace lattice
 		replace(cols.begin(), cols.end(), ',', ' ');
 		istringstream ist(cols);
 
-		unsigned char r, g, b;
+		unsigned int r, g, b;
 		ist >> r >> g >> b;
-		return rgb { r, g, b };
+		
+		return rgb { 
+			static_cast<unsigned char>(r),
+			static_cast<unsigned char>(g),
+			static_cast<unsigned char>(b) 
+		};
+	}
+
+	unsigned int compute_rgb_distance(rgb col1, rgb col2)
+	{
+		return abs(col1.r - col2.r) + abs(col1.g - col2.g) + abs(col1.b - col2.b);
 	}
 }

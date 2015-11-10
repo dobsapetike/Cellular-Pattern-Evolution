@@ -13,7 +13,7 @@ namespace lattice
 	/**
 		Simulates the computation of the CA
 	*/
-	void lattice::simulate()
+	void lattice::simulate(function<void(phenotypes::phenotype&)> callback)
 	{
 		_statistics->reset();
 		_genotype->reset();
@@ -29,6 +29,8 @@ namespace lattice
 
 			_statistics->eval_count++;
 			// cout << "Eval num: " << _statistics->eval_count << endl;
+
+			if (callback) callback(*_phenotype);
 		}
 	}
 }

@@ -3,7 +3,7 @@
 
 #include "Phenotypes\Cell\CellType.h"
 #include "State.h"
-#include "TargetPattern.h"
+#include "TargetPatternSvg.h"
 #include <string>
 #include <tinyxml/tinyxml.h>
 #include <memory>
@@ -15,7 +15,7 @@ namespace lattice
 	/**
 		Structure containing all the necessary information from which
 		the respective automaton can be constructed
-	*/
+		*/
 	struct lattice_settings
 	{
 		// spacial spread of the CA
@@ -30,7 +30,7 @@ namespace lattice
 		string init_pattern;
 
 		// field describing the target pattern
-		unique_ptr<target_pattern> target;
+		unique_ptr<target_pattern_svg> target;
 
 		// !!! settings with properties that are not fixed are stored 
 		// as xml elements for the respective class to parse 
@@ -41,8 +41,8 @@ namespace lattice
 
 	/**
 		Loads the lattice settings from the given XML files
-	*/
-	unique_ptr<lattice_settings> load_settings(string const& lattice_config, 
+		*/
+	unique_ptr<lattice_settings> load_settings(string const& lattice_config,
 		string const& controller_config, string const& stopcrit_config);
 }
 

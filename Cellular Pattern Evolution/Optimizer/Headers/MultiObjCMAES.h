@@ -16,7 +16,7 @@ namespace optimizer
 	{
 	private:
 		MOCMA _mocma;
-		unsigned int _max_step_count, _current_step_count;
+		unsigned int _max_step_count, _current_step_count = 0;
 	public:
 		mo_cmaes_optimizer(
 			std::shared_ptr<objective_functions::ca_multiobj_func> const& objfunc,

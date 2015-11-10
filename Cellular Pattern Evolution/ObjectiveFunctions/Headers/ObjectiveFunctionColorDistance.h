@@ -2,6 +2,7 @@
 #define OBJFUNC_COLDIST_H
 
 #include "ObjectiveFunction.h"
+#include <boost/geometry.hpp>
 
 namespace objective_functions
 {
@@ -11,26 +12,39 @@ namespace objective_functions
 	class objective_func_color_dist : public objective_func
 	{
 	public:
-		objective_func_color_dist(std::string name, std::shared_ptr<lattice::lattice> const& latt)
+		objective_func_color_dist(string name, shared_ptr<lattice::lattice> const& latt)
 			: objective_func(name, latt) { }
 		/**
-			Evaluation returns the sum of the square of the color difference between 
+			Evaluation returns the sum of the square of the color difference between
 			the target and actual pattern
 		*/
-		virtual double eval() override {
+		virtual double eval() override
+		{
 			double sum = 0.0;
 
-			unsigned int height((*this->lattice).get_settings().height);
-			unsigned int width((*this->lattice).get_settings().width);
-			for (unsigned int y = 0; y < height; ++y)
+			auto cells = (*this->lattice).get_phenotype().expose_cells();
+			auto targets = (*this->lattice).get_settings().target->get_polygons();
+			for (auto& cell : cells)
 			{
-				for (unsigned int x = 0; x < width; ++x)
+				polygon cellPoly = cell->get_geometry();
+				double area = boost::geometry::area(cellPoly), covered(0.0);
+				unsigned int coldiffBackground = compute_rgb_distance(cell->get_state().color,
+					(*this->lattice).get_settings().target->get_backcolor());
+
+				for (auto& target : targets)
 				{
-					auto c1 = (*this->lattice).get_settings().target.get()->at(x, y);
-					auto c2 = this->lattice.get()->get_phenotype()
-						.cell_at(x, y).get()->get_state().color;
-					int diff = (c1.r - c2.r) + (c1.g - c2.g) + (c1.b - c2.b);
-					sum += abs(diff);
+					unsigned int coldiffTarget = compute_rgb_distance(
+						cell->get_state().color, target->color);
+
+					vector<polygon> intersection;
+					boost::geometry::intersection(cellPoly, target->polygon, intersection);
+					for (auto& is : intersection)
+					{
+						double isArea = boost::geometry::area(is);
+						sum += coldiffTarget * isArea;
+						covered += isArea;
+					}
+					sum += (area - covered) * coldiffBackground;
 				}
 			}
 

@@ -41,6 +41,10 @@ public:
 	*/
 	void log_info(string const& info);
 	/**
+		Log warning information
+	*/
+	void logger::log_warning(string const& info);
+	/**
 		Log error message
 	*/
 	void log_error(string const& error);
