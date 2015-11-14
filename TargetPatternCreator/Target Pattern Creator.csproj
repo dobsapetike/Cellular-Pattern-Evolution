@@ -45,10 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\ColorGrid.cs" />
-    <Compile Include="Classes\ShapeRasterizer\EllipseRasterizer.cs" />
-    <Compile Include="Classes\ShapeRasterizer\ShapeRasterizer.cs" />
-    <Compile Include="Classes\ShapeRasterizer\RectangleRasterizer.cs" />
-    <Compile Include="Classes\ShapeRasterizer\LineRasterizer.cs" />
+    <Compile Include="Classes\Polygon\Edge.cs" />
+    <Compile Include="Classes\Polygon\Polygon.cs" />
     <Compile Include="FormCreator.cs">
       <SubType>Form</SubType>
     </Compile>

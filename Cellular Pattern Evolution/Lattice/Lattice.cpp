@@ -22,10 +22,12 @@ namespace lattice
 		while (!_genotype->get_criterion().should_stop(*this))
 		{
 			auto cells = _phenotype->expose_cells();
+			// compute the next state for each cell
 			for (auto& cell : cells)
-			{
 				_genotype->get_controller().set_next_state(*cell);
-			}
+			// and make a simultaneous update
+			for (auto& cell : cells)
+				cell->apply_candidate();
 
 			_statistics->eval_count++;
 			// cout << "Eval num: " << _statistics->eval_count << endl;

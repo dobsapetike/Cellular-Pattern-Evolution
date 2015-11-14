@@ -48,7 +48,7 @@ void painter::paint(std::string exp, std::string file, lattice::phenotypes::phen
 
 	std::string fullPath = path + exp + "/";
 	boost::filesystem::create_directory(fullPath);
-	FIBITMAP *scaled = FreeImage_Rescale(bitmap, DESIRED_WIDTH, DESIRED_HEIGHT);
+	FIBITMAP *scaled = FreeImage_Rescale(bitmap, DESIRED_WIDTH, DESIRED_HEIGHT, FILTER_BOX);
 	FreeImage_Save(FIF_PNG, scaled, (fullPath + file).c_str(), 0);
 
 	FreeImage_Unload(bitmap);

@@ -165,7 +165,7 @@ namespace lattice
 				color_level_to_rgb(newColor)
 			};
 
-			cell.set_state(newState);
+			cell.next_candidate(newState);
 		}
 	}
 }

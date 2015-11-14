@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using TargetPatternCreator.Classes;
-using TargetPatternCreator.Classes.ShapeRasterizer;
+using TargetPatternCreator.Classes.Polygon;
 
 namespace TargetPatternCreator
 {
@@ -20,27 +22,13 @@ namespace TargetPatternCreator
         private float _pixelDelta;
         private const int CanvasSize = 600;
 
-        private ShapeRasterizer _currentRasterizer;
-        private readonly LineRasterizer _lineRasterizer = new LineRasterizer();
-        private readonly RectangleRasterizer _rectRasterizer = new RectangleRasterizer();
-        private readonly EllipseRasterizer _ellipseRasrizer = new EllipseRasterizer();
-
+        private Polygon _currentPolygon;
+        private readonly List<Polygon> _polygons = new List<Polygon>(); 
         private readonly ColorGrid _colorGrid = new ColorGrid();
 
-        private int _x0, _y0;
-        private int _x1, _y1;
-
-        #endregion
-
-        #region Click state
-
-        private OperationEnum _op = OperationEnum.FirstPoint;
-
-        private enum OperationEnum
-        {
-            FirstPoint,
-            SecondPoint,
-        }
+        private Edge _currentEdge;
+        private Point _mousePoint;
+        private Point? _edgeFirstPoint;
 
         #endregion
 
@@ -51,7 +39,6 @@ namespace TargetPatternCreator
             InitializeComponent();
 
             NumSize.Value = 15;
-            _currentRasterizer = _lineRasterizer;
         }
 
         #endregion
@@ -65,36 +52,31 @@ namespace TargetPatternCreator
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.PixelOffsetMode = PixelOffsetMode.Half;
 
+            _colorGrid.Reset();
+            _polygons.ForEach(x => x.Draw(_colorGrid));
+            if (_currentPolygon != null) _currentPolygon.Draw(_colorGrid);
+            if (_currentEdge != null) _currentEdge.Draw(_colorGrid);
+
             for (var y = 0; y < NumSize.Value; ++y)
             {
                 for (var x = 0; x < NumSize.Value; ++x)
                 {
                     g.FillRectangle(
                         new SolidBrush(_colorGrid[x, y]),
-                        new Rectangle(Convert.ToInt32(x*_pixelDelta), Convert.ToInt32(y*_pixelDelta),
+                        new Rectangle(Convert.ToInt32(x * _pixelDelta), Convert.ToInt32(y * _pixelDelta),
                             Convert.ToInt32(_pixelDelta), Convert.ToInt32(_pixelDelta)));
                 }
-            }
-
-            if (_op == OperationEnum.SecondPoint)
-            {
-                _currentRasterizer.DrawGraphics(g, new Point(_x0, _y0), new Point(_x1, _y1),
-                    ColorPicker.Color, _pixelDelta, CBoxFill.Checked);
             }
 
             g.DrawRectangle(Pens.Black, 0, 0, CanvasSize - 1, CanvasSize - 1);
             for (var i = 0; i <= NumSize.Value + 1; i++)
             {
-                var pos = Convert.ToInt32(i*_pixelDelta);
+                var pos = Convert.ToInt32(i * _pixelDelta);
                 g.DrawLine(Pens.Black, 0, pos, CanvasSize, pos);
                 g.DrawLine(Pens.Black, pos, 0, pos, CanvasSize);
             }
 
-            g.FillEllipse(Brushes.Red, _pixelDelta*_x0, _pixelDelta*_y0, _pixelDelta, _pixelDelta);
-            if (_op == OperationEnum.SecondPoint)
-            {
-                g.FillEllipse(Brushes.Green, _pixelDelta*_x1, _pixelDelta*_y1, _pixelDelta, _pixelDelta);
-            }
+            g.FillEllipse(Brushes.Red, _pixelDelta * _mousePoint.X, _pixelDelta * _mousePoint.Y, _pixelDelta, _pixelDelta);
         }
 
         #endregion
@@ -104,32 +86,42 @@ namespace TargetPatternCreator
         private void Reset()
         {
             _colorGrid.Reset();
+            _polygons.Clear();
+            _currentEdge = null;
+            _currentPolygon = null;
+            _edgeFirstPoint = null;
+
             Invalidate();
         }
 
         private string TargetToString()
         {
             var result = new StringBuilder();
-            result.AppendLine(string.Format("{0} {0}", NumSize.Value));
-            for (var y = 0; y < _colorGrid.Size; ++y)
+
+            var bcgCol = _colorGrid.BackgroundColor;
+            result.AppendLine(string.Format(
+                "<svg height=\"{0}\" width=\"{0}\" fill=\"rgb({1},{2},{3})\">",
+                NumSize.Value, bcgCol.R, bcgCol.G, bcgCol.B));
+            foreach (var poly in _polygons)
             {
-                for (var x = 0; x < _colorGrid.Size; ++x)
+                result.Append("<polygon points=\"");
+                foreach (var edge in poly.Edges)
                 {
-                    var c = _colorGrid[x, y];
-                    result.Append(string.Format("({0},{1},{2})", c.R, c.G, c.B));
-                    if (x < _colorGrid.Size - 1)
-                        result.Append(";");
+                    result.Append(string.Format("{0} {1},", edge.Start.X, edge.Start.Y));
                 }
-                if (y < _colorGrid.Size - 1)
-                    result.AppendLine();
+                var first = poly.Edges.First().Start;
+                result.Append(string.Format("{0} {1}", first.X, first.Y));
+                result.Append("\" fill=\"");
+                result.AppendLine(string.Format("rgb({0},{1},{2})\" />", poly.Color.R, poly.Color.G, poly.Color.B));
             }
+            result.AppendLine("</svg>");
             return result.ToString();
         }
 
         private void Export()
         {
-            SaveDialog.FileName = "TargetPattern.target";
-            SaveDialog.Filter = @"Target file (*.target)|*.target";
+            SaveDialog.FileName = "TargetPattern.svg";
+            SaveDialog.Filter = @"SVG file (*.svg)|*.svg";
             if (SaveDialog.ShowDialog() != DialogResult.OK) return;
             using (var writer = new StreamWriter(SaveDialog.FileName))
             {
@@ -154,30 +146,23 @@ namespace TargetPatternCreator
         {
             var x = Convert.ToInt32(Math.Floor(e.X/_pixelDelta));
             var y = Convert.ToInt32(Math.Floor(e.Y/_pixelDelta));
+            var clickPoint = new Point(x, y);
 
-            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+            _mousePoint = clickPoint;
+            _edgeFirstPoint = clickPoint;
+
+            if (_currentPolygon == null)
+                _currentPolygon = new Polygon(clickPoint, PanelColor.BackColor);
+            else
             {
-                switch (_op)
+                _currentPolygon.TryAddVertex(clickPoint);
+                if (_currentPolygon.Closed)
                 {
-                    case OperationEnum.FirstPoint:
-                        _x0 = x;
-                        _y0 = y;
-                        _op = OperationEnum.SecondPoint;
-                        break;
-                    case OperationEnum.SecondPoint:
-                        _currentRasterizer.DrawGraphics(_colorGrid,
-                            new Point(_x0, _y0), new Point(_x1, _y1),
-                            ColorPicker.Color, CBoxFill.Checked);
-
-                        _x1 = x;
-                        _y1 = y;
-                        _op = OperationEnum.FirstPoint;
-                        break;
+                    _polygons.Add(_currentPolygon);
+                    _currentPolygon = null;
+                    _edgeFirstPoint = null;
+                    _currentEdge = null;
                 }
-            }
-            else if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
-            {
-                _colorGrid.FloodFill(x, y, ColorPicker.Color);
             }
 
             Invalidate();
@@ -185,19 +170,15 @@ namespace TargetPatternCreator
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            var x = Convert.ToInt32(Math.Floor(e.X/_pixelDelta));
-            var y = Convert.ToInt32(Math.Floor(e.Y/_pixelDelta));
+            var x = Convert.ToInt32(Math.Floor(e.X / _pixelDelta));
+            var y = Convert.ToInt32(Math.Floor(e.Y / _pixelDelta));
+            var clickPoint = new Point(x, y);
 
-            if (_op == OperationEnum.SecondPoint)
-            {
-                _x1 = x;
-                _y1 = y;
-            }
-            else if (_op == OperationEnum.FirstPoint)
-            {
-                _x0 = x;
-                _y0 = y;
-            }
+            if (_edgeFirstPoint != null)
+                _currentEdge = new Edge(_edgeFirstPoint.Value, clickPoint, 
+                    Color.FromArgb(150, PanelColor.BackColor));
+
+            _mousePoint = clickPoint;
 
             Invalidate();
         }
@@ -220,24 +201,14 @@ namespace TargetPatternCreator
             }
         }
 
-        #region Shape radiobutton
-
-        private void RdbLine_CheckedChanged(object sender, EventArgs e)
+        private void PanelBackgroundColor_Click(object sender, EventArgs e)
         {
-            _currentRasterizer = _lineRasterizer;
+            if (BackgroundColorPicker.ShowDialog() == DialogResult.OK)
+            {
+                _colorGrid.BackgroundColor = PanelBackgroundColor.BackColor = BackgroundColorPicker.Color;
+                Invalidate();
+            }
         }
-
-        private void RdbRectangle_CheckedChanged(object sender, EventArgs e)
-        {
-            _currentRasterizer = _rectRasterizer;
-        }
-
-        private void RdbEllipse_CheckedChanged(object sender, EventArgs e)
-        {
-            _currentRasterizer = _ellipseRasrizer;
-        }
-
-        #endregion
 
         private void ButReset_Click(object sender, EventArgs e)
         {

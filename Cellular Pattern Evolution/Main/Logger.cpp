@@ -1,4 +1,5 @@
 #include "Headers/Logger.h"
+#include <ctime>
 #include <boost/filesystem.hpp>
 
 logger::logger()
@@ -6,6 +7,24 @@ logger::logger()
 	boost::filesystem::create_directory(path);
 	_outfile_info.open(path + "info.log");
 	_outfile_error.open(path + "error.log");
+}
+
+/**
+	Returns a string containing the local time
+*/
+string get_time()
+{
+	string res("");
+	time_t now = time(nullptr);
+	tm *ltm = localtime(&now);
+
+	auto format_num = [](string s) 
+		{ return s.length() == 2 ? s : "0" + s; };
+
+	res += format_num(to_string(ltm->tm_hour));
+	res += ":" + format_num(to_string(ltm->tm_min));
+	res += ":" + format_num(to_string(ltm->tm_sec));
+	return res;
 }
 
 /**
@@ -31,7 +50,7 @@ void logger::dump(string const& s, ofstream& stream) const
 */
 void logger::log_info(string const& info)
 {
-	dump("[INFO] " + info, _outfile_info);
+	dump("[INFO][" + get_time() + "] " + info, _outfile_info);
 }
 
 /**
@@ -39,7 +58,7 @@ void logger::log_info(string const& info)
 */
 void logger::log_warning(string const& info)
 {
-	dump("[WARNING] " + info, _outfile_info);
+	dump("[WARNING][" + get_time() + "] " + info, _outfile_info);
 }
 
 /**
@@ -47,7 +66,7 @@ void logger::log_warning(string const& info)
 */
 void logger::log_error(string const& error)
 {
-	dump("[ERROR] " + error, _outfile_error);
+	dump("[ERROR][" + get_time() + "] " + error, _outfile_error);
 }
 
 /**
@@ -55,7 +74,7 @@ Log error message
 */
 void logger::log_evol_stat(string const& stat)
 {
-	dump("[EVOL]" + stat);
+	dump("[EVOL][" + get_time() + "] " + stat);
 }
 
 /**

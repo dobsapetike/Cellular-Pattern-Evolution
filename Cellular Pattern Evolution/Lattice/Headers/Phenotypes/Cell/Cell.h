@@ -31,7 +31,7 @@ namespace lattice
 			// a pointer to the phenotype to obtain the neighbouring cells
 			shared_ptr<phenotype> _owner;
 		protected:
-			state cell_state;
+			state cell_state, next_state;
 			polygon geometry;
 			// spacial coordinates of the cell
 			unsigned int coord_x, coord_y;	// !!! should not be used during state computation
@@ -54,6 +54,8 @@ namespace lattice
 			polygon const& get_geometry() const { return geometry; }
 			// field setters
 			void set_state(state const& s) { cell_state = s; }
+			void next_candidate(state const& s) { next_state = s; }
+			void apply_candidate() { cell_state = next_state; }
 		};
 	}
 }
