@@ -10,4 +10,4 @@ TODO
 <a href="http://www.boost.org/users/history/version_1_59_0.html">Boost 1.59.0</a><br/>
 <a href="http://image.diku.dk/shark/sphinx_pages/build/html/rest_sources/downloads/downloads.html">SHARK machine learning 2.8 - MO-CMAES</a></br> 
 <a href="http://www.gnuplot.info/download.html">gnuplot</a></br> 
-<a href="http://freeimage.sourceforge.net/">FreeImage</a></br> 
+<a href="http://freeimage.sourceforge.net/">FreeImage 3.17.0</a></br> 
