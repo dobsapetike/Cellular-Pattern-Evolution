@@ -285,9 +285,9 @@
     </Xml>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Target\twoband90_10.target">
+    <None Include="Target\test.svg">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="Target\test.svg" />
+    <None Include="ffmpeg.exe" />
   </ItemGroup>
 </Project>

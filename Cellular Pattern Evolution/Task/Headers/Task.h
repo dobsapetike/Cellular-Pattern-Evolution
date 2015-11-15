@@ -7,6 +7,8 @@
 #include "../../Lattice/Headers/Lattice.h"
 #include "../../Optimizer/Headers/Optimizer.h"
 
+#include <Windows.h>
+
 namespace task
 {
 	/**
@@ -23,7 +25,11 @@ namespace task
 		std::unique_ptr<painter> _painter;
 		std::unique_ptr<experiment> _experiment;
 
-		real_vector result;
+		real_vector _result;
+		double _result_fitness = DBL_MAX;
+
+		static bool _running;
+		static BOOL WINAPI _handle_abort(DWORD c_event);
 	public:
 		explicit task(experiment const& exp);
 		/**

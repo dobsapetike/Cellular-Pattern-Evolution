@@ -86,7 +86,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>C:\s\cpp;C:\s\shark\include;C:\s\cpp\boost_1_59_0;C:\Boost\include\boost-1_59;C:\Program Files %28x86%29\GnuWin32\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\s\cpp;C:\s\shark\include;C:\s\cpp\boost_1_59_0;C:\Boost\include\boost-1_59;C:\Program Files %28x86%29\GnuWin32\include;C:\Program Files %28x86%29\GnuWin32\include\FreeImage</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -95,7 +95,7 @@
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FREEIMAGE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <OmitFramePointers>false</OmitFramePointers>
@@ -104,7 +104,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\s\cpp\boost_1_59_0\bin.v2\libs\serialization\build\msvc-14.0\debug\link-static\threading-multi;C:\s\cpp\boost_1_59_0\bin.v2\libs\system\build\msvc-14.0\debug\link-static\threading-multi;C:\s\cpp\boost_1_59_0\bin.v2\libs\filesystem\build\msvc-14.0\debug\link-static\threading-multi;C:\s\cpp\boost_1_59_0\bin.v2\libs\program_options\build\msvc-14.0\debug\link-static\threading-multi;C:\s\cpp\tinyxml\Debugtinyxml;C:\s\shark\lib\Debug;C:\s\cpp\boost_1_59_0\libs;C:\Boost\lib;C:\Program Files %28x86%29\GnuWin32\lib\shark;C:\Program Files %28x86%29\GnuWin32\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>tinyxml.lib;libboost_program_options-vc120-mt-gd-1_59.lib;FreeImage.lib</AdditionalDependencies>
+      <AdditionalDependencies>tinyxml.lib;libboost_program_options-vc120-mt-gd-1_59.lib;FreeImageLibd.lib</AdditionalDependencies>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -134,7 +134,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Boost\include\boost-1_59;C:\Program Files %28x86%29\GnuWin32\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Boost\include\boost-1_59;C:\Program Files %28x86%29\GnuWin32\include;C:\Program Files %28x86%29\GnuWin32\include\FreeImage</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -143,9 +143,10 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FREEIMAGE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <OmitFramePointers>true</OmitFramePointers>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -153,7 +154,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>C:\Boost\lib;C:\Program Files %28x86%29\GnuWin32\lib\shark;C:\Program Files %28x86%29\GnuWin32\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>tinyxml.lib;libboost_program_options-vc120-mt-1_59.lib;FreeImage.lib</AdditionalDependencies>
+      <AdditionalDependencies>tinyxml.lib;libboost_program_options-vc120-mt-1_59.lib;FreeImageLib.lib</AdditionalDependencies>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -250,15 +251,45 @@
     </Xml>
     <Xml Include="Config\confStopCriterion.xml" />
     <Xml Include="Config\confObjective.xml" />
-    <Xml Include="Config\confOptimizer.xml" />
+    <Xml Include="Config\confOptimizer.xml">
+      <SubType>Designer</SubType>
+    </Xml>
     <Xml Include="Config\confLattice.xml">
       <SubType>Designer</SubType>
     </Xml>
     <Xml Include="Config\confController.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Target\test.svg" />
-    <None Include="Target\twoband90_10.target" />
+    <None Include="ffmpeg.exe" />
+    <None Include="Target\test.svg">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\confExperiment.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\confStopCriterion.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\confObjective.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\confOptimizer.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\confLattice.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\confController.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Target\test.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

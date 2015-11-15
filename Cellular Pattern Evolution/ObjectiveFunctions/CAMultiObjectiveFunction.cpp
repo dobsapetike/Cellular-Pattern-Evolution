@@ -37,9 +37,7 @@ namespace objective_functions
 	*/
 	RealVector ca_multiobj_func::eval(const RealVector& x) const
 	{
-		real_vector params;
-		params.insert(params.end(), x.begin(), x.end());
-
+		real_vector params = vector_convert(x);
 		// set new controller parameters and simulate run
 		_lattice.get()->get_genotype().get_controller().set_params(params);
 		_lattice.get()->simulate();
@@ -52,4 +50,24 @@ namespace objective_functions
 
 		return result;
 	}
+
+}
+
+/**
+	Conversion between the two kinds of vectors used in this class
+	needed for compatibility reasons with the shark library
+*/
+RealVector vector_convert(real_vector const& vec)
+{
+	RealVector v(vec.size());
+	for (unsigned int i = 0; i < vec.size(); ++i)
+		v[i] = vec[i];
+	return v;
+};
+
+real_vector vector_convert(RealVector const& vec)
+{
+	real_vector v;
+	v.insert(v.end(), vec.begin(), vec.end());
+	return v;
 }

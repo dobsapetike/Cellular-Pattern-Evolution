@@ -3,7 +3,8 @@
 plotter::plotter()
 {
 	_canvas = std::make_unique<Gnuplot>("linespoints");
-	_canvas->showonscreen().set_grid();
+	_canvas->showonscreen().set_grid()
+		.set_xlabel("Generation").set_ylabel("Objective");
 }
 
 plotter::~plotter()

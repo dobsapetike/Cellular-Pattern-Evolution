@@ -20,8 +20,8 @@ namespace lattice
 				row.reserve(settings.width);
 				for (unsigned int j = 0; j < settings.width; ++j)
 				{
-					auto cell = shared_ptr<lattice_cell>(
-						new regular_cell(j, i, settings.stateSettings, selfPtr));
+					auto cell = std::static_pointer_cast<lattice_cell>(
+						std::make_shared<regular_cell>(j, i, settings.stateSettings, selfPtr));
 					row.push_back(cell);
 					_cells.push_back(cell);
 				}
@@ -29,7 +29,7 @@ namespace lattice
 			}
 
 			// initialize states
-			set_init_pattern(settings.init_pattern, settings.stateSettings);
+			regular_structure_phenotype::set_init_pattern(settings.init_pattern, settings.stateSettings);
 
 			// set neighbourhood type
 			_neighbourhood_type = von_neumann; // default

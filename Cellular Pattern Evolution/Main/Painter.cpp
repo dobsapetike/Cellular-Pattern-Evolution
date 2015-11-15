@@ -22,6 +22,7 @@ void painter::paint(std::string exp, std::string file, lattice::phenotypes::phen
 	FIBITMAP *bitmap = FreeImage_Allocate(phenotype.get_width(), phenotype.get_height(), BPP);
 	RGBQUAD color;
 
+	unsigned int height = phenotype.get_height();
 	auto cells = phenotype.expose_cells();
 	for (auto& cell : cells)
 	{
@@ -41,7 +42,7 @@ void painter::paint(std::string exp, std::string file, lattice::phenotypes::phen
 				color.rgbRed = cellColor.r;
 				color.rgbGreen = cellColor.g;
 				color.rgbBlue = cellColor.b;
-				FreeImage_SetPixelColor(bitmap, x, y, &color);
+				FreeImage_SetPixelColor(bitmap, x, height - 1 - y, &color);
 			}
 		}
 	}

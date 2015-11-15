@@ -35,7 +35,7 @@ namespace lattice
 			// the number of parameters of optimization is the number of weights
 			param_count = _hidden_weight_count + _chemical_weight_count + _color_weight_count;
 
-			// randonly initialize weights
+			// randomly initialize weights
 			// TODO be able to read weight values from config
 			_params = real_vector(param_count);
 			for (unsigned int i = 0; i < _params.size(); ++i)

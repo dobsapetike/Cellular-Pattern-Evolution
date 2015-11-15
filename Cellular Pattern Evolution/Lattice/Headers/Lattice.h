@@ -17,6 +17,10 @@ namespace lattice
 		unique_ptr<lattice_settings> _settings;
 		unique_ptr<genotype::genotype> _genotype;
 		unique_ptr<phenotypes::phenotype> _phenotype;
+
+		unsigned int _desired_thread_count;
+		void update_cells(vector<shared_ptr<phenotypes::lattice_cell>>& cells, 
+			unsigned int chunks, unsigned int order_number);
 	public:
 		explicit lattice(unique_ptr<lattice_settings> ls);
 		// getters

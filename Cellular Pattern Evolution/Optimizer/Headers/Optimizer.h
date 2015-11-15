@@ -29,6 +29,7 @@ namespace optimizer
 		// name of the algorithm
 		virtual std::string get_name() const = 0;
 
+		virtual unsigned int step_count() const = 0;
 		// Initialization of the algorithm in order to set up instances, 
 		// reset states, etc...
 		// Always called before the start of the optimization

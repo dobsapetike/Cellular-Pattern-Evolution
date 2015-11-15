@@ -3,11 +3,13 @@
     Options:
         - EvalNums (Limit: int - number of step )
         - Energy (
-            WindowSize: int;
+            WindowSize: int,
             Threshold: double, 
-            StepLimit: int - optional, -1 - turned off
+            StepLimit: int
           )
    -->
-  <Criterion>EvalNums</Criterion>
-  <Limit>100</Limit>
+  <Criterion>Energy</Criterion>
+  <WindowSize>15</WindowSize>
+  <Threshold>10e-10</Threshold>
+  <StepLimit>65</StepLimit>
 </StopCriterion>

@@ -20,14 +20,14 @@ namespace lattice
 		*/
 		class phenotype
 		{
-		protected:
-			unsigned int width, height;
+		private:
+			unsigned int _width, _height;
 		public:
 			phenotype(lattice_settings const& settings) :
-				width(settings.width), height(settings.height) { };
+				_width(settings.width), _height(settings.height) { };
 
-			unsigned int get_width() const { return width; }
-			unsigned int get_height() const { return height; }
+			unsigned int get_width() const { return _width; }
+			unsigned int get_height() const { return _height; }
 
 			virtual bool is_split_merge_allowed() const = 0;
 			virtual cell_type get_cell_type() const = 0;

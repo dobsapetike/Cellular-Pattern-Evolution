@@ -33,14 +33,21 @@ namespace objective_functions
 			shared_ptr<lattice::lattice> const& lattice	// pointer to the lattice
 		);
 		// interface implementation
-		string name() const { return "CA MO Fitness Function"; }
-		size_t numberOfObjectives() const { return _objectives.size(); }
-		size_t numberOfVariables() const { return _constraintHandler.dimensions(); }
-		bool hasScalableObjectives() const { return false; }
-		bool hasScalableDimensionality() const { return false; }
+		string name() const override { return "CA MO Fitness Function"; }
+		size_t numberOfObjectives() const override { return _objectives.size(); }
+		size_t numberOfVariables() const override { return _constraintHandler.dimensions(); }
+		bool hasScalableObjectives() const override { return false; }
+		bool hasScalableDimensionality() const override { return false; }
 		// evaluates the objective functions
-		ResultType eval(const SearchPointType& x) const;
+		ResultType eval(const SearchPointType& x) const override;
 	};
 }
+
+/**
+	Conversion between the two kinds of vectors used in this class
+	needed for compatibility reasons with the shark library
+*/
+RealVector vector_convert(real_vector const& vec);
+real_vector vector_convert(RealVector const& vec);
 
 #endif
