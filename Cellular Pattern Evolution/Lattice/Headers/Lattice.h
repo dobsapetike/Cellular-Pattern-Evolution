@@ -3,8 +3,9 @@
 
 #include "LatticeSettings.h"
 #include "LatticeStatistics.h"
-#include "Phenotypes\Phenotype.h"
-#include "Genotype\Genotype.h"
+#include "Phenotypes/Phenotype.h"
+#include "Genotype/Genotype.h"
+#include "../../Main/Headers/ThreadPool.h"
 
 using namespace std;
 
@@ -18,11 +19,10 @@ namespace lattice
 		unique_ptr<genotype::genotype> _genotype;
 		unique_ptr<phenotypes::phenotype> _phenotype;
 
-		unsigned int _desired_thread_count;
-		void update_cells(vector<shared_ptr<phenotypes::lattice_cell>>& cells, 
-			unsigned int chunks, unsigned int order_number);
+		unique_ptr<thread_pool> _threads;
+		void update_cells(unsigned int order_number);
 	public:
-		explicit lattice(unique_ptr<lattice_settings> ls);
+		lattice(unique_ptr<lattice_settings> ls);
 		// getters
 		lattice_settings const& get_settings() const { return *_settings; }
 		lattice_statistics const& get_statistics() const { return *_statistics; }

@@ -117,6 +117,28 @@ namespace lattice
 			}
 		}
 
+		real_vector feedforward_ann_controller::compute_neighbour_externals(
+			phenotypes::neighbourhood& nbh, direction d) const
+		{
+			real_vector vec = vector<double>(state_params.external_chemical_count, 0.0);
+
+			if (nbh[d].size() == 0) 
+				// return zeroes if neighbour doesnt exist
+				return vec; 
+
+			// compute the mean of all neighbours in the given direction (TODO weighted mean)
+			for (unsigned int extChIndex = 0; extChIndex < state_params.external_chemical_count; ++extChIndex)
+			{
+				double ecSum = 0.0;
+				for (auto neighbour : nbh[d])
+				{
+					ecSum += (*neighbour).get_state().external_chemicals[extChIndex];
+				}
+				vec[extChIndex] = ecSum / nbh[d].size();
+			}
+			return vec;
+		}
+
 		void feedforward_ann_controller::set_next_state(phenotypes::lattice_cell& cell) const
 		{
 			// first, create the neural network input
@@ -128,28 +150,11 @@ namespace lattice
 
 			// insert neighbour externals
 			auto nbh = cell.get_neighbours();
-			// TODO apply blur
 			for (unsigned int i = upper; i <= lower; ++i)
 			{
 				direction dir = static_cast<direction>(i);
-				if (nbh[dir].size() == 0)
-				{
-					// fill with zeroes
-					auto zeros = vector<double>(state_params.external_chemical_count, 0.0);
-					annInp.insert(annInp.end(), zeros.begin(), zeros.end());
-					continue;
-				}
-
-				// insert the mean of all the neighbours - TODO use compatibility
-				for (unsigned int extChIndex = 0; extChIndex < state_params.external_chemical_count; ++extChIndex)
-				{
-					double ecSum = 0.0;
-					for (auto neighbour : nbh[dir])
-					{
-						ecSum += (*neighbour).get_state().external_chemicals[extChIndex];
-					}
-					annInp.push_back(ecSum / nbh[dir].size());
-				}
+				real_vector ext = compute_neighbour_externals(nbh, dir);
+				annInp.insert(annInp.end(), ext.begin(), ext.end());
 			}
 
 			// also append a bias unit

@@ -147,6 +147,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <OmitFramePointers>true</OmitFramePointers>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -180,6 +181,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Lattice\Controllers\FeedForwardANNController.cpp" />
+    <ClCompile Include="Lattice\Controllers\StateController.cpp" />
     <ClCompile Include="Lattice\Halting\EnergyCriterion.cpp" />
     <ClCompile Include="Lattice\Halting\EvalNumberCriterion.cpp" />
     <ClCompile Include="Lattice\Halting\StopCriterion.cpp" />
@@ -192,8 +195,6 @@
     <ClCompile Include="Task\ExperimentCollection.cpp" />
     <ClCompile Include="Task\Task.cpp" />
     <ClCompile Include="ObjectiveFunctions\ObjectiveFunction.cpp" />
-    <ClCompile Include="Lattice\Controllers\FeedForwardANNController.cpp" />
-    <ClCompile Include="Lattice\Controllers\StateController.cpp" />
     <ClCompile Include="Lattice\Genotype\Genotype.cpp" />
     <ClCompile Include="Lattice\Phenotype\Cell\Cell.cpp" />
     <ClCompile Include="Lattice\Phenotype\RegularStructurePhenotype.cpp" />
@@ -209,6 +210,7 @@
     <ClCompile Include="Optimizer\MultiObjCMAES.cpp" />
     <ClCompile Include="Optimizer\Optimizer.cpp" />
     <ClCompile Include="Optimizer\OptimizerSettings.cpp" />
+    <ClCompile Include="Main\ThreadPool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lattice\Headers\Halting\EnergyCriterion.h" />
@@ -244,6 +246,7 @@
     <ClInclude Include="Optimizer\Headers\MultiObjCMAES.h" />
     <ClInclude Include="Optimizer\Headers\Optimizer.h" />
     <ClInclude Include="Optimizer\Headers\OptimizerSettings.h" />
+    <ClInclude Include="Main\Headers\ThreadPool.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Config\confExperiment.xml">

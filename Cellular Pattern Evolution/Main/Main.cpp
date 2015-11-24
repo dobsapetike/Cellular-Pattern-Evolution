@@ -62,6 +62,5 @@ int main(int argc, char* argv[])
 
 	logger::get_logger().log_info("DONE! Aplication closes.");
 	
-	getchar();
 	return EXIT_SUCCESS;
 }

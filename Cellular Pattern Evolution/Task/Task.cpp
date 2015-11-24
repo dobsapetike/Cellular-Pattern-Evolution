@@ -17,7 +17,7 @@ namespace task
 				*objective_functions::load_settings(exp.objective_file),
 				_lattice->get_genotype().get_controller().get_param_count(),
 				_lattice
-				);
+			);
 			_optimizer = std::unique_ptr<optimizer::optimizer>(
 				optimizer::create_optimizer(
 					*optimizer::load_settings(exp.optimizer_file),

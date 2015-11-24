@@ -34,7 +34,7 @@ namespace lattice
 			bool is_split_merge_allowed() const override { return false; };
 			cell_type get_cell_type() const override { return regular; };
 			void set_init_pattern(string init_pattern, state_settings state_set) override;
-			const vector<shared_ptr<lattice_cell>>& expose_cells() const override { return _cells; };
+			vector<shared_ptr<lattice_cell>> const& expose_cells() const override { return _cells; };
 			neighbourhood get_neighbours(lattice_cell const& c) const override;
 		};
 

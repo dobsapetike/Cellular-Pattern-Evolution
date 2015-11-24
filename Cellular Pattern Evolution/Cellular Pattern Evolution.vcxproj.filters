@@ -96,12 +96,6 @@
     <ClCompile Include="Lattice\Genotype\Genotype.cpp">
       <Filter>Source Files\Lattice\Genotype</Filter>
     </ClCompile>
-    <ClCompile Include="Lattice\Controllers\FeedForwardANNController.cpp">
-      <Filter>Source Files\Lattice\Controllers</Filter>
-    </ClCompile>
-    <ClCompile Include="Lattice\Controllers\StateController.cpp">
-      <Filter>Source Files\Lattice\Controllers</Filter>
-    </ClCompile>
     <ClCompile Include="Lattice\State.cpp">
       <Filter>Source Files\Lattice</Filter>
     </ClCompile>
@@ -162,6 +156,15 @@
     <ClCompile Include="Task\Task.cpp">
       <Filter>Source Files\Task</Filter>
     </ClCompile>
+    <ClCompile Include="Main\ThreadPool.cpp">
+      <Filter>Source Files\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Controllers\StateController.cpp">
+      <Filter>Source Files\Lattice\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Controllers\FeedForwardANNController.cpp">
+      <Filter>Source Files\Lattice\Controllers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lattice\Headers\Lattice.h">
@@ -190,9 +193,6 @@
     </ClInclude>
     <ClInclude Include="Lattice\Headers\Phenotypes\RegularStructurePhenotype.h">
       <Filter>Header Files\Lattice\Phenotypes</Filter>
-    </ClInclude>
-    <ClInclude Include="Lattice\Headers\Controllers\FeedForwardANNController.h">
-      <Filter>Header Files\Lattice\Controllers</Filter>
     </ClInclude>
     <ClInclude Include="Lattice\Headers\Phenotypes\Cell\RegularCell.h">
       <Filter>Header Files\Lattice\Phenotypes\Cell</Filter>
@@ -262,6 +262,12 @@
     </ClInclude>
     <ClInclude Include="Main\Headers\Plotter.h">
       <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\Headers\ThreadPool.h">
+      <Filter>Header Files\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Controllers\FeedForwardANNController.h">
+      <Filter>Header Files\Lattice\Controllers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

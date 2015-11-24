@@ -30,11 +30,16 @@ namespace lattice
 			void execute_linear_combination(
 				unsigned int resSize, unsigned int& weightIndex,
 				real_vector const& input, real_vector& output) const;
+			// for the neighbourhood of a cell, computes the external chemicals in the given direction
+			real_vector compute_neighbour_externals(phenotypes::neighbourhood& nbh, direction d) const;
 		public:
 			feedforward_ann_controller(lattice_settings const& settings);
-			virtual real_vector get_params() const override;
-			virtual void set_params(real_vector const& p) const override;
-			virtual void set_next_state(phenotypes::lattice_cell& cell) const override;
+
+			// interface implementation
+
+			real_vector get_params() const override;
+			void set_params(real_vector const& p) const override;
+			void set_next_state(phenotypes::lattice_cell& cell) const override;
 		};
 	}
 }

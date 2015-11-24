@@ -32,7 +32,7 @@ namespace lattice
 			virtual bool is_split_merge_allowed() const = 0;
 			virtual cell_type get_cell_type() const = 0;
 			virtual void set_init_pattern(string init_pattern, state_settings state_set) = 0;
-			virtual const vector<shared_ptr<lattice_cell>>& expose_cells() const = 0;
+			virtual vector<shared_ptr<lattice_cell>> const& expose_cells() const = 0;
 			virtual neighbourhood get_neighbours(lattice_cell const& c) const = 0;
 		};
 

@@ -10,16 +10,24 @@ namespace lattice
 		_phenotype = phenotypes::create_phenotype(get_settings());
 		_genotype = make_unique<genotype::genotype>(get_settings());
 
-		_desired_thread_count = max(thread::hardware_concurrency(), static_cast<unsigned int>(1));
+		_threads = make_unique<thread_pool>(
+			max(thread::hardware_concurrency(), static_cast<unsigned int>(1))
+		);
 	}
 
-	void lattice::update_cells(vector<shared_ptr<phenotypes::lattice_cell>>& cells,
-		unsigned int chunks, unsigned int order_number)
+	void lattice::update_cells(unsigned int order_number)
 	{
+		auto cells = _phenotype->expose_cells();
+		unsigned int threadCount = min(_threads->thread_count(), cells.size());
+		// the number of cells for each thread
+		unsigned int chunks = ceil(cells.size() / static_cast<double>(threadCount));
+
 		unsigned int start = order_number * chunks;
-		for (unsigned int i = start; i < start + chunks || i == cells.size() - 1; ++i)
+		for (unsigned int cellindex = start; 
+			cellindex < start + chunks || cellindex == cells.size() - 1; 
+			++cellindex)
 		{
-			_genotype->get_controller().set_next_state(*cells[i]);
+			_genotype->get_controller().set_next_state(*cells[cellindex]);
 		}
 	}
 
@@ -32,21 +40,17 @@ namespace lattice
 		_genotype->reset();
 		_phenotype->set_init_pattern(get_settings().init_pattern, get_settings().stateSettings);
 
+		auto cells = _phenotype->expose_cells();
 		while (!_genotype->get_criterion().should_stop(*this))
 		{
-			auto cells = _phenotype->expose_cells();
-
-			// the number of cells for each thread
-			unsigned int threadCount = min(_desired_thread_count, cells.size());
-			unsigned int tw = ceil(cells.size() / static_cast<double>(threadCount));
-			// compute the next state for each cell
-			vector<thread> threads(threadCount);
-			for (unsigned int i = 0; i < threadCount; ++i)
-				threads[i] = thread(&lattice::update_cells, this, cells, tw, i);
-			for (auto& t : threads) t.join();
 			/*for (auto& cell : cells)
 				_genotype->get_controller().set_next_state(*cell);*/
-
+			for (unsigned int order = 0; order < _threads->thread_count(); ++order)
+			{
+				_threads->enqueue_job([&,order]{ update_cells(order); });
+			}
+			_threads->wait_for_jobs();
+			
 			// and make a simultaneous update
 			for (auto& cell : cells)
 			{
@@ -55,7 +59,7 @@ namespace lattice
 			}
 
 			_statistics->eval_count++;
-			// cout << "Eval num: " << _statistics->eval_count << endl;
+			//cout << "Eval num: " << _statistics->eval_count << endl;
 		}
 	}
 }
