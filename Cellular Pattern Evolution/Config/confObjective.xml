@@ -1,8 +1,9 @@
 <ObjectiveSettings>
-  <MinValue>-1</MinValue>
-  <MaxValue>1</MaxValue>
+  <MinValue>-5</MinValue>
+  <MaxValue>5</MaxValue>
   <ObjectiveFunctions>
-    <Function Name="ColorDist"/>
+    <Function Name="ColorDist" Importance="100"/>
+    <Function Name="CellCount" Importance="100"/>
   </ObjectiveFunctions>
 </ObjectiveSettings>
 

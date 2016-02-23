@@ -15,14 +15,14 @@ namespace optimizer
 	class mo_cmaes_optimizer : public optimizer
 	{
 	private:
-		MOCMA _mocma;
-		unsigned int _max_step_count, _current_step_count = 0;
+		MOCMA mocma;
+		unsigned int max_step_count, current_step_count = 0;
 	public:
 		mo_cmaes_optimizer(
 			std::shared_ptr<objective_functions::ca_multiobj_func> const& objfunc,
 			optimizer_settings const& settings);
 
-		unsigned int step_count() const { return _current_step_count; }
+		unsigned int step_count() const override { return current_step_count; }
 
 		std::string get_name() const override { return "MOCMA"; };
 		void init() override;

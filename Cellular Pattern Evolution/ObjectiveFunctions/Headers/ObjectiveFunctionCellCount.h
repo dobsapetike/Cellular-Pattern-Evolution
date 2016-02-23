@@ -10,14 +10,23 @@ namespace objective_functions
 	*/
 	class objective_func_cell_count : public objective_func
 	{
+	private:
+		/**
+			Needed for normalization
+		*/
+		unsigned int max_count;
 	public:
-		objective_func_cell_count(std::string name, std::shared_ptr<lattice::lattice> const& latt)
-			: objective_func(name, latt) { }
+		objective_func_cell_count(std::string name, double importance, std::shared_ptr<lattice::lattice> const& latt)
+			: objective_func(name, importance, latt)
+		{
+			max_count = lattice->get_settings().width * lattice->get_settings().height;
+		}
 		/**
 			Evaluation returns the number of cells
 		*/ 
 		virtual double eval() override { 
-			return this->lattice.get()->get_phenotype().expose_cells().size(); 
+			return this->lattice.get()->get_phenotype()
+				.expose_cells().size() / static_cast<double>(max_count); 
 		};
 	};
 }

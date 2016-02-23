@@ -1,7 +1,7 @@
 <LatticeSettings>
-  <LatticeWidth>2</LatticeWidth>
-  <LatticeHeight>2</LatticeHeight>
-  <CellType>Regular</CellType>
+  <LatticeWidth>8</LatticeWidth>
+  <LatticeHeight>8</LatticeHeight>
+  <CellType>IrregularSquare</CellType>
   <PhenotypeSettings>
     <NeighbourhoodType>VonNeumann</NeighbourhoodType>
   </PhenotypeSettings>
@@ -10,8 +10,8 @@
     TODO
   </InitPattern>
   <State>
-    <InternalCount>8</InternalCount>
-    <ExternalCount>8</ExternalCount>
+    <InternalCount>6</InternalCount>
+    <ExternalCount>4</ExternalCount>
     <InitialValues>0</InitialValues>
   </State>
 </LatticeSettings>

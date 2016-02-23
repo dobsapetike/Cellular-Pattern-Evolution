@@ -10,9 +10,9 @@ namespace lattice
 		*/
 		energy_halting::energy_halting(lattice_settings const& settings)
 		{
-			_threshold = atof(settings.stop_criterion->FirstChildElement("Threshold")->GetText());
-			_window_size = atoi(settings.stop_criterion->FirstChildElement("WindowSize")->GetText());
-			_step_limit = atoi(settings.stop_criterion->FirstChildElement("StepLimit")->GetText());
+			threshold = atof(settings.stop_criterion->FirstChildElement("Threshold")->GetText());
+			window_size = atoi(settings.stop_criterion->FirstChildElement("WindowSize")->GetText());
+			step_limit = atoi(settings.stop_criterion->FirstChildElement("StepLimit")->GetText());
 		}
 
 		/**
@@ -29,6 +29,7 @@ namespace lattice
 			{
 				energy += chemical * chemical;
 			}
+			//energy += cell.get_state().color.r;
 			return sqrt(energy);
 		}
 
@@ -47,32 +48,38 @@ namespace lattice
 			}
 			energy = sqrt(energy);
 			
-			_energy_history.push_back(energy);
-			_history_sum += energy;
-			if (_energy_history.size() < _window_size)
+			energy_history.push_back(energy);
+			history_sum += energy;
+			if (energy_history.size() < window_size)
 				// check criterion only after you have a complete time window to use
 				return false;
 
 			// remove the oldest when window has been exceeded
-			if (_energy_history.size() > _window_size)
+			if (energy_history.size() > window_size)
 			{
-				_history_sum -= _energy_history[0];
-				_energy_history.erase(_energy_history.begin());
+				history_sum -= energy_history[0];
+				energy_history.erase(energy_history.begin());
 			}
 
 			// compute the average of the history
-			avg = _history_sum / _window_size;
+			avg = history_sum / window_size;
 
 			// and the standard deviation of the energy
-			for (double en : _energy_history)
+			for (double en : energy_history)
 			{
 				double diff = en - avg;
 				stdev += diff * diff;
 			}
-			stdev = sqrt(stdev / _window_size);
+			stdev = sqrt(stdev / window_size);
 
-			return stdev < _threshold 
-				|| lattice.get_statistics().eval_count > _step_limit;
+			bool shouldStop = stdev < threshold
+				|| lattice.get_statistics().sim_eval_count >= step_limit;
+			if (shouldStop)
+			{
+				/*cout << "Stopping after steps: " << lattice.get_statistics().eval_count << 
+					" ( " << stdev << " )" << endl;*/
+			}
+			return shouldStop;
 		}
 	}
 }

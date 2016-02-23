@@ -12,7 +12,7 @@ namespace lattice
 			shared_ptr<regular_structure_phenotype> selfPtr(this);
 			
 			// fill the grid with pointers to cells
-			_grid.reserve(settings.height);
+			grid.reserve(settings.height);
 
 			for (unsigned int i = 0; i < settings.height; ++i)
 			{
@@ -23,41 +23,41 @@ namespace lattice
 					auto cell = std::static_pointer_cast<lattice_cell>(
 						std::make_shared<regular_cell>(j, i, settings.stateSettings, selfPtr));
 					row.push_back(cell);
-					_cells.push_back(cell);
+					cells.push_back(cell);
 				}
-				_grid.push_back(row);
+				grid.push_back(row);
 			}
 
 			// initialize states
-			regular_structure_phenotype::set_init_pattern(settings.init_pattern, settings.stateSettings);
+			regular_structure_phenotype::set_init_pattern();
 
 			// set neighbourhood type
-			_neighbourhood_type = von_neumann; // default
+			neighbourhood_type = von_neumann; // default
 			if (TiXmlElement* elem = settings.phenotype_settings.get()) 
 			{
 				auto nbTypeElem = elem->FirstChildElement("NeighbourhoodType");
 				if (nbTypeElem) 
 				{
-					_neighbourhood_type = parse_neighbourhood_type(nbTypeElem->GetText());
+					neighbourhood_type = parse_neighbourhood_type(nbTypeElem->GetText());
 				}
 			}
 		}
 
-		void regular_structure_phenotype::set_init_pattern(string init_pattern, state_settings state_set)
+		void regular_structure_phenotype::set_init_pattern()
 		{
-			for (unsigned int y = 0; y < _grid.size(); ++y)
+			for (unsigned int y = 0; y < grid.size(); ++y)
 			{
-				for (unsigned int x = 0; x < _grid[0].size(); ++x)
+				for (unsigned int x = 0; x < grid[0].size(); ++x)
 				{
-					state s = init_state(state_set);
-					_grid[y][x].get()->set_state(s);
+					state s = init_state(get_state_settings());
+					grid[y][x].get()->set_state(s);
 				}
 			}
 		}
 
 		neighbourhood regular_structure_phenotype::get_neighbours(lattice_cell const& c) const
 		{
-			size_t x(c.get_x()), y(c.get_y()), nt(_neighbourhood_type);
+			size_t x(c.get_x()), y(c.get_y()), nt(neighbourhood_type);
 
 			neighbourhood n;
 			// upper
@@ -65,34 +65,34 @@ namespace lattice
 			{
 				if (x > 0 && nt == moore)
 				{
-					n[upper].push_back(_grid[y - 1][x - 1]);
-					n[direction::left].push_back(_grid[y - 1][x - 1]);
+					n[upper].push_back(grid[y - 1][x - 1]);
+					n[direction::left].push_back(grid[y - 1][x - 1]);
 				}
-				n[upper].push_back(_grid[y - 1][x]);
-				if (x < _grid[0].size() - 1 && nt == moore)
+				n[upper].push_back(grid[y - 1][x]);
+				if (x < grid[0].size() - 1 && nt == moore)
 				{
-					n[upper].push_back(_grid[y - 1][x + 1]);
-					n[direction::right].push_back(_grid[y - 1][x + 1]);
+					n[upper].push_back(grid[y - 1][x + 1]);
+					n[direction::right].push_back(grid[y - 1][x + 1]);
 				}
 			}
 
 			// middle
-			if (x > 0) n[direction::left].push_back(_grid[y][x - 1]);
-			if (x < _grid[0].size() - 1) n[direction::right].push_back(_grid[y][x + 1]);
+			if (x > 0) n[direction::left].push_back(grid[y][x - 1]);
+			if (x < grid[0].size() - 1) n[direction::right].push_back(grid[y][x + 1]);
 
 			// bottom
-			if (y < _grid.size() - 1)
+			if (y < grid.size() - 1)
 			{
 				if (x > 0 && nt == moore)
 				{
-					n[direction::left].push_back(_grid[y + 1][x - 1]);
-					n[lower].push_back(_grid[y + 1][x - 1]);
+					n[direction::left].push_back(grid[y + 1][x - 1]);
+					n[lower].push_back(grid[y + 1][x - 1]);
 				}
-				n[lower].push_back(_grid[y + 1][x]);
-				if (x < _grid[0].size() - 1 && nt == moore)
+				n[lower].push_back(grid[y + 1][x]);
+				if (x < grid[0].size() - 1 && nt == moore)
 				{
-					n[direction::right].push_back(_grid[y + 1][x + 1]);
-					n[lower].push_back(_grid[y + 1][x + 1]);
+					n[direction::right].push_back(grid[y + 1][x + 1]);
+					n[lower].push_back(grid[y + 1][x + 1]);
 				}
 			}
 

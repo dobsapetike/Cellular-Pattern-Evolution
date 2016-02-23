@@ -17,19 +17,19 @@ namespace task
 	class task
 	{
 	private:
-		std::unique_ptr<optimizer::optimizer> _optimizer;
-		std::shared_ptr<objective_functions::ca_multiobj_func> _obj_func;
-		std::shared_ptr<lattice::lattice> _lattice;
+		std::unique_ptr<optimizer::optimizer> optimizer;
+		std::shared_ptr<objective_functions::ca_multiobj_func> obj_func;
+		std::shared_ptr<lattice::lattice> lattice;
 
-		std::unique_ptr<plotter> _plotter;
-		std::unique_ptr<painter> _painter;
-		std::unique_ptr<experiment> _experiment;
+		std::unique_ptr<plotter> plotter;
+		std::unique_ptr<painter> painter;
+		std::unique_ptr<experiment> experiment_ptr;
 
-		real_vector _result;
-		double _result_fitness = DBL_MAX;
+		real_vector result;
+		double result_fitness = DBL_MAX;
 
-		static bool _running;
-		static BOOL WINAPI _handle_abort(DWORD c_event);
+		static bool running;
+		static BOOL WINAPI handle_abort(DWORD c_event);
 	public:
 		explicit task(experiment const& exp);
 		/**
@@ -40,6 +40,8 @@ namespace task
 			Finalizes the experiment - should be called after the execution
 		*/
 		void finalize();
+
+		void simulate();
 	};
 }
 

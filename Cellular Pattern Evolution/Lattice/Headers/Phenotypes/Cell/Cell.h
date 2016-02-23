@@ -29,7 +29,7 @@ namespace lattice
 		{
 		private:
 			// a pointer to the phenotype to obtain the neighbouring cells
-			shared_ptr<phenotype> _owner;
+			shared_ptr<phenotype> owner;
 		protected:
 			state cell_state, next_state;
 			polygon geometry;
@@ -40,7 +40,7 @@ namespace lattice
 				unsigned int x, unsigned int y, 
 				state_settings const& state_settings,
 				shared_ptr<phenotype> const& owner) 
-					: _owner(owner), cell_state(init_state(state_settings)), 
+					: owner(owner), cell_state(init_state(state_settings)), 
 					  coord_x(x), coord_y(y) { };
 
 			// neighbourhood functions
@@ -52,11 +52,18 @@ namespace lattice
 			unsigned int get_y() const { return coord_y; }
 			state const& get_state() const { return cell_state; }
 			polygon const& get_geometry() const { return geometry; }
+			shared_ptr<phenotype>& get_owner() { return owner; }
 			// field setters
-			void set_state(state const& s) { cell_state = s; }
-			void next_candidate(state const& s) { next_state = s; }
-			void apply_candidate() { cell_state = next_state; }
+			void set_state(state const& s) { cell_state = move(s); }
+			void next_candidate(state const& s) { next_state = move(s); }
+			void apply_candidate() { cell_state = move(next_state); }
+			void reset_action() { cell_state.action = nothing; }
 		};
+
+		/**
+			Cell comparator for sorting
+		*/
+		extern function <bool(const lattice_cell&, const lattice_cell&)> cell_comparator;
 	}
 }
 

@@ -4,25 +4,16 @@
 #include "../Task/Headers/Task.h"
 #include "../Task/Headers/ExperimentCollection.h"
 
+#include <map>
+
 using namespace std;
 using namespace boost::program_options;
 
 void start_regime(string regime)
 {
-	/* TODO
-
-	if (regime == "master") {
-		cout << "TODO start master regime" << endl;
-	}
-	else if (regime == "slave") {
-		cout << "TODO start slave regime" << endl;
-	}
-	else {
-		cout << "TODO start simulation regime" << endl;
-	}*/
-
 	task::experiments e("config/confExperiment.xml");
 	unique_ptr<task::task> t = make_unique<task::task>(*e[1]);
+	//t->simulate();
 	t->execute();
 	t->finalize();
 }

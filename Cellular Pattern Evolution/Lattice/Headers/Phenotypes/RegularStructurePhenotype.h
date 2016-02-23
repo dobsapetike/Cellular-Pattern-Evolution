@@ -24,17 +24,17 @@ namespace lattice
 		class regular_structure_phenotype : public phenotype
 		{
 		private:
-			neighbourhood_type _neighbourhood_type;
+			neighbourhood_type neighbourhood_type;
 			// 2D array of cell pointers, topologically identical to the CA
-			vector<vector<shared_ptr<lattice_cell>>> _grid;
+			vector<vector<shared_ptr<lattice_cell>>> grid;
 			// also maintain a single list of all cells for the getter
-			vector<shared_ptr<lattice_cell>> _cells;
+			vector<shared_ptr<lattice_cell>> cells;
 		public:
 			regular_structure_phenotype(lattice_settings const& settings);
-			bool is_split_merge_allowed() const override { return false; };
 			cell_type get_cell_type() const override { return regular; };
-			void set_init_pattern(string init_pattern, state_settings state_set) override;
-			vector<shared_ptr<lattice_cell>> const& expose_cells() const override { return _cells; };
+			void rearrange_topology() override { };		// no split/merge possible
+			void set_init_pattern() override;
+			vector<shared_ptr<lattice_cell>> const& expose_cells() const override { return cells; };
 			neighbourhood get_neighbours(lattice_cell const& c) const override;
 		};
 

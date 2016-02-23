@@ -17,28 +17,28 @@ class thread_pool
 {
 private:
 	// list of threads in the pool
-	vector<thread> _threads;
+	vector<thread> threads;
 	// the task queue 
-	queue<function<void()>> _job_queue;
+	queue<function<void()>> job_queue;
 
 	// synchronization primitives
-	mutex _schedule_mutex;
-	condition_variable _schedule_cv, _jobs_cv;
-	bool _running = true;
-	unsigned int _tasks_in_progress = 0;
+	mutex schedule_mutex;
+	condition_variable schedule_cv, jobs_cv;
+	bool running = true;
+	unsigned int tasks_in_progress = 0;
 public:
 	thread_pool(unsigned int thread_count);
 	~thread_pool()
 	{
 		// tell the threads to stop waiting
-		_running = false;
-		_schedule_cv.notify_all();
+		running = false;
+		schedule_cv.notify_all();
 		// and wait for them to finish
-		for (unsigned int i = 0; i < _threads.size(); ++i)
-			_threads[i].join();
+		for (unsigned int i = 0; i < threads.size(); ++i)
+			threads[i].join();
 	}
 
-	unsigned int thread_count() const { return _threads.size(); }
+	unsigned int thread_count() const { return threads.size(); }
 	/**
 		Insert new task into the queue
 	*/

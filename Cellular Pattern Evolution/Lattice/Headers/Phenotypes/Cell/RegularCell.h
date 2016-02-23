@@ -1,3 +1,6 @@
+#ifndef REGULAR_H
+#define REGULAR_H
+
 #include "Cell.h"
 
 namespace lattice
@@ -24,8 +27,10 @@ namespace lattice
 			*/
 			virtual neighbourhood_compatibility get_neighbourhood_compatibility() const override 
 			{
-				throw invalid_argument("Compatibility: regular grid doesn't support split/merge!");
+				throw invalid_argument("Compatibility error: regular grid doesn't support split/merge!");
 			};
 		};
 	}
 }
+
+#endif

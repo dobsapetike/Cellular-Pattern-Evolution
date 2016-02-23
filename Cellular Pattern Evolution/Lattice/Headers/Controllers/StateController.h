@@ -16,6 +16,7 @@ namespace lattice
 		{
 		protected:
 			state_settings state_params;
+			color_type color_type;
 			// number of parameters for optimization
 			unsigned int param_count;
 		public:
@@ -29,6 +30,7 @@ namespace lattice
 			virtual void set_next_state(phenotypes::lattice_cell& cell) const = 0;
 
 			unsigned int get_param_count() const { return param_count; }
+			::color_type get_color_type() const { return color_type; }
 		};
 
 		/**

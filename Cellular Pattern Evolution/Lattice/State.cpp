@@ -1,6 +1,5 @@
 #include "Headers\State.h"
 #include <sstream>
-#include <iostream>
 #include <algorithm>
 
 using namespace std;
@@ -22,6 +21,7 @@ namespace lattice
 		state.color = {
 			255, 255, 255
 		};
+		state.action = nothing;
 
 		return state;
 	}

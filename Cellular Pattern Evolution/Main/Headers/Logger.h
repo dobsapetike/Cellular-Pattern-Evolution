@@ -59,7 +59,7 @@ public:
 	/**
 		Signal the end the current experiment. Log file closes.
 	*/
-	void log_experiment_end();
+	void log_experiment_end(string exp_name);
 };
 
 #endif

@@ -14,16 +14,15 @@ namespace lattice
 		*/
 		class genotype
 		{
-			// TODO split grammar
 		private:
-			unique_ptr<halting::stop_criterion> _stop_criterion;
-			unique_ptr<controllers::state_controller> _controller;
+			unique_ptr<halting::stop_criterion> stop_criterion;
+			unique_ptr<controllers::state_controller> controller;
 		public:
 			genotype(lattice_settings const& settings);
 			void reset();
 			// getters
-			halting::stop_criterion& get_criterion() { return *_stop_criterion; }
-			controllers::state_controller& get_controller() { return *_controller; };
+			halting::stop_criterion& get_criterion() { return *stop_criterion; }
+			controllers::state_controller& get_controller() { return *controller; };
 		};
 	}
 }

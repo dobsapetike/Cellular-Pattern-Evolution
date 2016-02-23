@@ -21,11 +21,11 @@ namespace objective_functions
 	{
 	private:
 		// constraints for the search space
-		BoxConstraintHandler<SearchPointType> _constraintHandler;
+		BoxConstraintHandler<SearchPointType> constraintHandler;
 		// list of all the objective functions
-		vector<unique_ptr<objective_func>> _objectives;
+		vector<unique_ptr<objective_func>> objectives;
 		// pointer to the lattice
-		shared_ptr<lattice::lattice> _lattice;
+		shared_ptr<lattice::lattice> lattice;
 	public:
 		ca_multiobj_func(
 			objective_settings const& settings,			// config settings
@@ -34,8 +34,8 @@ namespace objective_functions
 		);
 		// interface implementation
 		string name() const override { return "CA MO Fitness Function"; }
-		size_t numberOfObjectives() const override { return _objectives.size(); }
-		size_t numberOfVariables() const override { return _constraintHandler.dimensions(); }
+		size_t numberOfObjectives() const override { return objectives.size(); }
+		size_t numberOfVariables() const override { return constraintHandler.dimensions(); }
 		bool hasScalableObjectives() const override { return false; }
 		bool hasScalableDimensionality() const override { return false; }
 		// evaluates the objective functions

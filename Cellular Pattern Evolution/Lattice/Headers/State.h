@@ -16,16 +16,30 @@ namespace lattice
 	};
 
 	/**
+		Enumeration of the structure changing actions
+	*/
+	enum action
+	{
+		merge,
+		nothing,
+		split,
+	};
+
+	/**
 		Structure representing the state of a single CA cell.
 		The state consists of two real vectors - called chemicals: 
 			- internal used in the computation of the next state of the current cell
 			- external used in the computation of the next state of the neighbouring cells
+		Furthermore consist of an rgb value and a scalar representing the 
+		cell color resp. the merge/split action
 	*/
 	struct state
 	{
 		real_vector internal_chemicals;
 		real_vector external_chemicals;
+
 		rgb color;
+		action action;
 	};
 
 	/**
@@ -40,8 +54,6 @@ namespace lattice
 
 		// initial chemical values
 		double init_val;
-
-		// TODO gaussian blur settings
 	};
 
 	/**

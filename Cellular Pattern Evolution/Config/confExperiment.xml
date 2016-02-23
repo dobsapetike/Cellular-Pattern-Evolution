@@ -2,6 +2,7 @@
   <Experiment>
     <Name>Experiment1</Name>
     <Id>1</Id>
+    <RunCount>2</RunCount>
     <Controller>Config/confController.xml</Controller>
     <Lattice>Config/confLattice.xml</Lattice>
     <Objective>Config/confObjective.xml</Objective>

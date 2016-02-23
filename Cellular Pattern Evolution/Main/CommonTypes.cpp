@@ -18,12 +18,12 @@ polygon make_polygon(std::vector<point> const& points)
 	std::ostringstream oss;
 	for (unsigned int i = 0; i < points.size(); ++i)
 	{
-		auto point = points[i];
+		auto& point = points[i];
 		oss << point.get<0>() << " " << point.get<1>();
 		if (i != points.size() - 1)
 			oss << ",";
 	}
 	boost::geometry::read_wkt("POLYGON((" + oss.str() + "))", poly);
-		
+
 	return poly;
 }

@@ -11,7 +11,7 @@ namespace lattice
 			throw invalid_argument("Could not parse file: " + filepath);
 
 		auto svgElem = target.FirstChildElement("svg");
-		_background = parse_rgb(svgElem->Attribute("fill"));
+		background = parse_rgb(svgElem->Attribute("fill"));
 		int width(atoi(svgElem->Attribute("width")));
 		int height(atoi(svgElem->Attribute("height")));
 		if (width != desired_width || height != desired_height)
@@ -28,7 +28,7 @@ namespace lattice
 
 			string points = polyElem->Attribute("points");
 			boost::geometry::read_wkt("POLYGON((" + points + "))", p->polygon);
-			_polygons.push_back(move(p));
+			polygons.push_back(move(p));
 
 			polyElem = polyElem->NextSiblingElement();
 		}

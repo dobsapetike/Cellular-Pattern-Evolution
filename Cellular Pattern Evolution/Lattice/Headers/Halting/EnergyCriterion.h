@@ -14,16 +14,16 @@ namespace lattice
 		class energy_halting : public stop_criterion
 		{
 		private:
-			unsigned int _window_size = 10, _step_limit = 200;
-			double _threshold = 10e-15, _history_sum = 0.0;
-			vector<double> _energy_history;
+			unsigned int window_size = 10, step_limit = 200;
+			double threshold = 10e-15, history_sum = 0.0;
+			vector<double> energy_history;
 
 			double compute_energy(phenotypes::lattice_cell& cell) const;
 		public:
 			energy_halting(lattice_settings const& settings);
 			virtual void reset() override { 
-				_history_sum = 0;
-				_energy_history.clear();
+				history_sum = 0;
+				energy_history.clear();
 			};
 			// decides whether the simulation should stop
 			virtual bool should_stop(lattice& statistics) override;

@@ -23,6 +23,11 @@ enum color_type
 	rgb,
 };
 
+struct coord
+{
+	unsigned int x, y;
+};
+
 color_type parse_color_type(std::string type);
 polygon make_polygon(std::vector<point> const& points);
 

@@ -13,7 +13,7 @@ namespace lattice
 	struct target_pattern
 	{
 	private:
-		vector<vector<rgb>> _pattern;
+		vector<vector<rgb>> pattern;
 	public:
 		// Constructor fills the inner structure based on a file
 		target_pattern(unsigned int desired_width, unsigned int desired_height, string filepath);

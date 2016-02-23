@@ -7,13 +7,13 @@ namespace lattice
 		genotype::genotype(lattice_settings const& settings)
 		{
 			// initialize fields from config
-			_controller = controllers::create_controller(settings);
-			_stop_criterion = halting::create_stop_criterion(settings);
+			controller = controllers::create_controller(settings);
+			stop_criterion = halting::create_stop_criterion(settings);
 		}
 
 		void genotype::reset()
 		{
-			_stop_criterion->reset();
+			stop_criterion->reset();
 		}
 	}
 }

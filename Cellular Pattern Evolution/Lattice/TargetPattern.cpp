@@ -32,7 +32,7 @@ namespace lattice
 		getline(infile, line);
 		while (getline(infile, line))
 		{
-			_pattern.push_back(vector<rgb>());
+			pattern.push_back(vector<rgb>());
 
 			// format (r,g,b) with delimeter ';'
 			replace(line.begin(), line.end(), ';', ' ');
@@ -44,7 +44,7 @@ namespace lattice
 				isttoken.str(token);
 				
 				isttoken >> r >> g >> b;
-				_pattern.back().push_back(rgb { r, g, b });
+				pattern.back().push_back(rgb { r, g, b });
 				isttoken.clear();
 			}
 			istline.clear();
@@ -58,9 +58,9 @@ namespace lattice
 	*/
 	rgb target_pattern::at(unsigned int x, unsigned int y)
 	{
-		if (x < 0 || x >= _pattern.size() || y < 0 || y >= _pattern.size())
+		if (x < 0 || x >= pattern.size() || y < 0 || y >= pattern.size())
 			throw invalid_argument("Out of range at target pattern!");
 
-		return _pattern[y][x];
+		return pattern[y][x];
 	}
 }

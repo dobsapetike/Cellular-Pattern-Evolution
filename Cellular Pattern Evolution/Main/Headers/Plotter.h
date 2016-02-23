@@ -7,8 +7,8 @@
 class plotter
 {
 private:
-	std::vector<double> _history;
-	std::unique_ptr<Gnuplot> _canvas;
+	std::vector<double> history;
+	std::unique_ptr<Gnuplot> canvas;
 public:
 	plotter();
 	~plotter();

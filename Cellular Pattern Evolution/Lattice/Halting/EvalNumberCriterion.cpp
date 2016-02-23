@@ -10,7 +10,7 @@ namespace lattice
 		*/
 		eval_num_halting::eval_num_halting(lattice_settings const& settings)
 		{
-			_eval_limit = atoi(settings.stop_criterion->FirstChildElement("Limit")->GetText());
+			eval_limit = atoi(settings.stop_criterion->FirstChildElement("Limit")->GetText());
 		}
 
 		/*
@@ -18,7 +18,7 @@ namespace lattice
 		*/
 		bool eval_num_halting::should_stop(lattice& lattice)
 		{
-			return lattice.get_statistics().eval_count >= _eval_limit;
+			return lattice.get_statistics().sim_eval_count >= eval_limit;
 		}
 	}
 }

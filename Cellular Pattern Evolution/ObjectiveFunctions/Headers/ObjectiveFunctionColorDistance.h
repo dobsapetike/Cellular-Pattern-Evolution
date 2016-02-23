@@ -11,9 +11,18 @@ namespace objective_functions
 	*/
 	class objective_func_color_dist : public objective_func
 	{
+	private:
+		/**
+			Needed for normalization
+		*/
+		unsigned int max_color_diff;
 	public:
-		objective_func_color_dist(string name, shared_ptr<lattice::lattice> const& latt)
-			: objective_func(name, latt) { }
+		objective_func_color_dist(string name, double importance, shared_ptr<lattice::lattice> const& latt)
+			: objective_func(name, importance, latt)
+		{
+			max_color_diff = lattice->get_settings().width * lattice->get_settings().height  
+				* 255 * (latt->get_genotype().get_controller().get_color_type() == rgb ? 3 : 1);
+		}
 		/**
 			Evaluation returns the sum of the square of the color difference between
 			the target and actual pattern
@@ -44,11 +53,11 @@ namespace objective_functions
 						sum += coldiffTarget * isArea;
 						covered += isArea;
 					}
-					sum += (area - covered) * coldiffBackground;
 				}
+				sum += (area - covered) * coldiffBackground;
 			}
 
-			return sum;
+			return sum / static_cast<double>(max_color_diff);
 		};
 	};
 }

@@ -21,17 +21,20 @@ namespace lattice
 		class phenotype
 		{
 		private:
-			unsigned int _width, _height;
+			unsigned int width, height;
+			state_settings st_settings;
 		public:
 			phenotype(lattice_settings const& settings) :
-				_width(settings.width), _height(settings.height) { };
+				width(settings.width), height(settings.height), 
+				st_settings(settings.stateSettings) { };
 
-			unsigned int get_width() const { return _width; }
-			unsigned int get_height() const { return _height; }
+			unsigned int get_width() const { return width; }
+			unsigned int get_height() const { return height; }
+			state_settings const& get_state_settings() const { return st_settings; }
 
-			virtual bool is_split_merge_allowed() const = 0;
+			virtual void rearrange_topology() = 0;
 			virtual cell_type get_cell_type() const = 0;
-			virtual void set_init_pattern(string init_pattern, state_settings state_set) = 0;
+			virtual void set_init_pattern() = 0;
 			virtual vector<shared_ptr<lattice_cell>> const& expose_cells() const = 0;
 			virtual neighbourhood get_neighbours(lattice_cell const& c) const = 0;
 		};

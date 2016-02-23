@@ -9,7 +9,16 @@ namespace lattice
 		*/
 		neighbourhood lattice_cell::get_neighbours() const
 		{
-			return _owner->get_neighbours(*this);
+			return owner->get_neighbours(*this);
 		}
+
+		/**
+			Cell comparator for sorting
+		*/
+		function<bool(const lattice_cell&, const lattice_cell&)>
+		cell_comparator = [](const lattice_cell& a, const lattice_cell& b) -> bool {
+			return a.get_y() > b.get_y() ||
+				(a.get_y() == b.get_y() && a.get_x() > b.get_x());
+		};
 	}
 }

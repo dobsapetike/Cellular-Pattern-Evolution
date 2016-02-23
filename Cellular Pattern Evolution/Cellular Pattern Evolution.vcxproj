@@ -83,7 +83,7 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>C:\s\cpp;C:\s\shark\include;C:\s\cpp\boost_1_59_0;C:\Boost\include\boost-1_59;C:\Program Files %28x86%29\GnuWin32\include;C:\Program Files %28x86%29\GnuWin32\include\FreeImage</AdditionalIncludeDirectories>
@@ -142,12 +142,12 @@
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
       <PreprocessorDefinitions>FREEIMAGE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <OmitFramePointers>true</OmitFramePointers>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -181,6 +181,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Lattice\Phenotype\IrregularRectanglePhenotype.cpp" />
+    <ClCompile Include="Lattice\Phenotype\IrregularSquarePhenotype.cpp" />
     <ClCompile Include="Lattice\Controllers\FeedForwardANNController.cpp" />
     <ClCompile Include="Lattice\Controllers\StateController.cpp" />
     <ClCompile Include="Lattice\Halting\EnergyCriterion.cpp" />
@@ -213,6 +215,10 @@
     <ClCompile Include="Main\ThreadPool.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Lattice\Headers\Phenotypes\Cell\IrregularRectangleCell.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\IrregularRectanglePhenotype.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\IrregularSquarePhenotype.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\Cell\IrregularSquareCell.h" />
     <ClInclude Include="Lattice\Headers\Halting\EnergyCriterion.h" />
     <ClInclude Include="Lattice\Headers\Halting\EvalNumberCriterion.h" />
     <ClInclude Include="Lattice\Headers\LatticeStatistics.h" />

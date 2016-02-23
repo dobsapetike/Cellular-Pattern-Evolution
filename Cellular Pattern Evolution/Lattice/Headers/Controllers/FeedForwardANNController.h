@@ -16,22 +16,31 @@ namespace lattice
 		{
 		private:
 			// neuron number on different layers
-			unsigned int _hidden_neuron_count, _chemical_neuron_count, _color_neuron_count;
+			unsigned int hidden_neuron_count, chemical_neuron_count, output_neuron_count;
 			// network weights and number of weights and different layers
-			mutable real_vector _params;
-			unsigned int _hidden_weight_count, _chemical_weight_count, _color_weight_count;
+			mutable real_vector params;
+			unsigned int hidden_weight_count, chemical_weight_count, output_weight_count;
 			// execution of the chemical and color computation
 			void forward_pass(
 				real_vector& input,
 				real_vector& inner, 
 				real_vector& external,
-				real_vector& color) const;
+				real_vector& color,
+				double&		 action) const;
 			// used in the forward pass, linear combination of a layer with the respective weights
 			void execute_linear_combination(
 				unsigned int resSize, unsigned int& weightIndex,
 				real_vector const& input, real_vector& output) const;
-			// for the neighbourhood of a cell, computes the external chemicals in the given direction
-			real_vector compute_neighbour_externals(phenotypes::neighbourhood& nbh, direction d) const;
+
+			// For a cell neighbourhood, compute the mean of externals in every direction 
+			vector<real_vector> feedforward_ann_controller::compute_neighbour_external_means(
+				phenotypes::neighbourhood& nbh) const;
+			// Given a lattice cell, returns it's blurred externals using gaussian blur with radius of one
+			real_vector feedforward_ann_controller::compute_blurred_neighbour_external(
+				phenotypes::lattice_cell& cell) const;
+			// Computes a vector containing the blurred externals of neighbours in all 4 directions
+			vector<real_vector> feedforward_ann_controller::compute_externals(
+				phenotypes::lattice_cell& cell) const;
 		public:
 			feedforward_ann_controller(lattice_settings const& settings);
 

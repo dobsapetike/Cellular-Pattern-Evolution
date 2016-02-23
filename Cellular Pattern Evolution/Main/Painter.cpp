@@ -19,18 +19,20 @@ painter::~painter()
 
 void painter::paint(std::string exp, std::string file, lattice::phenotypes::phenotype const& phenotype)
 {
-	FIBITMAP *bitmap = FreeImage_Allocate(phenotype.get_width(), phenotype.get_height(), BPP);
+	FIBITMAP *bitmap = FreeImage_Allocate(
+		phenotype.get_width() * SCALEFACTOR, phenotype.get_height() * SCALEFACTOR, BPP);
 	RGBQUAD color;
 
-	unsigned int height = phenotype.get_height();
 	auto cells = phenotype.expose_cells();
 	for (auto& cell : cells)
 	{
-		lattice::rgb cellColor = cell->get_state().color;
+		lattice::rgb cellColor;
+		polygon cellPoly = cell->get_geometry(), scaled;
+		boost::geometry::strategy::transform::scale_transformer<double, 2, 2> scale(static_cast<double>(SCALEFACTOR));
+		boost::geometry::transform(cellPoly, scaled, scale);
 
-		polygon cellPoly = cell->get_geometry();
 		boost::geometry::model::box<point> box;
-		boost::geometry::envelope(cellPoly, box);
+		boost::geometry::envelope(scaled, box);
 		for (unsigned int y = static_cast<unsigned int>(box.min_corner().get<1>());
 			y < box.max_corner().get<1>(); ++y)
 		{
@@ -38,11 +40,15 @@ void painter::paint(std::string exp, std::string file, lattice::phenotypes::phen
 				x < box.max_corner().get<0>(); ++x)
 			{
 				boost::geometry::model::d2::point_xy<double> p(x, y);
-				if (!boost::geometry::covered_by(p, cellPoly)) continue;
+				if (!boost::geometry::covered_by(p, scaled)) continue;
+				cellColor = cell->get_state().color;
+				if (!boost::geometry::within(p, scaled)) {
+					cellColor = { 255, 0, 0 };
+				}
 				color.rgbRed = cellColor.r;
 				color.rgbGreen = cellColor.g;
 				color.rgbBlue = cellColor.b;
-				FreeImage_SetPixelColor(bitmap, x, height - 1 - y, &color);
+				FreeImage_SetPixelColor(bitmap, x, y, &color);
 			}
 		}
 	}

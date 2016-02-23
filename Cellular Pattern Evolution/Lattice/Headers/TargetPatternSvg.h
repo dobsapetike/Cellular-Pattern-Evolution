@@ -23,11 +23,11 @@ namespace lattice
 	struct target_pattern_svg
 	{
 	private:
-		rgb _background;
-		vector<shared_ptr<color_polygon>> _polygons;
+		rgb background;
+		vector<shared_ptr<color_polygon>> polygons;
 	public:
-		rgb const& get_backcolor() const { return _background; }
-		vector<shared_ptr<color_polygon>> const& get_polygons() const { return _polygons; }
+		rgb const& get_backcolor() const { return background; }
+		vector<shared_ptr<color_polygon>> const& get_polygons() const { return polygons; }
 		// Constructor fills the inner structure based on a file
 		target_pattern_svg(unsigned int desired_width, unsigned int desired_height, string filepath);
 	};

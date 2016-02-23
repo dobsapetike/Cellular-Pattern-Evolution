@@ -28,7 +28,7 @@ string get_time()
 }
 
 /**
-	Dump info string to the outputs
+	Dump the info string to the outputs
 */
 void logger::dump(string const& s)
 {
@@ -70,7 +70,7 @@ void logger::log_error(string const& error)
 }
 
 /**
-Log error message
+	Log error message
 */
 void logger::log_evol_stat(string const& stat)
 {
@@ -93,7 +93,11 @@ void logger::log_experiment_start(string exp_name)
 /**
 	Signal the end the current experiment. Log file closes.
 */
-void logger::log_experiment_end()
+void logger::log_experiment_end(string exp_name)
 {
+	dump(string(28 + exp_name.size(), '*'));
+	dump("Experiment ended!");
+	dump(string(28 + exp_name.size(), '*'));
+
 	_outfile_evol.close();
 }

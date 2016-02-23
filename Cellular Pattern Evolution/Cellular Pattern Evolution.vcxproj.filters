@@ -165,6 +165,12 @@
     <ClCompile Include="Lattice\Controllers\FeedForwardANNController.cpp">
       <Filter>Source Files\Lattice\Controllers</Filter>
     </ClCompile>
+    <ClCompile Include="Lattice\Phenotype\IrregularSquarePhenotype.cpp">
+      <Filter>Source Files\Lattice\Phenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Phenotype\IrregularRectanglePhenotype.cpp">
+      <Filter>Source Files\Lattice\Phenotype</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lattice\Headers\Lattice.h">
@@ -268,6 +274,18 @@
     </ClInclude>
     <ClInclude Include="Lattice\Headers\Controllers\FeedForwardANNController.h">
       <Filter>Header Files\Lattice\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\Cell\IrregularSquareCell.h">
+      <Filter>Header Files\Lattice\Phenotypes\Cell</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\IrregularSquarePhenotype.h">
+      <Filter>Header Files\Lattice\Phenotypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\Cell\IrregularRectangleCell.h">
+      <Filter>Header Files\Lattice\Phenotypes\Cell</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\IrregularRectanglePhenotype.h">
+      <Filter>Header Files\Lattice\Phenotypes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

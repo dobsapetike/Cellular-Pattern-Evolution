@@ -6,7 +6,7 @@ namespace objective_functions
 		objective_settings const& settings,			// config settings
 		unsigned int dimensions,					// number of variables
 		shared_ptr<lattice::lattice> const& lattice	// pointer to the lattice
-		) : _lattice(lattice)
+		) : lattice(lattice)
 	{
 		// iterate and remember objective functions
 		TiXmlNode* nextChild = settings.objfunc_settings->FirstChild();
@@ -20,16 +20,17 @@ namespace objective_functions
 				throw invalid_argument("Objective function has to be specified as type \"Function\"!");
 
 			string name = elem.Attribute("Name");
-			_objectives.push_back(parse_obj_func(name, lattice));
+			double impr = atoi(elem.Attribute("Importance")) / 100.0;
+			objectives.push_back(parse_obj_func(name, impr, lattice));
 
 			nextChild = nextChild->NextSibling();
 		}
 		
 		// create and set the constraint handler
-		_constraintHandler = BoxConstraintHandler<SearchPointType>(
+		constraintHandler = BoxConstraintHandler<SearchPointType>(
 			SearchPointType(dimensions, settings.min_value), 
 			SearchPointType(dimensions, settings.max_value));
-		announceConstraintHandler(&_constraintHandler);
+		announceConstraintHandler(&constraintHandler);
 	}
 
 	/**
@@ -39,14 +40,15 @@ namespace objective_functions
 	{
 		real_vector params = vector_convert(x);
 		// set new controller parameters and simulate run
-		_lattice.get()->get_genotype().get_controller().set_params(params);
-		_lattice.get()->simulate();
+		lattice.get()->get_genotype().get_controller().set_params(params);
+		lattice.get()->simulate();
 
 		ResultType result(numberOfObjectives());
 		for (unsigned int i = 0; i < numberOfObjectives(); ++i)
 		{
-			result[i] = _objectives[i]->eval();
+			result[i] = objectives[i]->eval() * objectives[i]->get_importance();
 		}
+		++lattice->get_statistics().sim_eval_count;
 
 		return result;
 	}

@@ -9,7 +9,7 @@
           )
    -->
   <Criterion>Energy</Criterion>
-  <WindowSize>15</WindowSize>
-  <Threshold>10e-10</Threshold>
-  <StepLimit>65</StepLimit>
+  <WindowSize>16</WindowSize>
+  <Threshold>0.01</Threshold>
+  <StepLimit>150</StepLimit>
 </StopCriterion>
