@@ -58,7 +58,8 @@ namespace lattice
 			}
 
 			// also, update topology
-			phenotype->rearrange_topology();
+			if (settings->allow_structure_change)
+				phenotype->rearrange_topology();
 
 			statistics->sim_eval_count++;
 			// cout << "Eval num: " << _statistics->eval_count << endl;

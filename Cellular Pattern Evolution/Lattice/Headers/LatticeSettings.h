@@ -29,6 +29,9 @@ namespace lattice
 		// the form depends on the cell type
 		string init_pattern;
 
+		// whether structure should change during simulation
+		bool allow_structure_change;
+
 		// field describing the target pattern
 		unique_ptr<target_pattern_svg> target;
 
@@ -41,7 +44,7 @@ namespace lattice
 
 	/**
 		Loads the lattice settings from the given XML files
-		*/
+	*/
 	unique_ptr<lattice_settings> load_settings(string const& lattice_config,
 		string const& controller_config, string const& stopcrit_config);
 }

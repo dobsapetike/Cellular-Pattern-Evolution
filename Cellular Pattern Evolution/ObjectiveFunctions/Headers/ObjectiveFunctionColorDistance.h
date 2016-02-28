@@ -31,7 +31,7 @@ namespace objective_functions
 		{
 			double sum = 0.0;
 
-			auto cells = (*this->lattice).get_phenotype().expose_cells();
+			auto& cells = (*this->lattice).get_phenotype().expose_cells();
 			auto targets = (*this->lattice).get_settings().target->get_polygons();
 			for (auto& cell : cells)
 			{

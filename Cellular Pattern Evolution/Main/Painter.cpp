@@ -23,7 +23,7 @@ void painter::paint(std::string exp, std::string file, lattice::phenotypes::phen
 		phenotype.get_width() * SCALEFACTOR, phenotype.get_height() * SCALEFACTOR, BPP);
 	RGBQUAD color;
 
-	auto cells = phenotype.expose_cells();
+	auto& cells = phenotype.expose_cells();
 	for (auto& cell : cells)
 	{
 		lattice::rgb cellColor;

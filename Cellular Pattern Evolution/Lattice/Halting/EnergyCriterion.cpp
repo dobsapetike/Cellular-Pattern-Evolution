@@ -41,7 +41,7 @@ namespace lattice
 			double energy(0.0), avg(0.0), stdev(0.0);
 			
 			// compute energy of the organism
-			auto cells = lattice.get_phenotype().expose_cells();
+			auto& cells = lattice.get_phenotype().expose_cells();
 			for (auto& cell : cells)
 			{
 				energy += compute_energy(*cell);
@@ -51,8 +51,10 @@ namespace lattice
 			energy_history.push_back(energy);
 			history_sum += energy;
 			if (energy_history.size() < window_size)
+			{
 				// check criterion only after you have a complete time window to use
 				return false;
+			}
 
 			// remove the oldest when window has been exceeded
 			if (energy_history.size() > window_size)
@@ -74,11 +76,11 @@ namespace lattice
 
 			bool shouldStop = stdev < threshold
 				|| lattice.get_statistics().sim_eval_count >= step_limit;
-			if (shouldStop)
+			/*if (shouldStop)
 			{
-				/*cout << "Stopping after steps: " << lattice.get_statistics().eval_count << 
-					" ( " << stdev << " )" << endl;*/
-			}
+				cout << "Stopping after steps: " << lattice.get_statistics().eval_count << 
+					" ( " << stdev << " )" << endl;
+			} */
 			return shouldStop;
 		}
 	}

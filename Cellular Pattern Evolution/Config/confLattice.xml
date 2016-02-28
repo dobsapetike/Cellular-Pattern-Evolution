@@ -1,10 +1,11 @@
 <LatticeSettings>
   <LatticeWidth>8</LatticeWidth>
   <LatticeHeight>8</LatticeHeight>
-  <CellType>IrregularRectangle</CellType>
+  <CellType>IrregularSquare</CellType>
   <PhenotypeSettings>
     <NeighbourhoodType>VonNeumann</NeighbourhoodType>
   </PhenotypeSettings>
+  <AllowStructureChange>1</AllowStructureChange>
   <TargetPattern>Target/test.svg</TargetPattern>
   <InitPattern>
     TODO
