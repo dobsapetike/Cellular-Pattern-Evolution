@@ -19,6 +19,7 @@ namespace lattice
 				return static_pointer_cast<irregular_square_phenotype>(self_ptr);
 			}
 		protected:
+			void apply_pattern(string pattern) override;
 			void split(shared_ptr<irregular_rectangle_cell> cell) override;
 			void merge(shared_ptr<irregular_rectangle_cell> cell) override;
 		public:

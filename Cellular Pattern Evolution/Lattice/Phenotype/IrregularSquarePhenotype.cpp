@@ -5,6 +5,24 @@ namespace lattice
 {
 	namespace phenotypes
 	{
+		/**
+			Understands pattern of form: 'x y dimension'
+		*/
+		void irregular_square_phenotype::apply_pattern(string pattern)
+		{
+			stringstream sst(pattern);
+			unsigned int x, y, d;
+			while (sst >> x >> y >> d)
+			{
+				auto cell = make_shared<irregular_square_cell>(
+					x, y, d, get_state_settings(), cast_self_ptr());
+				assign_cell(cell);
+			}
+		}
+
+		/**
+			Splits the cell into four subcells of equal size - in case of non-unit cells
+		*/
 		void irregular_square_phenotype::split(shared_ptr<irregular_rectangle_cell> cell)
 		{
 			// dont split if dimension of square has unit length
@@ -19,8 +37,8 @@ namespace lattice
 				make_shared<irregular_square_cell>(x, y + w, w, ss, cast_self_ptr()),
 				make_shared<irregular_square_cell>(x + w, y + w, w, ss, cast_self_ptr()) };
 			cell.reset();
-			for (auto& c : nc) 
-				assign_cell(c);
+
+			for (auto& c : nc) assign_cell(c);
 		}
 
 		void irregular_square_phenotype::merge(shared_ptr<irregular_rectangle_cell> cell)

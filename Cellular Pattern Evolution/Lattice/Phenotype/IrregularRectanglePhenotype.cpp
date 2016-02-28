@@ -12,11 +12,12 @@ namespace lattice
 			self_ptr = shared_ptr<irregular_rectangle_phenotype>(this);
 		}
 
-		void irregular_rectangle_phenotype::set_init_pattern()
+		void irregular_rectangle_phenotype::set_init_pattern(string pattern)
 		{
 			clear();
 			grid.reserve(get_height());
 
+			// fill with grid with unit cells
 			for (unsigned int row = 0; row < get_height(); ++row)
 			{
 				vector<cell_info> rowc;
@@ -34,6 +35,24 @@ namespace lattice
 					cells.push_back(cell);
 				}
 				grid.push_back(rowc);
+			}
+
+			// parse and apply pattern
+			// apply_pattern(pattern);
+		}
+
+		/**
+			Understands pattern of form: 'x y width height'
+		*/
+		void irregular_rectangle_phenotype::apply_pattern(string pattern)
+		{
+			stringstream sst(pattern);
+			unsigned int x, y, w, h;
+			while (sst >> x >> y >> w >> h)
+			{
+				auto cell = make_shared<irregular_rectangle_cell>(
+					x, y, w, h, get_state_settings(), self_ptr);
+				assign_cell(cell);
 			}
 		}
 
@@ -113,10 +132,13 @@ namespace lattice
 			auto size_prop = [right](const shared_ptr<irregular_rectangle_cell> c) {
 				return right ? c->get_width() : c->get_height();
 			};
+			auto dif_prop = [right](const shared_ptr<irregular_rectangle_cell> c) {
+				return !right ? c->get_width() : c->get_height();
+			};
 			if (right && cell->get_y() != n[0]->get_y()) return false;
 			if (!right && cell->get_x() != n[0]->get_x()) return false;
-			if (size_prop(cell) != std::accumulate(n.begin(), n.end(), 0, [size_prop]
-				(int curr, const shared_ptr<irregular_rectangle_cell> a) { return curr + size_prop(a); }) ) return false;
+			if (dif_prop(cell) != std::accumulate(n.begin(), n.end(), 0, [dif_prop]
+				(int curr, const shared_ptr<irregular_rectangle_cell> a) { return curr + dif_prop(a); }) ) return false;
 
 			// compute added size
 			auto minElem = *std::min_element(n.begin(), n.end(),
@@ -157,14 +179,14 @@ namespace lattice
 
 
 			// check right and bottom neighbourhood for merging opportunity
-			if (x + w + 1 < get_width())
+			if (x + w < get_width())
 			{
-				auto right = get_distinct_cells_in_line(y, y + h, x + w + 1, true);
+				auto right = get_distinct_cells_in_line(y, y + h, x + w, true);
 				if (merge_side(right, cell, true)) return;
 			}
-			if (y + h + 1 < get_height())
+			if (y + h < get_height())
 			{
-				auto bottom = get_distinct_cells_in_line(x, x + w, y + h + 1, false);
+				auto bottom = get_distinct_cells_in_line(x, x + w, y + h, false);
 				merge_side(bottom, cell, false);
 			}
 		}
@@ -208,7 +230,7 @@ namespace lattice
 			coord lastCoord{ -1, -1 };
 			for (unsigned int i = start; i < end; ++i)
 			{
-				auto coord = vertical ? grid[constdim][i].cell_coord : grid[i][constdim].cell_coord;
+				auto coord = vertical ? grid[i][constdim].cell_coord : grid[constdim][i].cell_coord;
 				if (coord.x == lastCoord.x && coord.y == lastCoord.y) continue;
 				cells.push_back(grid[coord.y][coord.x].cell);
 				lastCoord = coord;
@@ -222,9 +244,9 @@ namespace lattice
 			neighbourhood n;
 			unsigned int x(cell.get_x()), y(cell.get_y()), w(cell.get_width()), h(cell.get_height());
 			if (y > 0) n[upper] = get_distinct_cells_in_line(x, x + w, y - 1, false);
-			if (y + h < get_height() - 1) n[lower] = get_distinct_cells_in_line(x, x + w, y + h + 1, false);
+			if (y + h < get_height() - 1) n[lower] = get_distinct_cells_in_line(x, x + w, y + h, false);
 			if (x > 0) n[direction::left] = get_distinct_cells_in_line(y, y + h, x - 1, true);
-			if (x + w < get_width() - 1) n[direction::right] = get_distinct_cells_in_line(y, y + h, x + w + 1, true);
+			if (x + w < get_width() - 1) n[direction::right] = get_distinct_cells_in_line(y, y + h, x + w, true);
 			return n;
 		}
 	}

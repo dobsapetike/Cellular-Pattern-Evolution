@@ -20,14 +20,6 @@ namespace lattice
 				shared_ptr<irregular_square_phenotype> const& owner)
 				: irregular_rectangle_cell(x, y, dimension, dimension, settings, owner)
 			{ };
-
-			/**
-				TODO
-			*/
-			virtual neighbourhood_compatibility get_neighbourhood_compatibility() const override
-			{
-				throw invalid_argument("Compatibility error: regular grid doesn't support split/merge!");
-			};
 		};
 	}
 }

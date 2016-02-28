@@ -22,11 +22,11 @@ namespace lattice
 			unsigned int hidden_weight_count, chemical_weight_count, output_weight_count;
 			// execution of the chemical and color computation
 			void forward_pass(
-				real_vector& input,
+				real_vector const& input,
 				real_vector& inner, 
 				real_vector& external,
 				real_vector& color,
-				double&		 action) const;
+				real_vector& action) const;
 			// used in the forward pass, linear combination of a layer with the respective weights
 			void execute_linear_combination(
 				unsigned int resSize, unsigned int& weightIndex,
@@ -34,7 +34,7 @@ namespace lattice
 
 			// For a cell neighbourhood, compute the mean of externals in every direction 
 			vector<real_vector> feedforward_ann_controller::compute_neighbour_external_means(
-				phenotypes::neighbourhood& nbh) const;
+				phenotypes::neighbourhood& nbh, phenotypes::neighbourhood_compatibility& nbc) const;
 			// Given a lattice cell, returns it's blurred externals using gaussian blur with radius of one
 			real_vector feedforward_ann_controller::compute_blurred_neighbour_external(
 				phenotypes::lattice_cell& cell) const;

@@ -29,7 +29,7 @@ namespace lattice
 			}
 
 			// initialize states
-			regular_structure_phenotype::set_init_pattern();
+			regular_structure_phenotype::set_init_pattern("");
 
 			// set neighbourhood type
 			neighbourhood_type = von_neumann; // default
@@ -43,8 +43,9 @@ namespace lattice
 			}
 		}
 
-		void regular_structure_phenotype::set_init_pattern()
+		void regular_structure_phenotype::set_init_pattern(string pattern)
 		{
+			// simply reset the cell states - no pattern needed
 			for (unsigned int y = 0; y < grid.size(); ++y)
 			{
 				for (unsigned int x = 0; x < grid[0].size(); ++x)

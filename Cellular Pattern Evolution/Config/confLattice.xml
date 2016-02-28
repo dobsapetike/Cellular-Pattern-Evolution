@@ -1,7 +1,7 @@
 <LatticeSettings>
   <LatticeWidth>8</LatticeWidth>
   <LatticeHeight>8</LatticeHeight>
-  <CellType>IrregularSquare</CellType>
+  <CellType>IrregularRectangle</CellType>
   <PhenotypeSettings>
     <NeighbourhoodType>VonNeumann</NeighbourhoodType>
   </PhenotypeSettings>

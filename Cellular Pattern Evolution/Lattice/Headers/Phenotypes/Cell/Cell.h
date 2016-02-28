@@ -1,7 +1,6 @@
 #ifndef CELL_H
 #define CELL_H
 
-#include <tuple>
 #include <map>
 #include <memory>
 
@@ -19,7 +18,7 @@ namespace lattice
 		*/
 		class lattice_cell;		// forward declaration
 		typedef map<direction, vector<shared_ptr<lattice_cell>>> neighbourhood;
-		typedef vector<pair<shared_ptr<lattice_cell>, double>> neighbourhood_compatibility;
+		typedef map<direction, map<shared_ptr<lattice_cell>, double>> neighbourhood_compatibility;
 
 		/**
 			Abstract class for creating the basis of the the different 
@@ -37,7 +36,7 @@ namespace lattice
 			unsigned int coord_x, coord_y;	// !!! should not be used during state computation
 		public:
 			lattice_cell(
-				unsigned int x, unsigned int y, 
+				int x, int y, 
 				state_settings const& state_settings,
 				shared_ptr<phenotype> const& owner) 
 					: owner(owner), cell_state(init_state(state_settings)), 
@@ -45,7 +44,7 @@ namespace lattice
 
 			// neighbourhood functions
 			neighbourhood get_neighbours() const;
-			virtual neighbourhood_compatibility get_neighbourhood_compatibility() const = 0;
+			virtual neighbourhood_compatibility get_neighbour_compatibility() const = 0;
 
 			// field getters
 			unsigned int get_x() const { return coord_x; }

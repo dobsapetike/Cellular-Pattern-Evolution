@@ -17,7 +17,7 @@ namespace lattice
 				state_params.internal_chemical_count + state_params.external_chemical_count;
 
 			output_neuron_count = 
-				1 +		// merge/split action value 
+				3 +		// merge/split action and interval values 
 				(color_type == color_type::rgb ? 3 : 1);	// neuron for each component 
 
 
@@ -95,11 +95,11 @@ namespace lattice
 			Each of them is received as an output parameter.
 		*/
 		void feedforward_ann_controller::forward_pass (
-			real_vector& input,
+			real_vector const& input,
 			real_vector& inner,
 			real_vector& external,
 			real_vector& color,
-			double&		 action) const
+			real_vector& action) const
 		{
 			unsigned int weightIndex = 0;
 
@@ -121,8 +121,12 @@ namespace lattice
 			execute_linear_combination(output_neuron_count, weightIndex, output, color);
 
 			// compute color level and merge/split action
-			action = color.back();
-			color.pop_back();
+			action = real_vector(3);
+			for (unsigned int i = 3; i; --i)
+			{
+				action[i-1] = (color.back() + 1) / 2.0;
+				color.pop_back();
+			}
 			for (unsigned int i = 0; i < color.size(); ++i)
 			{
 				color[i] = (1.0 + color[i]) / 2.0;
@@ -133,7 +137,7 @@ namespace lattice
 			For a cell neighbourhood, compute the mean of externals in every direction 
 		*/
 		vector<real_vector> feedforward_ann_controller::compute_neighbour_external_means(
-			phenotypes::neighbourhood& nbh) const
+			phenotypes::neighbourhood& nbh, phenotypes::neighbourhood_compatibility& nbc) const
 		{
 			vector<real_vector> res;
 			for (unsigned int i = upper; i <= lower; ++i)
@@ -148,7 +152,8 @@ namespace lattice
 						double ecSum = 0.0;
 						for (auto& neighbour : nbh[d])
 						{
-							ecSum += (*neighbour).get_state().external_chemicals[extChIndex];
+							double comp = nbc[d][neighbour];
+							ecSum += (*neighbour).get_state().external_chemicals[extChIndex] * comp;
 						}
 						vec[extChIndex] = ecSum / nbh[d].size();
 					}
@@ -165,7 +170,8 @@ namespace lattice
 			phenotypes::lattice_cell& cell) const
 		{
 			auto nbh = cell.get_neighbours();
-			auto neighExts = compute_neighbour_external_means(nbh);
+			auto nbc = cell.get_neighbour_compatibility();
+			auto neighExts = compute_neighbour_external_means(nbh, nbc);
 
 			real_vector vec = vector<double>(state_params.external_chemical_count, 0.0);
 			auto curExt = cell.get_state().external_chemicals;
@@ -237,13 +243,15 @@ namespace lattice
 			annInp.push_back(static_cast<double>(BIAS));
 
 			// compute and set new state
-			double msAction;
-			real_vector newInternals, newExternals, newColor;
+			real_vector newInternals, newExternals, newColor, msAction;
 			forward_pass(annInp, newInternals, newExternals, newColor, msAction);
 
-			action action = msAction < -1.0 + 2.0 / 3 ? merge : 
-							msAction >  1.0 - 2.0 / 3 ? split :
-														nothing;
+			/*action action = msAction < -1.0 + 2.0 / 3 ? merge : 
+							  msAction >  1.0 - 2.0 / 3 ? split :
+														  nothing;*/
+			action action = msAction[0] < msAction[1]			    ? merge :
+							msAction[0] < msAction[1] + msAction[2] ? split :
+																	  nothing;
 			state newState = {
 				newInternals,
 				newExternals,

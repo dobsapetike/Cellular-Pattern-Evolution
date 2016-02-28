@@ -38,7 +38,7 @@ namespace lattice
 	{
 		statistics->reset();
 		genotype->reset();
-		phenotype->set_init_pattern();
+		phenotype->set_init_pattern(get_settings().init_pattern);
 
 		while (!genotype->get_criterion().should_stop(*this))
 		{

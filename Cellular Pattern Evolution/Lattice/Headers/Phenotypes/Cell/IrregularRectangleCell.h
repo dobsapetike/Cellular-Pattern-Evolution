@@ -18,7 +18,7 @@ namespace lattice
 		public:
 			irregular_rectangle_cell(
 				unsigned int x, unsigned int y,
-				unsigned int width, unsigned int height, state_settings const& settings,
+				int width, int height, state_settings const& settings,
 				shared_ptr<irregular_rectangle_phenotype> const& owner)
 				: lattice_cell(x, y, settings, owner), width(width), height(height)
 			{
@@ -33,12 +33,34 @@ namespace lattice
 			unsigned int get_height() const { return height; }
 
 			/**
-				TODO
+				Return compatibility based on the the shared line length
 			*/
-			virtual neighbourhood_compatibility get_neighbourhood_compatibility() const override
+			virtual neighbourhood_compatibility get_neighbour_compatibility() const override
 			{
-				throw invalid_argument("Compatibility error: regular grid doesn't support split/merge!");
-			};
+				neighbourhood n(get_neighbours());
+				neighbourhood_compatibility nc;
+
+				auto comp_shared = [](unsigned int as, unsigned int ae, unsigned int bs, unsigned int be) {
+					return min(be, ae) - max(bs, as);
+				};
+
+				for (unsigned int d = upper; d <= lower; ++d)
+				{
+					direction dir = static_cast<direction>(d);
+					if (n[dir].size() == 0) continue;
+					for (unsigned int index = 0; index < n[dir].size(); ++index)
+					{
+						auto cell = static_pointer_cast<irregular_rectangle_cell>(n[dir][index]);
+						// calculate shared line length and normalize it
+						nc[dir][n[dir][index]] = dir == ::left || dir == ::right
+							? comp_shared(get_y(), get_y() + get_height(),
+							cell->get_y(), cell->get_y() + cell->get_height()) / static_cast<double>(get_height())
+							: comp_shared(get_x(), get_x() + get_width(),
+							cell->get_x(), cell->get_x() + cell->get_width()) / static_cast<double>(get_width());
+					}
+				}
+				return nc;
+			}
 		};
 	}
 }

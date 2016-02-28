@@ -34,16 +34,16 @@ void painter::paint(std::string exp, std::string file, lattice::phenotypes::phen
 		boost::geometry::model::box<point> box;
 		boost::geometry::envelope(scaled, box);
 		for (unsigned int y = static_cast<unsigned int>(box.min_corner().get<1>());
-			y < box.max_corner().get<1>(); ++y)
+			y <= box.max_corner().get<1>(); ++y)
 		{
 			for (unsigned int x = static_cast<unsigned int>(box.min_corner().get<0>());
-				x < box.max_corner().get<0>(); ++x)
+				x <= box.max_corner().get<0>(); ++x)
 			{
 				boost::geometry::model::d2::point_xy<double> p(x, y);
 				if (!boost::geometry::covered_by(p, scaled)) continue;
 				cellColor = cell->get_state().color;
 				if (!boost::geometry::within(p, scaled)) {
-					cellColor = { 255, 0, 0 };
+					cellColor = { 100, 100, 100 };
 				}
 				color.rgbRed = cellColor.r;
 				color.rgbGreen = cellColor.g;

@@ -21,14 +21,24 @@ namespace lattice
 				};
 				geometry = make_polygon(points);
 			};
+
 			/**
-				Since there is no topology rearrangement in a regular CA, 
+				Since there is no topology rearrangement in a regular CA,
 				there is no need for complatibility values
 			*/
-			virtual neighbourhood_compatibility get_neighbourhood_compatibility() const override 
+			virtual neighbourhood_compatibility get_neighbour_compatibility() const override
 			{
-				throw invalid_argument("Compatibility error: regular grid doesn't support split/merge!");
-			};
+				neighbourhood n(get_neighbours());
+				neighbourhood_compatibility nc;
+				for (unsigned int d = upper; d <= lower; ++d)
+				{
+					direction dir = static_cast<direction>(d);
+					if (n[dir].size() == 0) continue;
+					// only one neighbour can exist, so give it max compatibility
+					nc[dir][n[dir][0]] = 1.0;
+				}
+				return nc;
+			}
 		};
 	}
 }

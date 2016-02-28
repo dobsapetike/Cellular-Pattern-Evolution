@@ -33,7 +33,7 @@ namespace lattice
 			regular_structure_phenotype(lattice_settings const& settings);
 			cell_type get_cell_type() const override { return regular; };
 			void rearrange_topology() override { };		// no split/merge possible
-			void set_init_pattern() override;
+			void set_init_pattern(string pattern) override;
 			vector<shared_ptr<lattice_cell>> const& expose_cells() const override { return cells; };
 			neighbourhood get_neighbours(lattice_cell const& c) const override;
 		};
