@@ -92,8 +92,8 @@ namespace task
 
 			logger::get_logger().log_evol_stat("Ended after step: " + to_string(lattice->get_statistics().sim_eval_count));
 
-			//if (_result_fitness == 0)
-			//	break;
+			if (result_fitness == 0)
+				break;
 
 			painter->paint(experiment_ptr->name, "gen" + to_string(optimizer->step_count())
 				+ ".png", lattice->get_phenotype());
@@ -119,14 +119,18 @@ namespace task
 		static int eval = 0;
 		auto callback = [&](lattice::phenotypes::phenotype& p)
 		{
-			this->painter->paint(experiment_ptr->name + "_Result", "eval" + to_string(++eval) + ".png", p);
+			this->painter->paint(experiment_ptr->name + "_Result", 
+				"eval" + to_string(++eval) + "_" + to_string(lattice->get_statistics().sim_eval_count) + ".png", p);
 		};
 		lattice->get_genotype().get_controller().set_params(result);
 		lattice->simulate(callback);
 
+		// print the generation number on the images
+		string command = "ImageUtil.exe " + experiment_ptr->name + "_Result";
+		system(command.c_str());
 		boost::filesystem::create_directory("results/");
 		// create video
-		string command = "ffmpeg.exe -nostats -loglevel 0 -framerate 60 -i pics/" + experiment_ptr->name +
+		command = "ffmpeg.exe -nostats -loglevel 0 -framerate 60 -i pics/" + experiment_ptr->name +
 			"_Result/eval%d.png -c: libx264 -r 30 -pix_fmt yuv420p results/" + experiment_ptr->name + ".mp4";
 		system(command.c_str());
 		boost::filesystem::remove_all("pics/" + experiment_ptr->name + "_Result");
@@ -138,7 +142,7 @@ namespace task
 		{
 			ofile << fixed << param << " ";
 		}
-		ofile << endl << "Evalution count: " << lattice->get_statistics().sim_eval_count << endl;
+		ofile << endl << "Evalution count: " << lattice->get_statistics().eval_count << endl;
 		ofile.close();
 	}
 }

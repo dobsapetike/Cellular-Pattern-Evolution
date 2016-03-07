@@ -23,6 +23,7 @@ namespace lattice
 		merge,
 		nothing,
 		split,
+		nil,	// for special cases, controller doesn't generate it
 	};
 
 	/**

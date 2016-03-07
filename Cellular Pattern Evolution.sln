@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cellular Pattern Evolution"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Target Pattern Creator", "TargetPatternCreator\Target Pattern Creator.csproj", "{8FE6035B-E5B1-4616-8774-201BB7C35138}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageUtil", "ImageUtil\ImageUtil.csproj", "{97127648-D19F-4FDB-B8D2-6C119971E074}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,18 @@ Global
 		{8FE6035B-E5B1-4616-8774-201BB7C35138}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{8FE6035B-E5B1-4616-8774-201BB7C35138}.Release|Win32.ActiveCfg = Release|Any CPU
 		{8FE6035B-E5B1-4616-8774-201BB7C35138}.Release|x64.ActiveCfg = Release|Any CPU
+		{97127648-D19F-4FDB-B8D2-6C119971E074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97127648-D19F-4FDB-B8D2-6C119971E074}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97127648-D19F-4FDB-B8D2-6C119971E074}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{97127648-D19F-4FDB-B8D2-6C119971E074}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{97127648-D19F-4FDB-B8D2-6C119971E074}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{97127648-D19F-4FDB-B8D2-6C119971E074}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{97127648-D19F-4FDB-B8D2-6C119971E074}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97127648-D19F-4FDB-B8D2-6C119971E074}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97127648-D19F-4FDB-B8D2-6C119971E074}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{97127648-D19F-4FDB-B8D2-6C119971E074}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{97127648-D19F-4FDB-B8D2-6C119971E074}.Release|Win32.ActiveCfg = Release|Any CPU
+		{97127648-D19F-4FDB-B8D2-6C119971E074}.Release|x64.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

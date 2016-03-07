@@ -83,7 +83,7 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>C:\s\cpp;C:\s\shark\include;C:\s\cpp\boost_1_59_0;C:\Boost\include\boost-1_59;C:\Program Files %28x86%29\GnuWin32\include;C:\Program Files %28x86%29\GnuWin32\include\FreeImage</AdditionalIncludeDirectories>
@@ -181,6 +181,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiDiagram.cpp" />
+    <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiDiagramGenerator.cpp" />
+    <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiEdge.cpp" />
     <ClCompile Include="Lattice\Phenotype\IrregularRectanglePhenotype.cpp" />
     <ClCompile Include="Lattice\Phenotype\IrregularSquarePhenotype.cpp" />
     <ClCompile Include="Lattice\Controllers\FeedForwardANNController.cpp" />
@@ -188,6 +191,7 @@
     <ClCompile Include="Lattice\Halting\EnergyCriterion.cpp" />
     <ClCompile Include="Lattice\Halting\EvalNumberCriterion.cpp" />
     <ClCompile Include="Lattice\Halting\StopCriterion.cpp" />
+    <ClCompile Include="Lattice\Phenotype\VoronoiPhenotype.cpp" />
     <ClCompile Include="Lattice\TargetPattern.cpp" />
     <ClCompile Include="Lattice\TargetPatternSvg.cpp" />
     <ClCompile Include="Main\gnuplot_i.cpp" />
@@ -216,12 +220,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lattice\Headers\Phenotypes\Cell\IrregularRectangleCell.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\Cell\VoronoiCell.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiDiagram.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiDiagramGenerator.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiEdge.h" />
     <ClInclude Include="Lattice\Headers\Phenotypes\IrregularRectanglePhenotype.h" />
     <ClInclude Include="Lattice\Headers\Phenotypes\IrregularSquarePhenotype.h" />
     <ClInclude Include="Lattice\Headers\Phenotypes\Cell\IrregularSquareCell.h" />
     <ClInclude Include="Lattice\Headers\Halting\EnergyCriterion.h" />
     <ClInclude Include="Lattice\Headers\Halting\EvalNumberCriterion.h" />
     <ClInclude Include="Lattice\Headers\LatticeStatistics.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\VoronoiPhenotye.h" />
     <ClInclude Include="Lattice\Headers\TargetPattern.h" />
     <ClInclude Include="Lattice\Headers\TargetPatternSvg.h" />
     <ClInclude Include="Main\Headers\gnuplot_i.h" />
@@ -258,7 +267,9 @@
     <Xml Include="Config\confExperiment.xml">
       <SubType>Designer</SubType>
     </Xml>
-    <Xml Include="Config\confStopCriterion.xml" />
+    <Xml Include="Config\confStopCriterion.xml">
+      <SubType>Designer</SubType>
+    </Xml>
     <Xml Include="Config\confObjective.xml" />
     <Xml Include="Config\confOptimizer.xml">
       <SubType>Designer</SubType>
@@ -270,6 +281,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ffmpeg.exe" />
+	<None Include="ImageUtil.exe" />
     <None Include="Target\test.svg">
       <SubType>Designer</SubType>
     </None>
@@ -294,6 +306,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+	<Content Include="ImageUtil.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Target\test.svg">

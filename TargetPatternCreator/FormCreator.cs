@@ -19,16 +19,16 @@ namespace TargetPatternCreator
 
         #region Private fields
 
-        private float _pixelDelta;
+        private float pixelDelta;
         private const int CanvasSize = 600;
 
-        private Polygon _currentPolygon;
-        private readonly List<Polygon> _polygons = new List<Polygon>(); 
-        private readonly ColorGrid _colorGrid = new ColorGrid();
+        private Polygon currentPolygon;
+        private readonly List<Polygon> polygons = new List<Polygon>(); 
+        private readonly ColorGrid colorGrid = new ColorGrid();
 
-        private Edge _currentEdge;
-        private Point _mousePoint;
-        private Point? _edgeFirstPoint;
+        private Edge currentEdge;
+        private Point mousePoint;
+        private Point? edgeFirstPoint;
 
         #endregion
 
@@ -52,31 +52,31 @@ namespace TargetPatternCreator
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.PixelOffsetMode = PixelOffsetMode.Half;
 
-            _colorGrid.Reset();
-            _polygons.ForEach(x => x.Draw(_colorGrid));
-            if (_currentPolygon != null) _currentPolygon.Draw(_colorGrid);
-            if (_currentEdge != null) _currentEdge.Draw(_colorGrid);
+            colorGrid.Reset();
+            polygons.ForEach(x => x.Draw(colorGrid));
+            if (currentPolygon != null) currentPolygon.Draw(colorGrid);
+            if (currentEdge != null) currentEdge.Draw(colorGrid);
 
             for (var y = 0; y < NumSize.Value; ++y)
             {
                 for (var x = 0; x < NumSize.Value; ++x)
                 {
                     g.FillRectangle(
-                        new SolidBrush(_colorGrid[x, y]),
-                        new Rectangle(Convert.ToInt32(x * _pixelDelta), Convert.ToInt32(y * _pixelDelta),
-                            Convert.ToInt32(_pixelDelta), Convert.ToInt32(_pixelDelta)));
+                        new SolidBrush(colorGrid[x, y]),
+                        new Rectangle(Convert.ToInt32(x * pixelDelta), Convert.ToInt32(y * pixelDelta),
+                            Convert.ToInt32(pixelDelta), Convert.ToInt32(pixelDelta)));
                 }
             }
 
             g.DrawRectangle(Pens.Black, 0, 0, CanvasSize - 1, CanvasSize - 1);
             for (var i = 0; i <= NumSize.Value + 1; i++)
             {
-                var pos = Convert.ToInt32(i * _pixelDelta);
+                var pos = Convert.ToInt32(i * pixelDelta);
                 g.DrawLine(Pens.Black, 0, pos, CanvasSize, pos);
                 g.DrawLine(Pens.Black, pos, 0, pos, CanvasSize);
             }
 
-            g.FillEllipse(Brushes.Red, _pixelDelta * _mousePoint.X, _pixelDelta * _mousePoint.Y, _pixelDelta, _pixelDelta);
+            g.FillEllipse(Brushes.Red, pixelDelta * mousePoint.X, pixelDelta * mousePoint.Y, pixelDelta, pixelDelta);
         }
 
         #endregion
@@ -85,11 +85,11 @@ namespace TargetPatternCreator
 
         private void Reset()
         {
-            _colorGrid.Reset();
-            _polygons.Clear();
-            _currentEdge = null;
-            _currentPolygon = null;
-            _edgeFirstPoint = null;
+            colorGrid.Reset();
+            polygons.Clear();
+            currentEdge = null;
+            currentPolygon = null;
+            edgeFirstPoint = null;
 
             Invalidate();
         }
@@ -98,11 +98,11 @@ namespace TargetPatternCreator
         {
             var result = new StringBuilder();
 
-            var bcgCol = _colorGrid.BackgroundColor;
+            var bcgCol = colorGrid.BackgroundColor;
             result.AppendLine(string.Format(
                 "<svg height=\"{0}\" width=\"{0}\" fill=\"rgb({1},{2},{3})\">",
                 NumSize.Value, bcgCol.R, bcgCol.G, bcgCol.B));
-            foreach (var poly in _polygons)
+            foreach (var poly in polygons)
             {
                 result.Append("<polygon points=\"");
                 foreach (var edge in poly.Edges)
@@ -135,8 +135,8 @@ namespace TargetPatternCreator
 
         private void NumSize_ValueChanged(object sender, EventArgs e)
         {
-            _colorGrid.Resize(Convert.ToInt32(NumSize.Value));
-            _pixelDelta = CanvasSize/(float) NumSize.Value;
+            colorGrid.Resize(Convert.ToInt32(NumSize.Value));
+            pixelDelta = CanvasSize/(float) NumSize.Value;
             Invalidate();
         }
 
@@ -144,24 +144,24 @@ namespace TargetPatternCreator
 
         protected override void OnMouseClick(MouseEventArgs e)
         {
-            var x = Convert.ToInt32(Math.Floor(e.X/_pixelDelta));
-            var y = Convert.ToInt32(Math.Floor(e.Y/_pixelDelta));
+            var x = Convert.ToInt32(Math.Floor(e.X/pixelDelta));
+            var y = Convert.ToInt32(Math.Floor(e.Y/pixelDelta));
             var clickPoint = new Point(x, y);
 
-            _mousePoint = clickPoint;
-            _edgeFirstPoint = clickPoint;
+            mousePoint = clickPoint;
+            edgeFirstPoint = clickPoint;
 
-            if (_currentPolygon == null)
-                _currentPolygon = new Polygon(clickPoint, PanelColor.BackColor);
+            if (currentPolygon == null)
+                currentPolygon = new Polygon(clickPoint, PanelColor.BackColor);
             else
             {
-                _currentPolygon.TryAddVertex(clickPoint);
-                if (_currentPolygon.Closed)
+                currentPolygon.TryAddVertex(clickPoint);
+                if (currentPolygon.Closed)
                 {
-                    _polygons.Add(_currentPolygon);
-                    _currentPolygon = null;
-                    _edgeFirstPoint = null;
-                    _currentEdge = null;
+                    polygons.Add(currentPolygon);
+                    currentPolygon = null;
+                    edgeFirstPoint = null;
+                    currentEdge = null;
                 }
             }
 
@@ -170,15 +170,15 @@ namespace TargetPatternCreator
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            var x = Convert.ToInt32(Math.Floor(e.X / _pixelDelta));
-            var y = Convert.ToInt32(Math.Floor(e.Y / _pixelDelta));
+            var x = Convert.ToInt32(Math.Floor(e.X / pixelDelta));
+            var y = Convert.ToInt32(Math.Floor(e.Y / pixelDelta));
             var clickPoint = new Point(x, y);
 
-            if (_edgeFirstPoint != null)
-                _currentEdge = new Edge(_edgeFirstPoint.Value, clickPoint, 
+            if (edgeFirstPoint != null)
+                currentEdge = new Edge(edgeFirstPoint.Value, clickPoint, 
                     Color.FromArgb(150, PanelColor.BackColor));
 
-            _mousePoint = clickPoint;
+            mousePoint = clickPoint;
 
             Invalidate();
         }
@@ -205,7 +205,7 @@ namespace TargetPatternCreator
         {
             if (BackgroundColorPicker.ShowDialog() == DialogResult.OK)
             {
-                _colorGrid.BackgroundColor = PanelBackgroundColor.BackColor = BackgroundColorPicker.Color;
+                colorGrid.BackgroundColor = PanelBackgroundColor.BackColor = BackgroundColorPicker.Color;
                 Invalidate();
             }
         }

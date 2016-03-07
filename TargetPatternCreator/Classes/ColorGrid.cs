@@ -9,7 +9,7 @@ namespace TargetPatternCreator.Classes
     /// </summary>
     public class ColorGrid
     {
-        private Color[,] _colorGrid;
+        private Color[,] colorGrid;
 
         public Color BackgroundColor { get; set; }
 
@@ -30,12 +30,12 @@ namespace TargetPatternCreator.Classes
                 for (var x = 0; x < size; ++x)
                 {
                     newGrid[y, x] =
-                        _colorGrid != null && _colorGrid.GetLength(0) > y && _colorGrid.GetLength(0) > x
-                            ? _colorGrid[y, x]
+                        colorGrid != null && colorGrid.GetLength(0) > y && colorGrid.GetLength(0) > x
+                            ? colorGrid[y, x]
                             : BackgroundColor;
                 }
             }
-            _colorGrid = newGrid;
+            colorGrid = newGrid;
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace TargetPatternCreator.Classes
         /// </summary>
         public int Size
         {
-            get { return _colorGrid.GetLength(0); }
+            get { return colorGrid.GetLength(0); }
         }
 
         /// <summary>
@@ -106,8 +106,8 @@ namespace TargetPatternCreator.Classes
         /// </summary>
         public Color this[int x, int y]
         {
-            get { return _colorGrid[y, x]; }
-            set { if (x < Size && y < Size) _colorGrid[y, x] = value; }
+            get { return colorGrid[y, x]; }
+            set { if (x < Size && y < Size) colorGrid[y, x] = value; }
         }
     }
 }

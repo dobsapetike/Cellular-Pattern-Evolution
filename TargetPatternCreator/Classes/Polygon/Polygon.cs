@@ -9,22 +9,23 @@ namespace TargetPatternCreator.Classes.Polygon
     {
         public bool Closed { get; private set; }
         public Color Color { get; private set; }
-        private readonly List<Edge> _edges = new List<Edge>();
-        private Point _prevPoint, _firstPoint;
+        private readonly List<Edge> edges = new List<Edge>();
+        private Point prevPoint;
+        private readonly Point firstPoint;
 
-        private int _ymin = int.MaxValue, _ymax = int.MinValue;
+        private int ymin = int.MaxValue, ymax = int.MinValue;
 
         public Polygon(Point first, Color c)
         {
             Color = c;
-            _firstPoint = _prevPoint = first;
+            firstPoint = prevPoint = first;
         }
 
         public IReadOnlyCollection<Edge> Edges 
         {
             get
             {
-                return _edges.AsReadOnly();
+                return edges.AsReadOnly();
             }
         }
 
@@ -32,14 +33,14 @@ namespace TargetPatternCreator.Classes.Polygon
         {
             if (Closed) return;
 
-            _edges.Add(new Edge(_prevPoint, point, Color));
-            _prevPoint = point;
-            if (point == _firstPoint) 
+            edges.Add(new Edge(prevPoint, point, Color));
+            prevPoint = point;
+            if (point == firstPoint) 
                 Closed = true;
 
             var y = Convert.ToInt32(point.Y);
-            _ymin = Math.Min(y, _ymin);
-            _ymax = Math.Max(y, _ymax);
+            ymin = Math.Min(y, ymin);
+            ymax = Math.Max(y, ymax);
         }
 
         private void ScanFill(ColorGrid grid)
@@ -48,9 +49,9 @@ namespace TargetPatternCreator.Classes.Polygon
 
             var edgeTable = new Dictionary<int, List<Edge>>();
             var xminTable = new Dictionary<Edge, double>();
-            _edges.ForEach(x => xminTable.Add(x, x.XMin));
+            edges.ForEach(x => xminTable.Add(x, x.XMin));
 
-            foreach (var edge in _edges.Where(edge => !edge.IsHorizontal))
+            foreach (var edge in edges.Where(edge => !edge.IsHorizontal))
             {
                 if (!edgeTable.ContainsKey(edge.YMax))
                 {
@@ -60,7 +61,7 @@ namespace TargetPatternCreator.Classes.Polygon
             }
 
             var activeEdgeTable = new List<Edge>();
-            for (var y = _ymax; y >= _ymin; --y)
+            for (var y = ymax; y >= ymin; --y)
             {
                 if (edgeTable.ContainsKey(y))
                 {
@@ -93,7 +94,7 @@ namespace TargetPatternCreator.Classes.Polygon
 
         public void Draw(ColorGrid grid)
         {
-            foreach (var e in _edges)
+            foreach (var e in edges)
                 e.Draw(grid);
             if (Closed) ScanFill(grid);
         }

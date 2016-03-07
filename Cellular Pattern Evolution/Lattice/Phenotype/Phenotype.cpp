@@ -2,6 +2,7 @@
 #include "../Headers/Phenotypes/RegularStructurePhenotype.h"
 #include "../Headers/Phenotypes/IrregularSquarePhenotype.h"
 #include "../Headers/Phenotypes/IrregularRectanglePhenotype.h"
+#include "../Headers/Phenotypes/VoronoiPhenotye.h"
 
 namespace lattice
 {
@@ -18,6 +19,8 @@ namespace lattice
 				return std::make_unique<irregular_square_phenotype>(settings);
 			if (settings.cellType == irregular_rectangle)
 				return std::make_unique<irregular_rectangle_phenotype>(settings);
+			if (settings.cellType == voronoi)
+				return std::make_unique<voronoi_phenotype>(settings);
 
 			throw invalid_argument(
 				"No matching phenotype found for celltype: " + settings.cellType);

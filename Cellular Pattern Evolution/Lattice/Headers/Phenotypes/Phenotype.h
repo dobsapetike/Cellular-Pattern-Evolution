@@ -3,7 +3,7 @@
 
 #include "../LatticeSettings.h"
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <memory>
 
 namespace lattice
@@ -11,7 +11,7 @@ namespace lattice
 	namespace phenotypes
 	{
 		class lattice_cell;
-		typedef map<direction, vector<shared_ptr<lattice_cell>>> neighbourhood;
+		typedef unordered_map<direction, vector<shared_ptr<lattice_cell>>> neighbourhood;
 
 		/**
 			Phenotype captures the observable characteristics of the individual,

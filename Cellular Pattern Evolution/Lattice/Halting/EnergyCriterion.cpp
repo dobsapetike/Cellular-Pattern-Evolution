@@ -38,8 +38,10 @@ namespace lattice
 		*/
 		bool energy_halting::should_stop(lattice& lattice)
 		{
-			double energy(0.0), avg(0.0), stdev(0.0);
-			
+			if (lattice.get_statistics().sim_eval_count >= step_limit)
+				return true;
+
+			double energy(0.0), avg(0.0), stdev(0.0);			
 			// compute energy of the organism
 			auto& cells = lattice.get_phenotype().expose_cells();
 			for (auto& cell : cells)
@@ -74,14 +76,7 @@ namespace lattice
 			}
 			stdev = sqrt(stdev / window_size);
 
-			bool shouldStop = stdev < threshold
-				|| lattice.get_statistics().sim_eval_count >= step_limit;
-			/*if (shouldStop)
-			{
-				cout << "Stopping after steps: " << lattice.get_statistics().eval_count << 
-					" ( " << stdev << " )" << endl;
-			} */
-			return shouldStop;
+			return stdev < threshold;
 		}
 	}
 }

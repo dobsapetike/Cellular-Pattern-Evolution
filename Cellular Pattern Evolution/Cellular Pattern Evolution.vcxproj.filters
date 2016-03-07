@@ -34,12 +34,6 @@
     <Filter Include="Header Files\Lattice\Controllers">
       <UniqueIdentifier>{58eed362-4340-43b1-8bbe-0139ceacb2d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Lattice\Phenotype">
-      <UniqueIdentifier>{9488d041-2372-4959-a5e4-79ab7cc600f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Lattice\Phenotype\Cell">
-      <UniqueIdentifier>{fe359dd2-6e68-4dfa-9a11-337a4ac4876e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Lattice\Genotype">
       <UniqueIdentifier>{6d31afa7-e667-4f3a-952a-eb05cde06557}</UniqueIdentifier>
     </Filter>
@@ -72,6 +66,18 @@
     </Filter>
     <Filter Include="Source Files\Task">
       <UniqueIdentifier>{d12d75a5-a73f-40f6-9f83-d5325e3db830}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lattice\Phenotypes\Geometry">
+      <UniqueIdentifier>{decfb752-7051-40d7-ad36-31e5101f69e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lattice\Phenotype">
+      <UniqueIdentifier>{9488d041-2372-4959-a5e4-79ab7cc600f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lattice\Phenotype\Cell">
+      <UniqueIdentifier>{fe359dd2-6e68-4dfa-9a11-337a4ac4876e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lattice\Phenotype\Geometry">
+      <UniqueIdentifier>{80614cf6-34d6-4251-a49a-d17e4aeab34d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +175,18 @@
       <Filter>Source Files\Lattice\Phenotype</Filter>
     </ClCompile>
     <ClCompile Include="Lattice\Phenotype\IrregularRectanglePhenotype.cpp">
+      <Filter>Source Files\Lattice\Phenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiDiagramGenerator.cpp">
+      <Filter>Source Files\Lattice\Phenotype\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiDiagram.cpp">
+      <Filter>Source Files\Lattice\Phenotype\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiEdge.cpp">
+      <Filter>Source Files\Lattice\Phenotype\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Phenotype\VoronoiPhenotype.cpp">
       <Filter>Source Files\Lattice\Phenotype</Filter>
     </ClCompile>
   </ItemGroup>
@@ -287,6 +305,21 @@
     <ClInclude Include="Lattice\Headers\Phenotypes\IrregularRectanglePhenotype.h">
       <Filter>Header Files\Lattice\Phenotypes</Filter>
     </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiDiagramGenerator.h">
+      <Filter>Header Files\Lattice\Phenotypes\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiDiagram.h">
+      <Filter>Header Files\Lattice\Phenotypes\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiEdge.h">
+      <Filter>Header Files\Lattice\Phenotypes\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\Cell\VoronoiCell.h">
+      <Filter>Header Files\Lattice\Phenotypes\Cell</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\VoronoiPhenotye.h">
+      <Filter>Header Files\Lattice\Phenotypes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Config\confController.xml">
@@ -313,5 +346,6 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="ffmpeg.exe" />
+    <None Include="ImageUtil.exe" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #ifndef CELL_H
 #define CELL_H
 
-#include <map>
+#include <unordered_map>
 #include <memory>
 
 #include "../Phenotype.h"
@@ -17,8 +17,8 @@ namespace lattice
 			Types for working with the neighbourhood
 		*/
 		class lattice_cell;		// forward declaration
-		typedef map<direction, vector<shared_ptr<lattice_cell>>> neighbourhood;
-		typedef map<direction, map<shared_ptr<lattice_cell>, double>> neighbourhood_compatibility;
+		typedef unordered_map<direction, vector<shared_ptr<lattice_cell>>> neighbourhood;
+		typedef unordered_map<direction, unordered_map<shared_ptr<lattice_cell>, double>> neighbourhood_compatibility;
 
 		/**
 			Abstract class for creating the basis of the the different 
@@ -51,12 +51,14 @@ namespace lattice
 			unsigned int get_y() const { return coord_y; }
 			state const& get_state() const { return cell_state; }
 			polygon const& get_geometry() const { return geometry; }
-			shared_ptr<phenotype>& get_owner() { return owner; }
+			shared_ptr<phenotype> get_owner() { return owner; }
 			// field setters
 			void set_state(state const& s) { cell_state = move(s); }
-			void next_candidate(state const& s) { next_state = move(s); }
-			void apply_candidate() { cell_state = move(next_state); }
+			void next_candidate(state const& s) { next_state = s; }
+			void apply_candidate() { cell_state = next_state; }
+
 			void reset_action() { cell_state.action = nothing; }
+			void reset_action(action a) { cell_state.action = a; }
 		};
 
 		/**
