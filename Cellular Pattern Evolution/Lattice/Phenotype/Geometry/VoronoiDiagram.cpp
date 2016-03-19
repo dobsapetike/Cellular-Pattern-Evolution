@@ -43,6 +43,7 @@ vector<shared_ptr<voronoi_region>> voronoi_diagram_factory::create_diagram(
 		if (edges.insert(v_edge{ x2, y2, x1, y1, false, false }).second)
 			place_side_vertice(x2, y2, side_vertices);
 	}
+	if (!edges.size()) return get_default();
 
 	// also append the side edges
 	for (unsigned int dir = upper; dir <= lower; ++dir)
@@ -55,6 +56,7 @@ vector<shared_ptr<voronoi_region>> voronoi_diagram_factory::create_diagram(
 		sort(side_vertices[dir].begin(), side_vertices[dir].end());
 		for (unsigned int i = 0; i < side_vertices[dir].size(); ++i)
 		{
+			if (i > 0 && float_equal(side_vertices[dir][i - 1], side_vertices[dir][i])) continue;
 			edges.insert(construct_side_edge(static_cast<direction>(dir),
 				i == 0 ? 0 : side_vertices[dir][i - 1], side_vertices[dir][i]));
 		}
@@ -64,15 +66,22 @@ vector<shared_ptr<voronoi_region>> voronoi_diagram_factory::create_diagram(
 
 	// create polygons by traversing them via the edges
 	vector<polygon> regions;
+	unsigned int prev_edge_count = -1;
 	while (edges.size())
 	{
+		if (edges.size() == prev_edge_count || edges.size() < 3) return get_default();
+		prev_edge_count = edges.size();
+
 		v_edge start;
-		for (auto iter = edges.begin();; ++iter)
+		bool found = false;
+		for (auto iter = edges.begin(); iter != edges.end(); ++iter)
 		{
 			if (iter->flippable) continue;
 			start = *iter;
+			found = true;
 			break;
 		}
+		if (!found) return get_default();
 
 		polygon poly;
 		v_edge current = start, temp = {};
@@ -106,6 +115,7 @@ vector<shared_ptr<voronoi_region>> voronoi_diagram_factory::create_diagram(
 			current = temp;
 			edges.erase(current.is_flipped ? current.flipped() : current);
 
+			if (max_angle == FLT_MIN) return get_default();
 		} 
 		while (current != start);
 
@@ -133,10 +143,10 @@ vector<shared_ptr<voronoi_region>> voronoi_diagram_factory::create_diagram(
 void voronoi_diagram_factory::place_side_vertice(float x, float y,
 	vector<vector<float>>& vertices)
 {
-	if (y == 0 && x > 0) vertices[lower].push_back(x);
-	else if (y == height && x < width) vertices[upper].push_back(x);
-	else if (x == 0 && y > 0) vertices[::left].push_back(y);
-	else if (x == width && y < height) vertices[::right].push_back(y);
+	if (float_equal(y, 0) && x > 0 && x < width) vertices[lower].push_back(x);
+	else if (float_equal(y, height) && x > 0 && x < width) vertices[upper].push_back(x);
+	else if (float_equal(x, 0) && y > 0 && y < height) vertices[::left].push_back(y);
+	else if (float_equal(x, width) && y > 0 && y < height) vertices[::right].push_back(y);
 }
 
 v_edge voronoi_diagram_factory::construct_side_edge(direction dir, float start, float end)
@@ -164,4 +174,16 @@ v_edge voronoi_diagram_factory::construct_side_edge(direction dir, float start, 
 	e.flippable = true;
 	e.is_flipped = false;
 	return e;
+}
+
+vector<shared_ptr<voronoi_region>> voronoi_diagram_factory::get_default()
+{
+	vector<shared_ptr<voronoi_region>> result;
+	vector<point> points{
+		point(0, 0), point(0, height),
+		point(width, height), point(width, 0), point(0, 0)
+	};
+	polygon poly = make_polygon(points);
+	result.push_back(make_shared<voronoi_region>(point(width / 2.0, height / 2.0), poly));
+	return result;
 }

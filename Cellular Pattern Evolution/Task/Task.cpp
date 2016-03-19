@@ -6,8 +6,9 @@
 
 namespace task
 {
-	task::task(experiment const& exp)
+	task::task(experiment const& exp, unsigned int num)
 	{
+		run_num = num;
 		// initialize fields based on experiment configuations
 		try
 		{
@@ -61,7 +62,7 @@ namespace task
 		//SetConsoleCtrlHandler(static_cast<PHANDLER_ROUTINE>(_handle_abort), true);
 		running = true;
 
-		logger::get_logger().log_experiment_start(experiment_ptr->name);
+		logger::get_logger().log_experiment_start(experiment_name());
 
 		optimizer->init();
 		// while stopping criterion is not met, call the optimizer stops
@@ -85,6 +86,7 @@ namespace task
 			}
 
 			plotter->add_point(result_fitness);
+			lattice->get_statistics().gen_history.push_back(result_fitness);
 			logger::get_logger().log_evol_stat("Fitness: " + to_string(result_fitness));
 
 			lattice->get_genotype().get_controller().set_params(result);
@@ -92,57 +94,73 @@ namespace task
 
 			logger::get_logger().log_evol_stat("Ended after step: " + to_string(lattice->get_statistics().sim_eval_count));
 
-			if (result_fitness == 0)
-				break;
+			// if (result_fitness == 0) break;
 
-			painter->paint(experiment_ptr->name, "gen" + to_string(optimizer->step_count())
+			painter->paint(experiment_name(), "gen" + to_string(optimizer->step_count())
 				+ ".png", lattice->get_phenotype());
 		}
 
 		running = false;
-		logger::get_logger().log_experiment_end(experiment_ptr->name);
+		logger::get_logger().log_experiment_end(experiment_name());
 	}
 
 	void task::simulate()
 	{
 		lattice->simulate();
-		painter->paint("simulator", "sim.png", lattice->get_phenotype());
+		painter->paint("simulator", "sim_" + experiment_name() +".png", lattice->get_phenotype());
 	}
 
 	/**
 		Finalizes the experiment - should be called after the execution
 	*/
+
+	static int eval;
 	void task::finalize()
 	{
 		// simulate a run while taking a picture after each evaluation
 		logger::get_logger().log_info("Generating video of the simulation of the resulting automaton ... ");
-		static int eval = 0;
-		auto callback = [&](lattice::phenotypes::phenotype& p)
-		{
-			this->painter->paint(experiment_ptr->name + "_Result", 
+		eval = 0;
+		auto callback = [&](lattice::phenotypes::phenotype& p) {
+			this->painter->paint(experiment_name() + "_Result", 
 				"eval" + to_string(++eval) + "_" + to_string(lattice->get_statistics().sim_eval_count) + ".png", p);
 		};
 		lattice->get_genotype().get_controller().set_params(result);
 		lattice->simulate(callback);
 
 		// print the generation number on the images
-		string command = "ImageUtil.exe " + experiment_ptr->name + "_Result";
+		string command = "ImageUtil.exe " + experiment_name() + "_Result";
 		system(command.c_str());
 		boost::filesystem::create_directory("results/");
 		// create video
-		command = "ffmpeg.exe -nostats -loglevel 0 -framerate 60 -i pics/" + experiment_ptr->name +
-			"_Result/eval%d.png -c: libx264 -r 30 -pix_fmt yuv420p results/" + experiment_ptr->name + ".mp4";
+		command = "ffmpeg.exe -nostats -loglevel 0 -framerate 60 -i pics/" + experiment_name() +
+			"_Result/eval%d.png -c: libx264 -r 30 -pix_fmt yuv420p results/" + experiment_name() + ".mp4";
 		system(command.c_str());
-		boost::filesystem::remove_all("pics/" + experiment_ptr->name + "_Result");
-		// and save the lattice configuration
+		boost::filesystem::remove_all("pics/" + experiment_name() + "_Result");
+
+		// and save result
 		ofstream ofile;
-		ofile.open("results/" + experiment_ptr->name + ".txt");
+		ofile.open("results/" + experiment_name() + ".txt");
 		ofile.precision(numeric_limits<double>::max_digits10);
-		for (auto param : result) //_lattice->get_genotype().get_controller().get_params())
+		// the controller parameters
+		// for (auto param : result)
+		for (auto param : lattice->get_genotype().get_controller().get_params())
 		{
 			ofile << fixed << param << " ";
 		}
-		ofile << endl << "Evalution count: " << lattice->get_statistics().eval_count << endl;
+		ofile << endl << endl;
+		// and the fitness history
+		auto fitn_writer = [&](string type, real_vector fitn) {
+			ofile << "Fitness history by " <<  type << ": " << endl << "[ ";
+			for (auto elem : fitn)
+			{
+				ofile << elem << " ";
+			}
+			ofile << "]" << endl << endl;
+		};
+		fitn_writer("generations", lattice->get_statistics().gen_history);
+		fitn_writer("evalutations", lattice->get_statistics().eval_history);
+
+		ofile << endl << "No of evaluations: " << lattice->get_statistics().eval_count << endl;
 		ofile.close();
 	}
 }

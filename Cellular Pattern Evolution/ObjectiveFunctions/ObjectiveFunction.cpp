@@ -1,6 +1,7 @@
 #include "Headers/ObjectiveFunction.h"
 #include "Headers/ObjectiveFunctionCellCount.h"
 #include "Headers/ObjectiveFunctionColorDistance.h"
+#include "Headers/ObjectiveFunctionGenerationCount.h"
 #include <algorithm>
 
 namespace objective_functions
@@ -19,6 +20,8 @@ namespace objective_functions
 			return unique_ptr<objective_func_cell_count>(new objective_func_cell_count(oName, importance, lattice));
 		if (name == "colordist")
 			return unique_ptr<objective_func_color_dist>(new objective_func_color_dist(oName, importance, lattice));
+		if (name == "gencount")
+			return unique_ptr<objective_func_gen_count>(new objective_func_gen_count(oName, importance, lattice));
 
 		throw invalid_argument("Unknown objective function: " + oName);
 	}

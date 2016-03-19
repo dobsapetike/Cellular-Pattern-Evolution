@@ -52,11 +52,17 @@ bool float_equal(float a, float b, float eps)
 	return fabs(a - b) < eps;
 }
 
+double point_distance(point const& a, point const& b)
+{
+	return sqrt((a.get<0>() - b.get<0>()) * (a.get<0>() - b.get<0>()) +
+		(a.get<1>() - b.get<1>()) * (a.get<1>() - b.get<1>()));
+}
+
 /**
 	Point comparison
 */
 
-bool point_equal(point a, point b, float eps)
+bool point_equal(point const& a, point const& b, float eps)
 {
 	return float_equal(a.get<0>(), b.get<0>(), eps) 
 		&& float_equal(a.get<1>(), b.get<1>(), eps);

@@ -25,6 +25,9 @@ namespace task
 		*/
 		std::shared_ptr<experiment> const& get_experiment(unsigned int id) const;
 		std::shared_ptr<experiment> const& operator[](unsigned int id) const;
+
+		unsigned int experiment_count() const { return experiments_list.size(); }
+		std::shared_ptr<experiment> const& at(unsigned int index) const;
 	};
 }
 

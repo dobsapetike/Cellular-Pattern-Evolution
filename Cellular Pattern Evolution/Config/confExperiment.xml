@@ -1,8 +1,8 @@
 <Experiments>
   <Experiment>
-    <Name>Experiment1</Name>
+    <Name>SQR0COLORREGULAR2BAND908x8</Name>  <!-- !!!! name should not contain char '_' !!!! -->
     <Id>1</Id>
-    <RunCount>2</RunCount>
+    <RunCount>1</RunCount>
     <Controller>Config/confController.xml</Controller>
     <Lattice>Config/confLattice.xml</Lattice>
     <Objective>Config/confObjective.xml</Objective>

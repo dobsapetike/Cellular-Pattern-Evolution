@@ -44,7 +44,7 @@ namespace lattice
 		{
 			auto& cells = phenotype->expose_cells();
 			//for (auto& cell : cells)
-			//	_genotype->get_controller().set_next_state(*cell);
+			//	genotype->get_controller().set_next_state(*cell);
 			for (unsigned int order = 0; order < threads->thread_count(); ++order)
 			{
 				threads->enqueue_job([&,order] () -> void { update_cells(order); });

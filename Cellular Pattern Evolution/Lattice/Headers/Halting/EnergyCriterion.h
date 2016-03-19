@@ -14,7 +14,7 @@ namespace lattice
 		class energy_halting : public stop_criterion
 		{
 		private:
-			unsigned int window_size = 10, step_limit = 200;
+			unsigned int window_size = 10;
 			double threshold = 10e-15, history_sum = 0.0;
 			vector<double> energy_history;
 

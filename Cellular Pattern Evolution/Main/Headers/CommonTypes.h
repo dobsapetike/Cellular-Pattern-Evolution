@@ -41,7 +41,8 @@ polygon make_polygon(std::vector<point> const& points);
 void reorder_clockwise(polygon& p);
 
 bool float_equal(float a, float b, float eps = .005);
-bool point_equal(point a, point b, float eps = .005);
+bool point_equal(point const& a, point const& b, float eps = .005);
+double point_distance(point const& a, point const& b);
 
 /**
 	Hash code for the point type

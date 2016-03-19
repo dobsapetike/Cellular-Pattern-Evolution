@@ -1,57 +1,49 @@
 #include <boost/program_options.hpp>
 
-#include "Headers/Logger.h"
 #include "../Task/Headers/Task.h"
 #include "../Task/Headers/ExperimentCollection.h"
 
-#include <map>
 
 using namespace std;
 using namespace boost::program_options;
 
 void start_regime(string regime)
 {
-	task::experiments e("config/confExperiment.xml");
-	unique_ptr<task::task> t = make_unique<task::task>(*e[1]);
-	//t->simulate();
-	t->execute();
-	t->finalize();
+	/*ofstream ofile;
+	ofile.open("results/poly.html");
+	ofile << "<svg transform=\"rotate(180, 64, 64)\">" << endl;
+	for (auto& r : regions) 
+	{
+		ofile << "<polygon points=\"" ;
+		for (auto& p : r->polygon.outer())
+		{
+			ofile << p.x() << " " << p.y() << ", ";
+		}
+		ofile << "\"/>" << endl;
+		ofile << "<ellipse cx=\"" << r->generator.get<0>() << "\" cy=\"" << r->generator.get<1>()
+			<< "\" rx=\"1\" ry=\"1\" fill=\"red\"/>" << endl;
+	}
+	ofile << "</svg>" << endl;
+	ofile.close();*/
 }
 
 int main(int argc, char* argv[])
 {
-	try
+	string config = argc > 1 ? argv[1] : "config/confExperiment.xml";
+
+	task::experiments experiments(config);
+	for (unsigned int i = 0; i < experiments.experiment_count(); ++i)
 	{
-		options_description description{ "Options" };
-		description.add_options()
-			("help,h", "Help screen")
-			("regime,r", value<string>()->default_value("master"), 
-				"Available regimes: master, slave, simulator");
-		
-		variables_map vm;
-		store(parse_command_line(argc, argv, description), vm);
-		notify(vm);
-
-		if (vm.count("help"))
+		auto& exp = *experiments.at(i);
+		unsigned int run(0);
+		while (run++ != exp.run_count)
 		{
-			cout << description << endl;
-			return EXIT_SUCCESS;
+			shared_ptr<task::task> t = make_shared<task::task>(exp, run);
+			t->execute();
+			t->simulate();
+			t->finalize();
 		}
-
-		string regime("master");
-		if (vm.count("regime"))
-		{
-			regime = vm["regime"].as<string>();
-		}
-
-		start_regime(regime);
-	}
-	catch (const error &ex)
-	{	
-		logger::get_logger().log_error(ex.what());
 	}
 
-	logger::get_logger().log_info("DONE! Aplication closes.");
-	
 	return EXIT_SUCCESS;
 }

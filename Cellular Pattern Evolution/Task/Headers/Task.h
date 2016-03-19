@@ -25,13 +25,15 @@ namespace task
 		std::unique_ptr<painter> painter;
 		std::unique_ptr<experiment> experiment_ptr;
 
+		unsigned int run_num = 0;
+
 		real_vector result;
 		double result_fitness = DBL_MAX;
 
 		static bool running;
 		static BOOL WINAPI handle_abort(DWORD c_event);
 	public:
-		explicit task(experiment const& exp);
+		explicit task(experiment const& exp, unsigned int num);
 		/**
 			Executes the experiment
 		*/
@@ -40,8 +42,11 @@ namespace task
 			Finalizes the experiment - should be called after the execution
 		*/
 		void finalize();
-
 		void simulate();
+
+		string experiment_name() const {
+			return experiment_ptr->name + "(" + to_string(run_num) + ")";
+		}
 	};
 }
 

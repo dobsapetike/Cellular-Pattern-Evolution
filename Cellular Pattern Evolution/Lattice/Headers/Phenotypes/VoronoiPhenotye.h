@@ -27,8 +27,9 @@ namespace lattice
 			/**
 				Topology updates
 			*/
-			void split(shared_ptr<voronoi_cell> cell, vector<point>& new_points);
+			void split(shared_ptr<voronoi_cell> cell, vector<point> const& points, vector<point>& new_points);
 			bool merge(shared_ptr<voronoi_cell> cell, point& new_point);
+			bool is_feasible(vector<point> const& points, point p);
 
 			void place_incident(v_edge const& edge, shared_ptr<voronoi_cell> cell);
 			void generate_topology(vector<point> const& points, 

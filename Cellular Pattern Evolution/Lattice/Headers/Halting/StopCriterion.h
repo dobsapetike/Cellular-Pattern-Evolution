@@ -16,11 +16,15 @@ namespace lattice
 		*/
 		class stop_criterion
 		{
+		protected:
+			unsigned int step_limit = 200;
 		public:
 			// decides whether the simulation should stop
 			virtual bool should_stop(lattice& statistics) = 0;
 			// resets inner state befre simulation
 			virtual void reset() = 0;
+
+			unsigned int get_step_limit() const { return step_limit; }
 		};
 
 		/**

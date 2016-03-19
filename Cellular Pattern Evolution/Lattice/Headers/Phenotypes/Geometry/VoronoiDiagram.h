@@ -29,6 +29,7 @@ private:
 
 	void place_side_vertice(float x, float y, std::vector<std::vector<float>>& vertices);
 	v_edge construct_side_edge(direction dir, float start, float end);
+	std::vector<std::shared_ptr<voronoi_region>> get_default();
 public:
 	/**
 		Constructos the voronoi region based on the generator points and the size of the 

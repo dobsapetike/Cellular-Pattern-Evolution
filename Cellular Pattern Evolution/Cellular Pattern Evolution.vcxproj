@@ -237,6 +237,7 @@
     <ClInclude Include="Main\Headers\Logger.h" />
     <ClInclude Include="Main\Headers\Painter.h" />
     <ClInclude Include="Main\Headers\Plotter.h" />
+    <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveFunctionGenerationCount.h" />
     <ClInclude Include="Task\Headers\Experiment.h" />
     <ClInclude Include="Task\Headers\ExperimentCollection.h" />
     <ClInclude Include="Task\Headers\Task.h" />
@@ -281,7 +282,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ffmpeg.exe" />
-	<None Include="ImageUtil.exe" />
+    <None Include="ImageUtil.exe" />
     <None Include="Target\test.svg">
       <SubType>Designer</SubType>
     </None>
@@ -308,7 +309,7 @@
     <Content Include="ffmpeg.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-	<Content Include="ImageUtil.exe">
+    <Content Include="ImageUtil.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Target\test.svg">

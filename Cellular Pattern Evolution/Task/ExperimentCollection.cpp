@@ -1,6 +1,5 @@
 #include <tinyxml/tinyxml.h>
 #include "Headers/ExperimentCollection.h"
-#include <iostream>
 
 namespace task
 {
@@ -54,5 +53,15 @@ namespace task
 	std::shared_ptr<experiment> const& experiments::operator[](unsigned int id) const
 	{
 		return get_experiment(id);
+	}
+
+	/**
+		Getter by index
+	*/
+	std::shared_ptr<experiment> const& experiments::at(unsigned int index) const
+	{
+		if (index < 0 || index > experiment_count() - 1)
+			throw std::out_of_range("Experiment index is out of range!");
+		return experiments_list[index];
 	}
 }

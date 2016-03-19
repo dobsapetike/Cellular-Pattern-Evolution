@@ -12,8 +12,6 @@ namespace lattice
 		*/
 		class eval_num_halting : public stop_criterion
 		{
-		private:
-			unsigned int eval_limit;
 		public:
 			eval_num_halting(lattice_settings const& settings);
 			virtual void reset() override { };

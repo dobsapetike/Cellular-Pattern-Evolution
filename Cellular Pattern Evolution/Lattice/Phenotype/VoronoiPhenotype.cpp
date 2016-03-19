@@ -26,12 +26,12 @@ namespace lattice
 			incidents.clear();
 
 			auto diagram = vor_factory.create_diagram(points, get_width(), get_height());
-			for (auto region : diagram)
+			for (auto& region : diagram)
 			{
 				auto cellptr = make_shared<voronoi_cell>(region, get_state_settings(), self_ptr);
 				if (state_map) {
 					auto stateitr = state_map->find(cellptr->get_region()->generator);
-					cellptr->set_state(stateitr->second);
+					if (stateitr != state_map->end()) cellptr->set_state(stateitr->second);
 				}
 
 				cells.push_back(cellptr);
@@ -44,7 +44,8 @@ namespace lattice
 			}
 		}
 
-		void voronoi_phenotype::split(shared_ptr<voronoi_cell> cell, vector<point>& new_points)
+		void voronoi_phenotype::split(shared_ptr<voronoi_cell> cell, 
+			vector<point> const& cpoints, vector<point>& new_points)
 		{
 			double minx(FLT_MAX), miny(FLT_MAX), maxx(FLT_MIN), maxy(FLT_MIN);
 			auto& points = cell->get_region()->polygon.outer();
@@ -57,10 +58,14 @@ namespace lattice
 			double gx(gen.get<0>()), gy(gen.get<1>());
 
 			new_points.clear();
-			if (gx - minx > 3.0) new_points.push_back(point(gx - (gx - minx) / 2.0, gy));
-			if (maxx - gx > 3.0) new_points.push_back(point(maxx - (maxx - gx) / 2.0, gy));
-			if (gy - miny > 3.0) new_points.push_back(point(gx, gy - (gy - miny) / 2.0));
-			if (maxy - gy > 3.0) new_points.push_back(point(gx, maxy - (maxy - gy) / 2.0));
+			if (is_feasible(cpoints, point((gx + minx) / 2.0, gy))) 
+				new_points.push_back(point((gx + minx) / 2.0, gy));
+			if (is_feasible(cpoints, point((maxx + gx) / 2.0, gy)))
+				new_points.push_back(point((maxx + gx) / 2.0, gy));
+			if (is_feasible(cpoints, point(gx, (gy + miny) / 2.0)))
+				new_points.push_back(point(gx, (gy + miny) / 2.0));
+			if (is_feasible(cpoints, point(gx, (maxy + gy) / 2.0)))
+				new_points.push_back(point(gx, (maxy + gy) / 2.0));
 		}
 
 		bool voronoi_phenotype::merge(shared_ptr<voronoi_cell> cell, point& point)
@@ -88,6 +93,16 @@ namespace lattice
 			return true;
 		}
 
+		bool voronoi_phenotype::is_feasible(vector<point> const& points, point p)
+		{
+			if (p.get<0>() < 1.0 || p.get<0>() > get_width() - 1.0
+				|| p.get<1>() < 1.0 || p.get<1>() > get_height() - 1.0) return false;
+			for (auto& point : points) {
+				if (point_distance(point, p) < 2.0) return false;
+			}
+			return true;
+		}
+
 		void voronoi_phenotype::rearrange_topology()
 		{
 			point np;
@@ -95,17 +110,27 @@ namespace lattice
 			unordered_map<point, state, point_hash> state_map;
 			unsigned int added;
 
-			for (auto cell : cells)
+			vector<point> current_points;
+			for (auto& cell : cells) {
+				current_points.push_back(static_pointer_cast<voronoi_cell>(cell)->get_region()->generator);
+			}
+
+			for (auto& cell : cells)
 			{
 				auto vcell = static_pointer_cast<voronoi_cell>(cell);
 				switch (vcell->get_state().action)
 				{
 					/*case action::merge:
-						if (merge(vcell, np))
+						if (merge(vcell, np) && is_feasible(new_points, np)) {
 							new_points.push_back(np);
+							state_map[np] = vcell->get_state();
+						} else {
+							new_points.push_back(vcell->get_region()->generator);
+							state_map[vcell->get_region()->generator] = vcell->get_state();
+						}
 						break;*/
 					case action::split:
-						split(vcell, nps);
+						split(vcell, current_points, nps);
 						added = 0;
 						for (auto& p : nps) {
 							if (!boost::geometry::within(p, vcell->get_region()->polygon)) continue;
@@ -118,7 +143,7 @@ namespace lattice
 							state_map[vcell->get_region()->generator] = vcell->get_state();
 						}
 						break;
-					case action::nil:
+					case nil:
 						break;
 					default:
 						new_points.push_back(vcell->get_region()->generator);
@@ -162,7 +187,7 @@ namespace lattice
 					points[i + 1].x(), points[i + 1].y(), true };
 				 auto& inc = incidents.find(edge)->second;
 				 if (inc.size() == 1) continue; // side edge
-				 auto nptr = point_equal(inc[0]->get_region()->generator, 
+				 auto& nptr = point_equal(inc[0]->get_region()->generator, 
 					 cell.get_region()->generator) ? inc[1] : inc[0];
 
 				 get_edge_directions(edge, dirs);

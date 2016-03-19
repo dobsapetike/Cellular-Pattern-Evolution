@@ -20,8 +20,10 @@ namespace lattice
 
 		settings->cellType = phenotypes::parse_cell_type(
 			settingsElem->FirstChildElement("CellType")->GetText());
-		settings->init_pattern = settingsElem->FirstChildElement("InitPattern")->GetText();
 		settings->allow_structure_change = atoi(settingsElem->FirstChildElement("AllowStructureChange")->GetText());
+
+		auto initp = settingsElem->FirstChildElement("InitPattern")->GetText();
+		settings->init_pattern = initp ? initp : "";
 
 		string target_path = settingsElem->FirstChildElement("TargetPattern")->GetText();
 		settings->target = make_unique<target_pattern_svg>(settings->width, settings->height, target_path);

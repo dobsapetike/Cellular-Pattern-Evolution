@@ -1,14 +1,15 @@
 <LatticeSettings>
   <LatticeWidth>8</LatticeWidth>
   <LatticeHeight>8</LatticeHeight>
-  <CellType>IrregularSquare</CellType>
+  <!-- options: regular, irregularsquare, irregularrectangle, voronoi -->
+  <CellType>Regular</CellType>
   <PhenotypeSettings>
     <NeighbourhoodType>VonNeumann</NeighbourhoodType>
   </PhenotypeSettings>
   <AllowStructureChange>1</AllowStructureChange>
   <TargetPattern>Target/test.svg</TargetPattern>
   <InitPattern>
-    TODO
+    
   </InitPattern>
   <State>
     <InternalCount>6</InternalCount>

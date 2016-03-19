@@ -320,6 +320,9 @@
     <ClInclude Include="Lattice\Headers\Phenotypes\VoronoiPhenotye.h">
       <Filter>Header Files\Lattice\Phenotypes</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveFunctionGenerationCount.h">
+      <Filter>Header Files\ObjectiveFunctions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Config\confController.xml">

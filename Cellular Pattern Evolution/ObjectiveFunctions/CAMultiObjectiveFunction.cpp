@@ -49,6 +49,7 @@ namespace objective_functions
 			result[i] = objectives[i]->eval() * objectives[i]->get_importance();
 		}
 		++lattice->get_statistics().eval_count;
+		lattice->get_statistics().add_eval(accumulate(result.begin(), result.end(), 0.0));
 
 		return result;
 	}
