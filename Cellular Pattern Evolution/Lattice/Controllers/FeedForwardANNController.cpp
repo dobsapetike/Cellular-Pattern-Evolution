@@ -1,4 +1,5 @@
 #include "../Headers/Controllers/FeedForwardANNController.h"
+#include <numeric>
 
 namespace lattice
 {
@@ -9,6 +10,7 @@ namespace lattice
 		{
 			auto& init_config = *settings.controller;
 			color_type = parse_color_type(init_config.FirstChildElement("ColorType")->GetText());
+			use_fixed_intervals = atoi(init_config.FirstChildElement("FixedIntervals")->GetText());
 			
 			// find out the number of neurons on different layers
 			hidden_neuron_count = atoi(init_config.FirstChildElement("HiddenNeuronCount")->GetText());
@@ -17,7 +19,7 @@ namespace lattice
 				state_params.internal_chemical_count + state_params.external_chemical_count;
 
 			output_neuron_count = 
-				3 +		// merge/split action and interval values 
+				4 +		// merge/split action and interval values 
 				(color_type == color_type::rgb ? 3 : 1);	// neuron for each component 
 
 
@@ -121,12 +123,17 @@ namespace lattice
 			execute_linear_combination(output_neuron_count, weightIndex, output, color);
 
 			// compute color level and merge/split action
-			action = real_vector(3);
+			action = real_vector(4);
+			// interval values
 			for (unsigned int i = 3; i; --i)
 			{
-				action[i-1] = (color.back() + 1) / 2.0;
+				action[i] = (1.0 + color.back()) / 2.0;
 				color.pop_back();
 			}
+			// action value
+			action[0] = color.back();
+			color.pop_back();
+			// color
 			for (unsigned int i = 0; i < color.size(); ++i)
 			{
 				color[i] = (1.0 + color[i]) / 2.0;
@@ -223,6 +230,24 @@ namespace lattice
 			return res;
 		}
 
+		action feedforward_ann_controller::choose_action(real_vector& values) const
+		{
+			if (use_fixed_intervals) 
+			{
+				return values[0] < -1.0 + 2.0 / 3 ? merge :
+					   values[0] >  1.0 - 2.0 / 3 ? split :
+													nothing;
+			}
+
+			// create prob distribution and splice the interval
+			double total = accumulate(next(values.begin()), values.end(), 0.0);
+			for (unsigned int i = 1; i < values.size(); ++i) values[i] *= 2.0 / total;
+			// and splice the interval
+			return values[0] < -1.0 + values[1] ? merge :
+				   values[0] > 1.0 - values[2]  ? split : 
+												  nothing;
+		}
+
 		void feedforward_ann_controller::set_next_state(phenotypes::lattice_cell& cell) const
 		{
 			// first, create the neural network input
@@ -246,17 +271,11 @@ namespace lattice
 			real_vector newInternals, newExternals, newColor, msAction;
 			forward_pass(annInp, newInternals, newExternals, newColor, msAction);
 
-			/*action action = msAction < -1.0 + 2.0 / 3 ? merge : 
-							  msAction >  1.0 - 2.0 / 3 ? split :
-														  nothing;*/
-			action action = msAction[0] < msAction[1]			    ? merge :
-							msAction[0] < msAction[1] + msAction[2] ? split :
-																	  nothing;
 			state newState = {
 				newInternals,
 				newExternals,
 				color_level_to_rgb(newColor),
-				action
+				choose_action(msAction)
 			};
 
 			// set new state as a candidate

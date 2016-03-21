@@ -44,8 +44,7 @@ namespace lattice
 			}
 		}
 
-		void voronoi_phenotype::split(shared_ptr<voronoi_cell> cell, 
-			vector<point> const& cpoints, vector<point>& new_points)
+		void voronoi_phenotype::split(shared_ptr<voronoi_cell> cell, vector<point>& new_points)
 		{
 			double minx(FLT_MAX), miny(FLT_MAX), maxx(FLT_MIN), maxy(FLT_MIN);
 			auto& points = cell->get_region()->polygon.outer();
@@ -58,13 +57,13 @@ namespace lattice
 			double gx(gen.get<0>()), gy(gen.get<1>());
 
 			new_points.clear();
-			if (is_feasible(cpoints, point((gx + minx) / 2.0, gy))) 
+			if (is_feasible(point((gx + minx) / 2.0, gy))) 
 				new_points.push_back(point((gx + minx) / 2.0, gy));
-			if (is_feasible(cpoints, point((maxx + gx) / 2.0, gy)))
+			if (is_feasible(point((maxx + gx) / 2.0, gy)))
 				new_points.push_back(point((maxx + gx) / 2.0, gy));
-			if (is_feasible(cpoints, point(gx, (gy + miny) / 2.0)))
+			if (is_feasible(point(gx, (gy + miny) / 2.0)))
 				new_points.push_back(point(gx, (gy + miny) / 2.0));
-			if (is_feasible(cpoints, point(gx, (maxy + gy) / 2.0)))
+			if (is_feasible(point(gx, (maxy + gy) / 2.0)))
 				new_points.push_back(point(gx, (maxy + gy) / 2.0));
 		}
 
@@ -77,10 +76,9 @@ namespace lattice
 				if (!n[dir].size()) continue;
 				for (auto c : n[dir])  
 				{
-					if (c->get_state().action == action::merge) {
-						mergcell = static_pointer_cast<voronoi_cell>(c);
-						break;
-					}
+					if (c->get_state().action != action::merge) continue;
+					mergcell = static_pointer_cast<voronoi_cell>(c);
+					break;
 				}
 				if (mergcell) break;
 			}
@@ -89,15 +87,18 @@ namespace lattice
 			auto& a = mergcell->get_region()->generator;
 			auto& b = cell->get_region()->generator;
 			point = ::point((a.get<0>() + b.get<0>()) / 2.0, (a.get<1>() + b.get<1>()) / 2.0);
+			if (!is_feasible(point)) return false;
+			cell->reset_action(nil);
 			mergcell->reset_action(nil);
 			return true;
 		}
 
-		bool voronoi_phenotype::is_feasible(vector<point> const& points, point p)
+		bool voronoi_phenotype::is_feasible(point p)
 		{
 			if (p.get<0>() < 1.0 || p.get<0>() > get_width() - 1.0
 				|| p.get<1>() < 1.0 || p.get<1>() > get_height() - 1.0) return false;
-			for (auto& point : points) {
+			for (auto& cell : cells) {
+				point point = static_pointer_cast<voronoi_cell>(cell)->get_region()->generator;
 				if (point_distance(point, p) < 2.0) return false;
 			}
 			return true;
@@ -106,53 +107,47 @@ namespace lattice
 		void voronoi_phenotype::rearrange_topology()
 		{
 			point np;
-			vector<point> new_points, nps;
+			vector<point> new_points, split_points;
 			unordered_map<point, state, point_hash> state_map;
-			unsigned int added;
-
-			vector<point> current_points;
-			for (auto& cell : cells) {
-				current_points.push_back(static_pointer_cast<voronoi_cell>(cell)->get_region()->generator);
-			}
 
 			for (auto& cell : cells)
 			{
 				auto vcell = static_pointer_cast<voronoi_cell>(cell);
+				bool add = true;
 				switch (vcell->get_state().action)
 				{
-					/*case action::merge:
-						if (merge(vcell, np) && is_feasible(new_points, np)) {
+					case action::merge:
+						if (merge(vcell, np))
+						{
 							new_points.push_back(np);
 							state_map[np] = vcell->get_state();
-						} else {
-							new_points.push_back(vcell->get_region()->generator);
-							state_map[vcell->get_region()->generator] = vcell->get_state();
+							add = false;
 						}
-						break;*/
+						break;
 					case action::split:
-						split(vcell, current_points, nps);
-						added = 0;
-						for (auto& p : nps) {
-							if (!boost::geometry::within(p, vcell->get_region()->polygon)) continue;
-							new_points.push_back(p);
-							state_map[p] = vcell->get_state();
-							++added;
+						split(vcell, split_points);
+						if (!split_points.size()) break;
+						for (auto sp : split_points)
+						{
+							if (!boost::geometry::within(sp, vcell->get_region()->polygon)) continue;
+							new_points.push_back(sp);
+							state_map[sp] = vcell->get_state();
 						}
-						if (!added) {
-							new_points.push_back(vcell->get_region()->generator);
-							state_map[vcell->get_region()->generator] = vcell->get_state();
-						}
+						add = false;
 						break;
 					case nil:
+						add = false;
 						break;
+					case nothing:
 					default:
-						new_points.push_back(vcell->get_region()->generator);
-						state_map[vcell->get_region()->generator] = vcell->get_state();
 						break;
 				}
+
+				if (!add) continue;
+				new_points.push_back(vcell->get_region()->generator);
+				state_map[vcell->get_region()->generator] = vcell->get_state();
 			}
 			generate_topology(new_points, &state_map);
-			//generate_topology(new_points);
 		}
 
 		void voronoi_phenotype::set_init_pattern(string pattern)
