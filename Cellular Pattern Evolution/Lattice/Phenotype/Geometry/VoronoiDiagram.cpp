@@ -1,6 +1,8 @@
 #include <unordered_set>
 #include "../../Headers/Phenotypes/Geometry/VoronoiDiagram.h"
-#include "../../Headers/Phenotypes/Geometry/VoronoiDiagramGenerator.h"
+
+#define JC_VORONOI_IMPLEMENTATION
+#include "../../Headers/Phenotypes/Geometry/jc_voronoi.h"
 
 #define M_PI  3.141592653589793
 #define M_2PI 2 * M_PI
@@ -17,6 +19,7 @@ vector<shared_ptr<voronoi_region>> voronoi_diagram_factory::create_diagram(
 {
 	this->width = width;
 	this->height = height;
+	if (points.size() <= 1) return get_default();
 
 	vector<shared_ptr<voronoi_region>> result;
 
@@ -24,18 +27,27 @@ vector<shared_ptr<voronoi_region>> voronoi_diagram_factory::create_diagram(
 	vector<vector<float>> side_vertices(4, vector<float>());
 
 	// use the generator to obtain edges
-	VoronoiDiagramGenerator vg;
-	vector<float> x(points.size()), y(points.size());
+	jcv_diagram diagram;
+	memset(&diagram, 0, sizeof(jcv_diagram));
+	vector<jcv_point> vpoints;
 	for (unsigned int i = 0; i < points.size(); ++i) {
-		x[i] = static_cast<float>(points[i].get<0>());
-		y[i] = static_cast<float>(points[i].get<1>());
+		vpoints.push_back(jcv_point{
+			static_cast<float>(points[i].get<0>()),
+			static_cast<float>(points[i].get<1>())
+		});
 	}
-	vg.generateVoronoi(&x[0], &y[0], x.size(), 0.0, width, 0.0, height);
+	jcv_diagram_generate(vpoints.size(), &vpoints[0], width, height, &diagram);
+	
 
 	// wrap them in our edge object
 	float x1, x2, y1, y2;
-	vg.resetIterator();
-	while (vg.getNext(x1, y1, x2, y2)) {
+	const jcv_edge* edge = jcv_diagram_get_edges(&diagram);
+	while (edge)
+	{
+		x1 = edge->pos[0].x; y1 = edge->pos[0].y;
+		x2 = edge->pos[1].x; y2 = edge->pos[1].y;
+		edge = edge->next;
+
 		if (float_equal(x1, x2) && float_equal(y1, y2)) continue;
 
 		if (edges.insert(v_edge{ x1, y1, x2, y2, false, false }).second)
@@ -43,6 +55,8 @@ vector<shared_ptr<voronoi_region>> voronoi_diagram_factory::create_diagram(
 		if (edges.insert(v_edge{ x2, y2, x1, y1, false, false }).second)
 			place_side_vertice(x2, y2, side_vertices);
 	}
+	jcv_diagram_free(&diagram);
+
 	if (!edges.size()) return get_default();
 
 	// also append the side edges
@@ -125,9 +139,9 @@ vector<shared_ptr<voronoi_region>> voronoi_diagram_factory::create_diagram(
 		regions.push_back(poly);
 
 		point seed;
-		for (unsigned int i = 0; i < x.size(); ++i)
+		for (unsigned int i = 0; i < vpoints.size(); ++i)
 		{
-			point pc(x[i], y[i]);
+			point pc(vpoints[i].x, vpoints[i].y);
 			if (boost::geometry::covered_by(pc, poly)) {
 				seed = pc;
 				break;

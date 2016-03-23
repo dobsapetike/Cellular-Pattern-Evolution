@@ -3,29 +3,10 @@
 #include "../Task/Headers/Task.h"
 #include "../Task/Headers/ExperimentCollection.h"
 
+// #include "../Lattice/Headers/Phenotypes/Geometry/jc_voronoi.h"
 
 using namespace std;
 using namespace boost::program_options;
-
-void start_regime(string regime)
-{
-	/*ofstream ofile;
-	ofile.open("results/poly.html");
-	ofile << "<svg transform=\"rotate(180, 64, 64)\">" << endl;
-	for (auto& r : regions) 
-	{
-		ofile << "<polygon points=\"" ;
-		for (auto& p : r->polygon.outer())
-		{
-			ofile << p.x() << " " << p.y() << ", ";
-		}
-		ofile << "\"/>" << endl;
-		ofile << "<ellipse cx=\"" << r->generator.get<0>() << "\" cy=\"" << r->generator.get<1>()
-			<< "\" rx=\"1\" ry=\"1\" fill=\"red\"/>" << endl;
-	}
-	ofile << "</svg>" << endl;
-	ofile.close();*/
-}
 
 int main(int argc, char* argv[])
 {

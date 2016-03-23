@@ -3,6 +3,6 @@
   <Params>
     <InitStepSize>1.0</InitStepSize>
     <ParentSelectionCount>85</ParentSelectionCount>
-    <EvolutionStepCount>100</EvolutionStepCount>
+    <EvolutionStepCount>350</EvolutionStepCount>
   </Params>
 </OptimizerSettings>

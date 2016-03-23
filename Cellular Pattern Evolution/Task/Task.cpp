@@ -132,8 +132,9 @@ namespace task
 		system(command.c_str());
 		boost::filesystem::create_directory("results/");
 		// create video
-		command = "ffmpeg.exe -nostats -loglevel 0 -framerate 60 -i pics/" + experiment_name() +
-			"_Result/eval%d.png -c: libx264 -r 30 -pix_fmt yuv420p results/" + experiment_name() + ".mp4";
+		command = "ffmpeg.exe -nostats -loglevel 0 -framerate " + to_string(experiment_ptr->video_fps) 
+			+ " -i pics/" + experiment_name() + "_Result/eval%d.png" 
+			+ " -c: libx264 -r 30 -pix_fmt yuv420p results/" + experiment_name() + ".mp4";
 		system(command.c_str());
 		boost::filesystem::remove_all("pics/" + experiment_name() + "_Result");
 

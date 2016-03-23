@@ -13,6 +13,7 @@ namespace task
 		std::string name;
 		unsigned int id;
 		unsigned int run_count;
+		unsigned int video_fps;
 		// detailed informations are in their respective files
 		std::string controller_file;
 		std::string lattice_file;

@@ -4,7 +4,7 @@
 #include <boost/functional/hash.hpp>
 
 /**
-	Structure encapsulating an edge in the diagram
+Structure encapsulating an edge in the diagram
 */
 struct v_edge
 {
@@ -14,25 +14,25 @@ struct v_edge
 	bool flippable, is_flipped;
 
 	/**
-		Gets the flipped version of this edge
+	Gets the flipped version of this edge
 	*/
 	v_edge flipped() const;
 
 	/**
-		Returns wheter input edge is the follwer of this edge
+	Returns wheter input edge is the follwer of this edge
 	*/
 	bool follows_strict(const v_edge& e) const;
 	bool follows(const v_edge& e) const;
 
 	/**
-		Equality operators
+	Equality operators
 	*/
 	bool operator==(const v_edge& other) const;
 	bool operator!=(const v_edge& other) const;
 };
 
 /**
-	Hash code for the voronoi edge
+Hash code for the voronoi edge
 */
 template <>
 struct std::hash<v_edge>

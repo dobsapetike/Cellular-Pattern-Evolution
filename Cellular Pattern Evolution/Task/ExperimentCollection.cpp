@@ -30,6 +30,7 @@ namespace task
 			exp->objective_file = experimentElem->FirstChildElement("Objective")->GetText();
 			exp->optimizer_file = experimentElem->FirstChildElement("Optimizer")->GetText();
 			exp->stopcriterion_file = experimentElem->FirstChildElement("StopCriterion")->GetText();
+			exp->video_fps = atoi(experimentElem->FirstChildElement("VideoFPS")->GetText());
 			experiments_list.push_back(move(exp));
 
 			experimentElem = experimentElem->NextSibling();

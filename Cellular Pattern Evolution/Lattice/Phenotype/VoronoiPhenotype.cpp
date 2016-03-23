@@ -95,8 +95,8 @@ namespace lattice
 
 		bool voronoi_phenotype::is_feasible(point p)
 		{
-			if (p.get<0>() < 1.0 || p.get<0>() > get_width() - 1.0
-				|| p.get<1>() < 1.0 || p.get<1>() > get_height() - 1.0) return false;
+			if (p.get<0>() < 1.5 || p.get<0>() > get_width() - 1.5
+				|| p.get<1>() < 1.5 || p.get<1>() > get_height() - 1.5) return false;
 			for (auto& cell : cells) {
 				point point = static_pointer_cast<voronoi_cell>(cell)->get_region()->generator;
 				if (point_distance(point, p) < 2.0) return false;
@@ -113,12 +113,16 @@ namespace lattice
 			for (auto& cell : cells)
 			{
 				auto vcell = static_pointer_cast<voronoi_cell>(cell);
-				bool add = true;
+				bool add = true, ok = true;
 				switch (vcell->get_state().action)
 				{
 					case action::merge:
 						if (merge(vcell, np))
 						{
+							for (auto p : new_points) {
+								if (point_distance(np, p) < 2.0) ok = false;
+							}
+							if (!ok) break;
 							new_points.push_back(np);
 							state_map[np] = vcell->get_state();
 							add = false;
@@ -130,10 +134,17 @@ namespace lattice
 						for (auto sp : split_points)
 						{
 							if (!boost::geometry::within(sp, vcell->get_region()->polygon)) continue;
+							for (auto p : new_points) {
+								if (point_distance(sp, p) < 2.0) ok = false;
+							}
+							if (!ok) {
+								ok = true;
+								continue;
+							}
 							new_points.push_back(sp);
 							state_map[sp] = vcell->get_state();
+							add = false;
 						}
-						add = false;
 						break;
 					case nil:
 						add = false;

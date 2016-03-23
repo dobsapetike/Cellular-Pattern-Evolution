@@ -182,7 +182,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiDiagram.cpp" />
-    <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiDiagramGenerator.cpp" />
     <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiEdge.cpp" />
     <ClCompile Include="Lattice\Phenotype\IrregularRectanglePhenotype.cpp" />
     <ClCompile Include="Lattice\Phenotype\IrregularSquarePhenotype.cpp" />
@@ -221,9 +220,8 @@
   <ItemGroup>
     <ClInclude Include="Lattice\Headers\Phenotypes\Cell\IrregularRectangleCell.h" />
     <ClInclude Include="Lattice\Headers\Phenotypes\Cell\VoronoiCell.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\jc_voronoi.h" />
     <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiDiagram.h" />
-    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiDiagramGenerator.h" />
-    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiEdge.h" />
     <ClInclude Include="Lattice\Headers\Phenotypes\IrregularRectanglePhenotype.h" />
     <ClInclude Include="Lattice\Headers\Phenotypes\IrregularSquarePhenotype.h" />
     <ClInclude Include="Lattice\Headers\Phenotypes\Cell\IrregularSquareCell.h" />
@@ -263,6 +261,7 @@
     <ClInclude Include="Optimizer\Headers\Optimizer.h" />
     <ClInclude Include="Optimizer\Headers\OptimizerSettings.h" />
     <ClInclude Include="Main\Headers\ThreadPool.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiEdge.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Config\confExperiment.xml">

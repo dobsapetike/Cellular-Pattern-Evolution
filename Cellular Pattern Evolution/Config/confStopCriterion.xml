@@ -11,5 +11,5 @@
   <Criterion>Energy</Criterion>
   <WindowSize>16</WindowSize>
   <Threshold>0.01</Threshold>
-  <StepLimit>100</StepLimit>
+  <StepLimit>355</StepLimit>
 </StopCriterion>

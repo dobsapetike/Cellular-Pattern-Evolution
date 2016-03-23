@@ -3,6 +3,7 @@
 
 #include "ObjectiveFunction.h"
 #include <boost/geometry.hpp>
+#include "../../Main/Headers/Logger.h"
 
 namespace objective_functions
 {
@@ -46,7 +47,13 @@ namespace objective_functions
 						cell->get_state().color, target->color);
 
 					vector<polygon> intersection;
-					boost::geometry::intersection(cellPoly, target->polygon, intersection);
+					try {
+						boost::geometry::intersection(cellPoly, target->polygon, intersection);
+					} catch (boost::geometry::overlay_invalid_input_exception exp) {
+						logger::get_logger().log_error(exp.what());
+						continue;
+					}
+
 					for (auto& is : intersection)
 					{
 						double isArea = boost::geometry::area(is);

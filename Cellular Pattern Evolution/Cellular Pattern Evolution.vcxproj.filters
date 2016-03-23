@@ -177,17 +177,14 @@
     <ClCompile Include="Lattice\Phenotype\IrregularRectanglePhenotype.cpp">
       <Filter>Source Files\Lattice\Phenotype</Filter>
     </ClCompile>
-    <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiDiagramGenerator.cpp">
-      <Filter>Source Files\Lattice\Phenotype\Geometry</Filter>
-    </ClCompile>
     <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiDiagram.cpp">
-      <Filter>Source Files\Lattice\Phenotype\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiEdge.cpp">
       <Filter>Source Files\Lattice\Phenotype\Geometry</Filter>
     </ClCompile>
     <ClCompile Include="Lattice\Phenotype\VoronoiPhenotype.cpp">
       <Filter>Source Files\Lattice\Phenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiEdge.cpp">
+      <Filter>Source Files\Lattice\Phenotype\Geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -305,13 +302,7 @@
     <ClInclude Include="Lattice\Headers\Phenotypes\IrregularRectanglePhenotype.h">
       <Filter>Header Files\Lattice\Phenotypes</Filter>
     </ClInclude>
-    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiDiagramGenerator.h">
-      <Filter>Header Files\Lattice\Phenotypes\Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiDiagram.h">
-      <Filter>Header Files\Lattice\Phenotypes\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiEdge.h">
       <Filter>Header Files\Lattice\Phenotypes\Geometry</Filter>
     </ClInclude>
     <ClInclude Include="Lattice\Headers\Phenotypes\Cell\VoronoiCell.h">
@@ -322,6 +313,12 @@
     </ClInclude>
     <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveFunctionGenerationCount.h">
       <Filter>Header Files\ObjectiveFunctions</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiEdge.h">
+      <Filter>Header Files\Lattice\Phenotypes\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\jc_voronoi.h">
+      <Filter>Header Files\Lattice\Phenotypes\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

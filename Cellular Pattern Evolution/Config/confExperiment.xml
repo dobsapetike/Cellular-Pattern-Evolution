@@ -1,6 +1,6 @@
 <Experiments>
   <Experiment>
-    <Name>SQR0COLORREGULAR2BAND908x8</Name>  <!-- !!!! name should not contain char '_' !!!! -->
+    <Name>VORCOLORCELLCOUNTGENIRREGULAR2BAND4532x32</Name>  <!-- !!!! name should not contain char '_' !!!! -->
     <Id>1</Id>
     <RunCount>1</RunCount>
     <Controller>Config/confController.xml</Controller>
@@ -8,5 +8,6 @@
     <Objective>Config/confObjective.xml</Objective>
     <Optimizer>Config/confOptimizer.xml</Optimizer>
     <StopCriterion>Config/confStopCriterion.xml</StopCriterion>
+    <VideoFPS>15</VideoFPS>
   </Experiment>
 </Experiments>
