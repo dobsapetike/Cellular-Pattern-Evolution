@@ -190,7 +190,6 @@ namespace task
 	/**
 		Finalizes the experiment - should be called after the execution
 	*/
-
 	void task::finalize()
 	{
 		boost::filesystem::create_directory("results/");

@@ -29,13 +29,13 @@ namespace ImageUtil
                 if (!filename.StartsWith(FilePrefix)) continue;
 
                 // filename is of format '$prefix_$generationNumber'
-                var parts = filename.Split('_');
-                var geNum = Int32.Parse(parts[1]);
+                var prefix = filename.Substring(0, filename.LastIndexOf('_'));
+                var geNum = Int32.Parse(filename.Substring(filename.LastIndexOf('_') + 1));
 
                 var bitmap = new Bitmap(filepath);
                 using (var g = Graphics.FromImage(bitmap))
                 using (var memory = new MemoryStream())
-                using (var fs = new FileStream(Path.Combine(path, parts[0] + ".png"), 
+                using (var fs = new FileStream(Path.Combine(path, prefix + ".png"), 
                     FileMode.Create, FileAccess.ReadWrite))
                 {
                     g.DrawString(string.Format("Generation {0}", geNum), Font,

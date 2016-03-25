@@ -282,7 +282,7 @@
   <ItemGroup>
     <None Include="ffmpeg.exe" />
     <None Include="ImageUtil.exe" />
-    <None Include="Target\test.svg">
+    <None Include="Target\target.svg">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -311,7 +311,7 @@
     <Content Include="ImageUtil.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Target\test.svg">
+    <Content Include="Target\target.svg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

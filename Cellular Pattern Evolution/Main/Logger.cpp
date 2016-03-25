@@ -118,6 +118,9 @@ void logger::log_experiment_end(string const& exp_name)
 	outfile_evol.close();
 }
 
+/**
+	Signal the start of the current observed run. Log file closes.
+*/
 void logger::log_observed_run_start(unsigned int gen)
 {
 	observed_run_stream.open(path + "observed_gen" + to_string(gen) + ".log");
@@ -125,6 +128,9 @@ void logger::log_observed_run_start(unsigned int gen)
 	observed_run_stream.flush();
 }
 
+/**
+	Log observed run info
+*/
 void logger::log_observed_run_gen(unsigned int gen, lattice::observed_run_stat const& stat)
 {
 	observed_run_stream << gen << "," << stat.energy << "," << stat.color_distance << ","
@@ -132,6 +138,9 @@ void logger::log_observed_run_gen(unsigned int gen, lattice::observed_run_stat c
 	observed_run_stream.flush();
 }
 
+/**
+	Signal the end of the current observed run. Log file closes.
+*/
 void logger::log_observed_run_end()
 {
 	observed_run_stream.close();

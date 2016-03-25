@@ -61,14 +61,20 @@ public:
 	*/
 	void log_experiment_start(string const& exp_name, vector<string>& objectives);
 	/**
-		Signal the end the current experiment. Log file closes.
+		Signal the end of the current experiment. Log file closes.
 	*/
 	void log_experiment_end(string const& exp_name);
-
+	/**
+		Signal the start of the current observed run. Log file closes.
+	*/
 	void log_observed_run_start(unsigned int gen);
-
+	/**
+		Log observed run info
+	*/
 	void log_observed_run_gen(unsigned int gen, lattice::observed_run_stat const& stat);
-
+	/**
+		Signal the end of the current observed run. Log file closes.
+	*/
 	void log_observed_run_end();
 };
 

@@ -342,10 +342,10 @@
     </Xml>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Target\test.svg">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="ffmpeg.exe" />
     <None Include="ImageUtil.exe" />
+    <None Include="Target\target.svg">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
