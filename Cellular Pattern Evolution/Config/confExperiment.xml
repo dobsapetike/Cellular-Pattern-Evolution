@@ -9,5 +9,7 @@
     <Optimizer>Config/confOptimizer.xml</Optimizer>
     <StopCriterion>Config/confStopCriterion.xml</StopCriterion>
     <VideoFPS>15</VideoFPS>
+    <GenerateVideo>1</GenerateVideo>
+    <SimulateOnly>0</SimulateOnly>
   </Experiment>
 </Experiments>

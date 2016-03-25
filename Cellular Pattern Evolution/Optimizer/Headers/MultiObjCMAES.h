@@ -23,6 +23,7 @@ namespace optimizer
 			optimizer_settings const& settings);
 
 		unsigned int step_count() const override { return current_step_count; }
+		unsigned int step_count_limit() const override { return max_step_count; }
 
 		std::string get_name() const override { return "MOCMA"; };
 		void init() override;

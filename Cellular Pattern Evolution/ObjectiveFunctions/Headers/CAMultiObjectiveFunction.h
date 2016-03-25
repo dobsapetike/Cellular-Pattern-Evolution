@@ -40,6 +40,14 @@ namespace objective_functions
 		bool hasScalableDimensionality() const override { return false; }
 		// evaluates the objective functions
 		ResultType eval(const SearchPointType& x) const override;
+
+		// returns the objective types
+		vector<string> get_objectives() const {
+			vector<string> res;
+			for (unsigned i = 0; i < numberOfObjectives(); ++i) 
+				res.push_back(objectives[i]->get_name());
+			return res;
+		}
 	};
 }
 

@@ -43,7 +43,7 @@ namespace lattice
 				Interface implementation
 			*/
 			virtual cell_type get_cell_type() const override { return voronoi; };
-			virtual void rearrange_topology() override;
+			virtual merge_split_count rearrange_topology() override;
 			virtual void set_init_pattern(string pattern) override;
 			virtual vector<shared_ptr<lattice_cell>> const& expose_cells() const override { return cells; };
 			virtual neighbourhood get_neighbours(lattice_cell const& c) const override;

@@ -26,12 +26,13 @@ namespace task
 		std::unique_ptr<experiment> experiment_ptr;
 
 		unsigned int run_num = 0;
-
 		real_vector result;
 		double result_fitness = DBL_MAX;
 
 		static bool running;
 		static BOOL WINAPI handle_abort(DWORD c_event);
+
+		const unsigned int observable_gen_count = 5;
 	public:
 		explicit task(experiment const& exp, unsigned int num);
 		/**
@@ -42,6 +43,7 @@ namespace task
 			Finalizes the experiment - should be called after the execution
 		*/
 		void finalize();
+		void generate_video();
 		void simulate();
 
 		string experiment_name() const {

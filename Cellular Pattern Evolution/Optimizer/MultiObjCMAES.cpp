@@ -10,7 +10,7 @@ namespace optimizer
 	{
 		mocma.initialSigma() = atof(settings.params->FirstChildElement("InitStepSize")->GetText());
 		mocma.mu() = atoi(settings.params->FirstChildElement("ParentSelectionCount")->GetText());
-		max_step_count = atoi(settings.params->FirstChildElement("EvolutionStepCount")->GetText());
+		max_step_count = max(atoi(settings.params->FirstChildElement("EvolutionStepCount")->GetText()), 5);
 
 		unsigned int time_ui = static_cast<unsigned int>(time(nullptr));
 		Rng::seed(time_ui);
@@ -36,17 +36,17 @@ namespace optimizer
 
 	void mo_cmaes_optimizer::init()
 	{
-		logger::get_logger().log_evol_stat("Initializing optimizer!");
+		logger::get_logger().log_info("Initializing optimizer!");
 
 		mocma.init(*objective_func);
 		current_step_count = 0;
 		
-		logger::get_logger().log_evol_stat("Initialization complete! Starting evolution!");
+		logger::get_logger().log_info("Initialization complete! Starting evolution!");
 	}
 
 	void mo_cmaes_optimizer::step()
 	{
-		logger::get_logger().log_evol_stat("Generation: " + to_string(current_step_count + 1));
+		logger::get_logger().log_info("Generation: " + to_string(current_step_count + 1));
 
 		mocma.step(*objective_func);
 		++current_step_count;

@@ -20,8 +20,8 @@ namespace lattice
 			}
 		protected:
 			void apply_pattern(string pattern) override;
-			void split(shared_ptr<irregular_rectangle_cell> cell) override;
-			void merge(shared_ptr<irregular_rectangle_cell> cell) override;
+			bool split(shared_ptr<irregular_rectangle_cell> cell) override;
+			bool merge(shared_ptr<irregular_rectangle_cell> cell) override;
 		public:
 			irregular_square_phenotype(lattice_settings const& settings) 
 				: irregular_rectangle_phenotype(settings) { };

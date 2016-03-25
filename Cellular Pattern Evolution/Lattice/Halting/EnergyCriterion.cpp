@@ -75,6 +75,7 @@ namespace lattice
 				stdev += diff * diff;
 			}
 			stdev = sqrt(stdev / window_size);
+			lattice.get_statistics().observed_run_stat.energy = stdev;
 
 			return stdev < threshold;
 		}

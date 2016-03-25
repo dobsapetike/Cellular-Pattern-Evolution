@@ -30,11 +30,12 @@ namespace optimizer
 		virtual std::string get_name() const = 0;
 
 		virtual unsigned int step_count() const = 0;
+		virtual unsigned int step_count_limit() const = 0;
 		// Initialization of the algorithm in order to set up instances, 
 		// reset states, etc...
 		// Always called before the start of the optimization
 		virtual void init() = 0;
-		// Makes one step of the optimization, afterr each step the solutin should be updated
+		// Makes one step of the optimization, after each step the solutin should be updated
 		virtual void step() = 0;
 		// Whether the optimization should be stopped after the actual step
 		virtual bool should_stop() = 0;

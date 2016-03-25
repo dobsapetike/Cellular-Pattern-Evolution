@@ -12,6 +12,7 @@ namespace lattice
 	{
 		class lattice_cell;
 		typedef unordered_map<direction, vector<shared_ptr<lattice_cell>>> neighbourhood;
+		typedef pair<unsigned int, unsigned int> merge_split_count;
 
 		/**
 			Phenotype captures the observable characteristics of the individual,
@@ -32,7 +33,7 @@ namespace lattice
 			unsigned int get_height() const { return height; }
 			state_settings const& get_state_settings() const { return st_settings; }
 
-			virtual void rearrange_topology() = 0;
+			virtual merge_split_count rearrange_topology() = 0;
 			virtual cell_type get_cell_type() const = 0;
 			virtual void set_init_pattern(string pattern) = 0;
 			virtual vector<shared_ptr<lattice_cell>> const& expose_cells() const = 0;

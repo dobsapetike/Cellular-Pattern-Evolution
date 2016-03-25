@@ -3,10 +3,7 @@
 #include "../Task/Headers/Task.h"
 #include "../Task/Headers/ExperimentCollection.h"
 
-// #include "../Lattice/Headers/Phenotypes/Geometry/jc_voronoi.h"
-
 using namespace std;
-using namespace boost::program_options;
 
 int main(int argc, char* argv[])
 {
@@ -20,7 +17,8 @@ int main(int argc, char* argv[])
 		while (run++ != exp.run_count)
 		{
 			shared_ptr<task::task> t = make_shared<task::task>(exp, run);
-			t->execute();
+			if (!exp.simulate_only) 
+				t->execute();
 			t->simulate();
 			t->finalize();
 		}

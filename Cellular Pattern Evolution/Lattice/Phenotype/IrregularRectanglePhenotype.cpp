@@ -87,10 +87,10 @@ namespace lattice
 		/**
 			Splits the rectangle into equally sized (if possible - otherwise almost equally sized) subcells
 		*/
-		void irregular_rectangle_phenotype::split(shared_ptr<irregular_rectangle_cell> cell)
+		bool irregular_rectangle_phenotype::split(shared_ptr<irregular_rectangle_cell> cell)
 		{
 			// nothing to do in case of unit cell
-			if (cell->get_height() == 1 && cell->get_width() == 1) return;
+			if (cell->get_height() == 1 && cell->get_width() == 1) return false;
 
 			state_settings ss(get_state_settings());
 			unsigned int x(cell->get_x()), y(cell->get_y());
@@ -113,6 +113,7 @@ namespace lattice
 				assign_cell(c);
 			}
 			cell.reset();
+			return true;
 		}
 
 		bool irregular_rectangle_phenotype::merge_side(vector<shared_ptr<lattice_cell>>& neigh,
@@ -172,7 +173,7 @@ namespace lattice
 			return true;
 		}
 
-		void irregular_rectangle_phenotype::merge(shared_ptr<irregular_rectangle_cell> cell)
+		bool irregular_rectangle_phenotype::merge(shared_ptr<irregular_rectangle_cell> cell)
 		{
 			unsigned int x(cell->get_x()), y(cell->get_y()), 
 				w(cell->get_width()), h(cell->get_height());
@@ -182,20 +183,22 @@ namespace lattice
 			if (x + w < get_width())
 			{
 				auto right = get_distinct_cells_in_line(y, y + h, x + w, true);
-				if (merge_side(right, cell, true)) return;
+				if (merge_side(right, cell, true)) return true;
 			}
 			if (y + h < get_height())
 			{
 				auto bottom = get_distinct_cells_in_line(x, x + w, y + h, false);
-				merge_side(bottom, cell, false);
+				return merge_side(bottom, cell, false);
 			}
+
+			return false;
 		}
 
-		void irregular_rectangle_phenotype::rearrange_topology()
+		merge_split_count irregular_rectangle_phenotype::rearrange_topology()
 		{
 			// drop the previous cells collection and 
 			// fill the automaton with new ones based on their action state
-
+			merge_split_count msc(0, 0);
 			cells.clear();
 			for (unsigned int row = 0; row < get_height(); ++row)
 			{
@@ -206,10 +209,10 @@ namespace lattice
 					switch (cell->get_state().action)
 					{
 						case action::merge:
-							merge(cell);
+							if (merge(cell)) msc.first++;
 							break;
 						case action::split:
-							split(cell);
+							if (split(cell)) msc.second++;
 							break;
 						default:
 							break;
@@ -217,6 +220,7 @@ namespace lattice
 					cells.push_back(grid[row][col].cell);
 				}
 			}
+			return msc;
 		}
 
 		/**

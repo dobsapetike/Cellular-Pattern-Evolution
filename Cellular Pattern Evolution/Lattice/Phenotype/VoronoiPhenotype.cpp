@@ -104,11 +104,12 @@ namespace lattice
 			return true;
 		}
 
-		void voronoi_phenotype::rearrange_topology()
+		merge_split_count voronoi_phenotype::rearrange_topology()
 		{
-			point np;
+			point new_point;
 			vector<point> new_points, split_points;
 			unordered_map<point, state, point_hash> state_map;
+			merge_split_count msc(0, 0);
 
 			for (auto& cell : cells)
 			{
@@ -117,15 +118,16 @@ namespace lattice
 				switch (vcell->get_state().action)
 				{
 					case action::merge:
-						if (merge(vcell, np))
+						if (merge(vcell, new_point))
 						{
 							for (auto p : new_points) {
-								if (point_distance(np, p) < 2.0) ok = false;
+								if (point_distance(new_point, p) < 2.0) ok = false;
 							}
 							if (!ok) break;
-							new_points.push_back(np);
-							state_map[np] = vcell->get_state();
+							new_points.push_back(new_point);
+							state_map[new_point] = vcell->get_state();
 							add = false;
+							msc.first++;
 						}
 						break;
 					case action::split:
@@ -145,6 +147,7 @@ namespace lattice
 							state_map[sp] = vcell->get_state();
 							add = false;
 						}
+						msc.second++;
 						break;
 					case nil:
 						add = false;
@@ -159,6 +162,8 @@ namespace lattice
 				state_map[vcell->get_region()->generator] = vcell->get_state();
 			}
 			generate_topology(new_points, &state_map);
+
+			return msc;
 		}
 
 		void voronoi_phenotype::set_init_pattern(string pattern)

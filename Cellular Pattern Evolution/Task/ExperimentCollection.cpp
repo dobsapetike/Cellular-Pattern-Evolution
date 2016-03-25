@@ -31,6 +31,8 @@ namespace task
 			exp->optimizer_file = experimentElem->FirstChildElement("Optimizer")->GetText();
 			exp->stopcriterion_file = experimentElem->FirstChildElement("StopCriterion")->GetText();
 			exp->video_fps = atoi(experimentElem->FirstChildElement("VideoFPS")->GetText());
+			exp->generate_video = atoi(experimentElem->FirstChildElement("GenerateVideo")->GetText());
+			exp->simulate_only = atoi(experimentElem->FirstChildElement("SimulateOnly")->GetText());
 			experiments_list.push_back(move(exp));
 
 			experimentElem = experimentElem->NextSibling();

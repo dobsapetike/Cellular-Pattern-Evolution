@@ -44,8 +44,8 @@ namespace lattice
 			/**
 				Topological updates
 			*/
-			virtual void split(shared_ptr<irregular_rectangle_cell> cell);
-			virtual void merge(shared_ptr<irregular_rectangle_cell> cell);
+			virtual bool split(shared_ptr<irregular_rectangle_cell> cell);
+			virtual bool merge(shared_ptr<irregular_rectangle_cell> cell);
 			bool irregular_rectangle_phenotype::merge_side(vector<shared_ptr<lattice_cell>>& neigh,
 				shared_ptr<irregular_rectangle_cell> cell, bool right); 
 
@@ -58,7 +58,7 @@ namespace lattice
 				Interface implementation
 			*/
 			virtual cell_type get_cell_type() const override { return irregular_rectangle; };
-			virtual void rearrange_topology() override;
+			virtual merge_split_count rearrange_topology() override;
 			virtual void set_init_pattern(string pattern) override;
 			virtual vector<shared_ptr<lattice_cell>> const& expose_cells() const override { return cells; };
 			virtual neighbourhood get_neighbours(lattice_cell const& c) const override;

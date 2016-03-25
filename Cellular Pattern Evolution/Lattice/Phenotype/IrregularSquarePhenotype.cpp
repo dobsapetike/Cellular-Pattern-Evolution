@@ -23,10 +23,10 @@ namespace lattice
 		/**
 			Splits the cell into four subcells of equal size - in case of non-unit cells
 		*/
-		void irregular_square_phenotype::split(shared_ptr<irregular_rectangle_cell> cell)
+		bool irregular_square_phenotype::split(shared_ptr<irregular_rectangle_cell> cell)
 		{
 			// dont split if dimension of square has unit length
-			if (cell->get_width() == 1) return;
+			if (cell->get_width() == 1) return false;
 
 			state_settings ss(get_state_settings());
 			unsigned int x(cell->get_x()), y(cell->get_y()), w(cell->get_width() / 2);
@@ -39,13 +39,14 @@ namespace lattice
 			cell.reset();
 
 			for (auto& c : nc) assign_cell(c);
+			return true;
 		}
 
-		void irregular_square_phenotype::merge(shared_ptr<irregular_rectangle_cell> cell)
+		bool irregular_square_phenotype::merge(shared_ptr<irregular_rectangle_cell> cell)
 		{
 			// skip cells on border
 			if (cell->get_x() + cell->get_width() >= get_width() ||
-				cell->get_y() + cell->get_height() >= get_height()) return;
+				cell->get_y() + cell->get_height() >= get_height()) return false;
 
 			// only merge if result is also square
 			vector < shared_ptr<irregular_rectangle_cell> > mNeigh{
@@ -54,9 +55,9 @@ namespace lattice
 				grid[cell->get_y() + cell->get_height()][cell->get_x() + cell->get_width()].cell };
 			for (auto& n : mNeigh)
 			{
-				if (n == nullptr) return;
-				if (n->get_height() != cell->get_height()) return;
-				if (n->get_state().action != action::merge) return;
+				if (n == nullptr) return false;
+				if (n->get_height() != cell->get_height()) return false;
+				if (n->get_state().action != action::merge) return false;
 			}
 
 			// everything clicks, so go for it
@@ -64,6 +65,7 @@ namespace lattice
 				cell->get_x(), cell->get_y(), cell->get_width() * 2, get_state_settings(), cast_self_ptr());
 			cell.reset();
 			assign_cell(merged);
+			return true;
 		}
 	}
 }
