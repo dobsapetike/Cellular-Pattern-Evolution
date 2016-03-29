@@ -25,6 +25,7 @@ private:
 	void dump(string const& s, ofstream& stream) const;
 		
 	const string path = "logs/";	// path to the log files
+	string current_experiment;		// remember it
 	// 3 persistent filestreams: for general info logging, errors and evolution statistics
 	ofstream outfile_evol, outfile_info, outfile_error;
 

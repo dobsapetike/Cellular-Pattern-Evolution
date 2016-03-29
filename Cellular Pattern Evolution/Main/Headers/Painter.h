@@ -8,10 +8,18 @@
 
 #include "../../Lattice/Headers/Phenotypes/Phenotype.h"
 
+struct FIBITMAP;
+struct tagRGBQUAD;
+
 class painter
 {
 private:
+	tagRGBQUAD* border_color;
 	const std::string path = "pics/";
+
+	void rasterize_polygon_border(FIBITMAP* bitmap, polygon& p);
+	void painter::rasterize_line(FIBITMAP* bitmap,
+		boost::geometry::model::d2::point_xy<double> p1, boost::geometry::model::d2::point_xy<double> p2);
 public:
 	painter();
 	~painter();

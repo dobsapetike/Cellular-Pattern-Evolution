@@ -89,6 +89,7 @@ void logger::log_evol_stat(lattice::statistics_log const& stat)
 */
 void logger::log_experiment_start(string const& exp_name, vector<string>& objectives)
 {
+	current_experiment = exp_name;
 	outfile_evol.open(path + exp_name + ".log");
 	// set the log file header
 	outfile_evol << "Timestamp,Gen_num,Eval_num,";
@@ -123,7 +124,7 @@ void logger::log_experiment_end(string const& exp_name)
 */
 void logger::log_observed_run_start(unsigned int gen)
 {
-	observed_run_stream.open(path + "observed_gen" + to_string(gen) + ".log");
+	observed_run_stream.open(path + current_experiment + "_observed_gen" + to_string(gen) + ".log");
 	observed_run_stream << "Gen,Energy,Color_dist,Cell_count,Merge_count,Split_count" << endl;
 	observed_run_stream.flush();
 }
