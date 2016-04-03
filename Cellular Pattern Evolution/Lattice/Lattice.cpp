@@ -70,8 +70,8 @@ namespace lattice
 			for (auto& cell : cells)
 			{
 				cell->apply_candidate();
-				if (callback) callback(*phenotype);
 			}
+			if (callback) callback(*phenotype);
 
 			// also, update topology
 			if (settings->allow_structure_change)

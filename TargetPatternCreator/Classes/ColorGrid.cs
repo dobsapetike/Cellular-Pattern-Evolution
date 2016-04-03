@@ -107,7 +107,7 @@ namespace TargetPatternCreator.Classes
         public Color this[int x, int y]
         {
             get { return colorGrid[y, x]; }
-            set { if (x < Size && y < Size) colorGrid[y, x] = value; }
+            set { if (x < Size && y < Size && x >= 0 && y >= 0) colorGrid[y, x] = value; }
         }
     }
 }
