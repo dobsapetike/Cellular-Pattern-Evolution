@@ -270,7 +270,9 @@
     <Xml Include="Config\confStopCriterion.xml">
       <SubType>Designer</SubType>
     </Xml>
-    <Xml Include="Config\confObjective.xml" />
+    <Xml Include="Config\confObjective.xml">
+      <SubType>Designer</SubType>
+    </Xml>
     <Xml Include="Config\confOptimizer.xml">
       <SubType>Designer</SubType>
     </Xml>

@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <fstream>
-#include "../Lattice/Headers/LatticeStatistics.h"
+#include "../../Lattice/Headers/LatticeStatistics.h"
 
 using namespace std;
 
