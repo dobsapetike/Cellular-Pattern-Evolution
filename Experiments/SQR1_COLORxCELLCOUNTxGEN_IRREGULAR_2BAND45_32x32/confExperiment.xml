@@ -1,0 +1,16 @@
+<Experiments>
+  <Experiment>
+    <Name>SQR1_COLORxCELLCOUNTxGEN_IRREGULAR_2BAND45_32x32</Name> 
+    <Id>1</Id>
+    <RunCount>10</RunCount>
+    <Controller>Config/confController.xml</Controller>
+    <Lattice>Config/confLattice.xml</Lattice>
+    <Objective>Config/confObjective.xml</Objective>
+    <Optimizer>Config/confOptimizer.xml</Optimizer>
+    <StopCriterion>Config/confStopCriterion.xml</StopCriterion>
+    <VideoFPS>30</VideoFPS>
+    <GenerateVideo>0</GenerateVideo>
+    <SimulateOnly>0</SimulateOnly>
+	<ObservedRuns>10</ObservedRuns>
+  </Experiment>
+</Experiments>

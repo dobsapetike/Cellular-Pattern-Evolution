@@ -1,0 +1,18 @@
+<ObjectiveSettings>
+  <MinValue>-5</MinValue>
+  <MaxValue>5</MaxValue>
+  
+  <!-- options: ColorDist, CellCount, GenCount -->
+  <!-- 
+  
+    <Function Name="ColorDist" Importance="100"/>
+    <Function Name="CellCount" Importance="100"/>
+    <Function Name="GenCount" Importance="25"/>
+  
+  -->
+  <ObjectiveFunctions>
+    <Function Name="ColorDist" Importance="100"/>
+    <Function Name="GenCount" Importance="50"/>
+  </ObjectiveFunctions>
+</ObjectiveSettings>
+

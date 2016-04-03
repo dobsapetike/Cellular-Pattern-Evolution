@@ -1,0 +1,17 @@
+<LatticeSettings>
+  <LatticeWidth>8</LatticeWidth>
+  <LatticeHeight>8</LatticeHeight>
+  <!-- options: regular, irregularsquare, irregularrectangle, voronoi -->
+  <CellType>regular</CellType>
+  <PhenotypeSettings></PhenotypeSettings>
+  <AllowStructureChange>1</AllowStructureChange>
+  <TargetPattern>Target/target.svg</TargetPattern>
+  <InitPattern>
+  </InitPattern>
+  <State>
+    <InternalCount>6</InternalCount>
+    <ExternalCount>4</ExternalCount>
+    <InitialValues>0</InitialValues>
+  </State>
+</LatticeSettings>
+ 

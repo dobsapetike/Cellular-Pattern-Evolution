@@ -1,0 +1,16 @@
+<Experiments>
+  <Experiment>
+    <Name>SQR1_COLOR_IRREGULARFIX_2BAND90_32x32</Name> 
+    <Id>1</Id>
+    <RunCount>10</RunCount>
+    <Controller>Config/confController.xml</Controller>
+    <Lattice>Config/confLattice.xml</Lattice>
+    <Objective>Config/confObjective.xml</Objective>
+    <Optimizer>Config/confOptimizer.xml</Optimizer>
+    <StopCriterion>Config/confStopCriterion.xml</StopCriterion>
+    <VideoFPS>60</VideoFPS>
+    <GenerateVideo>10</GenerateVideo>
+    <SimulateOnly>0</SimulateOnly>
+	<ObservedRuns>10</ObservedRuns>
+  </Experiment>
+</Experiments>

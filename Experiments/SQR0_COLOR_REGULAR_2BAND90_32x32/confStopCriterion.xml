@@ -1,0 +1,15 @@
+<StopCriterion>
+   <!--
+    Options:
+        - EvalNums (Limit: int - number of step )
+        - Energy (
+            WindowSize: int,
+            Threshold: double, 
+            StepLimit: int
+          )
+   -->
+  <Criterion>Energy</Criterion>
+  <WindowSize>15</WindowSize>
+  <Threshold>0.001</Threshold>
+  <StepLimit>100</StepLimit>
+</StopCriterion>
