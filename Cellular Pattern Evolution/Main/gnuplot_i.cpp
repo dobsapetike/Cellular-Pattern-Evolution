@@ -8,7 +8,11 @@ int Gnuplot::tmpfile_num = 0;
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__TOS_WIN__)
 std::string Gnuplot::m_sGNUPlotFileName = "gnuplot.exe";
+#if defined(PALO)
+std::string Gnuplot::m_sGNUPlotPath = "C:/a/gnuplot/bin/";
+#else
 std::string Gnuplot::m_sGNUPlotPath = "C:/Program files (x86)/gnuplot/bin/";
+#endif
 #elif defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
 std::string Gnuplot::m_sGNUPlotFileName = "gnuplot";
 std::string Gnuplot::m_sGNUPlotPath = "/usr/local/bin/";

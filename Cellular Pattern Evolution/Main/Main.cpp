@@ -9,6 +9,8 @@ int main(int argc, char* argv[])
 {
 	string config = argc > 1 ? argv[1] : "config/confExperiment.xml";
 
+	printf("will use %d threads\n", thread::hardware_concurrency());
+
 	task::experiments experiments(config);
 	for (unsigned int i = 0; i < experiments.experiment_count(); ++i)
 	{

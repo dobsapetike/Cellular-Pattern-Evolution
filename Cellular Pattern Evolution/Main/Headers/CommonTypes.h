@@ -49,9 +49,9 @@ double point_distance(point const& a, point const& b);
 */
 struct point_hash
 {
-	unsigned int operator()(const point& p) const
+	size_t operator()(const point& p) const
 	{
-		unsigned int h(0);
+		size_t h(0);
 		boost::hash_combine(h, floor(p.get<0>()));
 		boost::hash_combine(h, floor(p.get<1>()));
 		return h;

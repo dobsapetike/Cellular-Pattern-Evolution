@@ -31,7 +31,7 @@ namespace lattice
 	void lattice::update_cells(unsigned int order_number)
 	{
 		auto& cells = phenotype->expose_cells();
-		unsigned int threadCount = min(threads->thread_count(), cells.size());
+		unsigned int threadCount = min((size_t)threads->thread_count(), cells.size());
 		// the number of cells for each thread
 		unsigned int chunks = ceil(cells.size() / static_cast<double>(threadCount));
 
