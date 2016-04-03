@@ -159,7 +159,7 @@ namespace task
 
 	void task::simulate()
 	{
-		lattice->simulate();
+		lattice->simulate(nullptr, true);
 		painter->paint("simulator", "sim_" + experiment_name() +".png", lattice->get_phenotype());
 	}
 

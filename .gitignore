@@ -45,6 +45,7 @@ Temporary Items
 *.suo
 *.user
 *.obj
+*.mp4
 Release/
 Debug/
 Cellular Pattern Evolution/Release/

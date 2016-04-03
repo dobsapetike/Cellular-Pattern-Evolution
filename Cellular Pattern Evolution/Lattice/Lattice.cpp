@@ -65,6 +65,7 @@ namespace lattice
 				threads->enqueue_job([&,order] () -> void { update_cells(order); });
 			}
 			threads->wait_for_jobs();
+
 			// and make a simultaneous update
 			for (auto& cell : cells)
 			{
