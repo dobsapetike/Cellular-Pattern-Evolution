@@ -30,14 +30,15 @@ namespace lattice
 
 			state_settings ss(get_state_settings());
 			unsigned int x(cell->get_x()), y(cell->get_y()), w(cell->get_width() / 2);
-			// split cell into four subcells
-			vector < shared_ptr<irregular_square_cell> > nc {
-				make_shared<irregular_square_cell>(x, y, w, ss, cast_self_ptr()),
-				make_shared<irregular_square_cell>(x + w, y, w, ss, cast_self_ptr()),
-				make_shared<irregular_square_cell>(x, y + w, w, ss, cast_self_ptr()),
-				make_shared<irregular_square_cell>(x + w, y + w, w, ss, cast_self_ptr()) };
-			cell.reset();
+			// split cell into four subcells (placing the make_shared directly in initializer produced runtime errors, separating)
+			shared_ptr<irregular_square_cell> c1 = make_shared<irregular_square_cell>(x, y, w, ss, cast_self_ptr());
+			shared_ptr<irregular_square_cell> c2 = make_shared<irregular_square_cell>(x + w, y, w, ss, cast_self_ptr());
+			shared_ptr<irregular_square_cell> c3 = make_shared<irregular_square_cell>(x, y + w, w, ss, cast_self_ptr());
+			shared_ptr<irregular_square_cell> c4 = make_shared<irregular_square_cell>(x + w, y + w, w, ss, cast_self_ptr());
 
+			vector < shared_ptr<irregular_square_cell> > nc{ c1, c2, c3, c4 };
+			cell.reset();
+						
 			for (auto& c : nc) assign_cell(c);
 			return true;
 		}
