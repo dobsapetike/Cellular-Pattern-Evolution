@@ -63,6 +63,7 @@ namespace task
 		running = true;
 
 		// set observable generation numbers
+		unsigned int observable_gen_count = min(experiment_ptr->observed_runs, optimizer->step_count_limit());
 		unsigned int intervs = optimizer->step_count_limit() / observable_gen_count;
 		vector<unsigned int> observable_gens;
 		for (unsigned int i = 1; i < observable_gen_count; ++i)
@@ -145,7 +146,10 @@ namespace task
 			logger::get_logger().log_info("Ended after step: " + to_string(lattice->get_statistics().sim_eval_count));
 			logger::get_logger().log_evol_stat(log);
 
-			// if (result_fitness == 0) break;
+			if (result_fitness == 0) {
+				cout << "Fitness is optimal, evolution terminates!" << endl;
+				break;
+			}
 
 			painter->paint(experiment_name(), "gen" + to_string(optimizer->step_count())
 				+ ".png", lattice->get_phenotype());

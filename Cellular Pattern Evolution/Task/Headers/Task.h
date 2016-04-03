@@ -31,8 +31,6 @@ namespace task
 
 		static bool running;
 		static BOOL WINAPI handle_abort(DWORD c_event);
-
-		const unsigned int observable_gen_count = 5;
 	public:
 		explicit task(experiment const& exp, unsigned int num);
 		/**
