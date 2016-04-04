@@ -38,7 +38,7 @@ namespace ImageUtil
                 using (var fs = new FileStream(Path.Combine(path, prefix + ".png"), 
                     FileMode.Create, FileAccess.ReadWrite))
                 {
-                    g.DrawString(string.Format("Generation {0}", geNum), Font,
+                    g.DrawString(string.Format("Iteration {0}", geNum), Font,
                         Brushes.Red, new PointF(10, FileSize - 30));
                     bitmap.Save(memory, ImageFormat.Png);
                     var bytes = memory.ToArray();

@@ -107,10 +107,10 @@ namespace TargetPatternCreator
                 result.Append("<polygon points=\"");
                 foreach (var edge in poly.Edges)
                 {
-                    result.Append(string.Format("{0} {1},", edge.Start.X, edge.Start.Y));
+                    result.Append(string.Format("{0} {1},", edge.Start.X, colorGrid.Size - edge.Start.Y - 1));
                 }
                 var first = poly.Edges.First().Start;
-                result.Append(string.Format("{0} {1}", first.X, first.Y));
+                result.Append(string.Format("{0} {1}", first.X, colorGrid.Size - first.Y - 1));
                 result.Append("\" fill=\"");
                 result.AppendLine(string.Format("rgb({0},{1},{2})\" />", poly.Color.R, poly.Color.G, poly.Color.B));
             }

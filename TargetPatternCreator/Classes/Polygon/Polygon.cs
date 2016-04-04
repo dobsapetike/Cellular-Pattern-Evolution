@@ -29,14 +29,24 @@ namespace TargetPatternCreator.Classes.Polygon
             }
         }
 
+        public bool IsClockWise()
+        {
+            if (!Closed) return false;
+	        return edges.Aggregate(0f, (current, edge) => 
+                    current + (edge.End.X - edge.Start.X) * (edge.End.Y + edge.Start.Y)) > 0;
+        }
+
         public void TryAddVertex(Point point)
         {
             if (Closed) return;
 
             edges.Add(new Edge(prevPoint, point, Color));
             prevPoint = point;
-            if (point == firstPoint) 
+            if (point == firstPoint)
+            {
                 Closed = true;
+                if (!IsClockWise()) edges.ForEach(x => x.ChangeOrder());
+            }
 
             var y = Convert.ToInt32(point.Y);
             ymin = Math.Min(y, ymin);

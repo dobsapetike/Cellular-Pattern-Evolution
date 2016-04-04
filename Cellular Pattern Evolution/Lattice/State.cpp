@@ -86,6 +86,10 @@ namespace lattice
 
 	unsigned int compute_rgb_distance(rgb col1, rgb col2)
 	{
-		return abs(col1.r - col2.r) + abs(col1.g - col2.g) + abs(col1.b - col2.b);
+		int dr = col1.r - col2.r;
+		int dg = col1.g - col2.g;
+		int db = col1.b - col2.b;
+		//return dr * dr + dg * dg + db * db;
+		return abs(dr) + abs(dg) + abs(db);
 	}
 }

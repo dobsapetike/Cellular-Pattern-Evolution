@@ -28,6 +28,13 @@ namespace TargetPatternCreator.Classes.Polygon
                 : (double)(End.Y - Start.Y) / (End.X - Start.X);
         }
 
+        public void ChangeOrder()
+        {
+            var temp = Start;
+            Start = End;
+            End = temp;
+        }
+
         public void Draw(ColorGrid grid)
         {
             var dx = End.X - Start.X;
