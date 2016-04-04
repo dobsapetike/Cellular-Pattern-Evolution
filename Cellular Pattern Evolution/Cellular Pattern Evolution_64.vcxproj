@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1393C5EC-715B-4F2D-841D-8B3E11C347AC}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>CellularPatternEvolution</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <SDLCheck>false</SDLCheck>
+      <AdditionalIncludeDirectories>C:\s\cpp;C:\s\cpp\cellular\Shark-3.0.0\include;C:\s\cpp\cellular\boost_1_59_0\boost_1_59_0;C:\Boost\include\boost-1_59;C:\s\cpp\cellular\FreeImage3170\FreeImage\Dist\x32;C:\s\cpp\cellular\tinyxml_2_6_2;C:\s\cpp\cellular\tinyxml_2_6_2\tinyxml;C:\Program Files %28x86%29\GnuWin32\include;C:\Program Files %28x86%29\GnuWin32\include\FreeImage</AdditionalIncludeDirectories>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <OmitFramePointers>true</OmitFramePointers>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\s\cpp\cellular\FreeImage3170\FreeImage\Dist\x32;C:\s\cpp\cellular\boost_1_59_0\boost_1_59_0\stage\lib;C:\s\cpp\cellular\boost_1_59_0\boost_1_59_0\libs\serialization\build;C:\s\cpp\boost_1_59_0\bin.v2\libs\serialization\build\msvc-14.0\debug\link-static\threading-multi;C:\s\cpp\boost_1_59_0\bin.v2\libs\system\build\msvc-14.0\debug\link-static\threading-multi;C:\s\cpp\boost_1_59_0\bin.v2\libs\filesystem\build\msvc-14.0\debug\link-static\threading-multi;C:\s\cpp\boost_1_59_0\bin.v2\libs\program_options\build\msvc-14.0\debug\link-static\threading-multi;C:\s\cpp\cellular\tinyxml_2_6_2\tinyxml\Debugtinyxml;C:\s\shark\lib\Debug;C:\s\cpp\boost_1_59_0\libs;C:\Boost\lib;C:\Program Files %28x86%29\GnuWin32\lib\shark;C:\Program Files %28x86%29\GnuWin32\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>tinyxml.lib;libboost_program_options-vc120-mt-gd-1_59.lib;FreeImaged.lib</AdditionalDependencies>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;ARMA_USE_LAPACK;ARMA_USE_BLAS;WIN32;_DEBUG;;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\s\cpp\cellular\Shark-3.0.0\include;C:\s\cpp\cellular\boost_1_59_0;C:\s\cpp\cellular\FreeImage3170\FreeImage\Dist\x64;C:\s\cpp\cellular\tinyxml_2_6_2</AdditionalIncludeDirectories>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <FloatingPointModel>Fast</FloatingPointModel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\s\cpp\cellular\boost_1_59_0\stage\lib;C:\s\cpp\cellular\tinyxml_2_6_2\tinyxml\x64\Release;C:\s\cpp\cellular\Shark-3.0.0\lib\Release;C:\s\cpp\cellular\FreeImage3170\FreeImage\Dist\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>tinyxml.lib;libboost_program_options-vc120-mt-gd-1_59.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>LIBCMT.lib</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>false</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Boost\include\boost-1_59;C:\Program Files %28x86%29\GnuWin32\include;C:\Program Files %28x86%29\GnuWin32\include\FreeImage</AdditionalIncludeDirectories>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <PreprocessorDefinitions>FREEIMAGE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>true</OmitFramePointers>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\Boost\lib;C:\Program Files %28x86%29\GnuWin32\lib\shark;C:\Program Files %28x86%29\GnuWin32\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>tinyxml.lib;libboost_program_options-vc120-mt-1_59.lib;FreeImageLib.lib</AdditionalDependencies>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>PALO;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;ARMA_USE_LAPACK;ARMA_USE_BLAS;WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\s\cpp\cellular\Shark-3.0.0\include;C:\s\cpp\cellular\boost_1_59_0;C:\s\cpp\cellular\FreeImage3170\FreeImage\Dist\x64;C:\s\cpp\cellular\tinyxml_2_6_2</AdditionalIncludeDirectories>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <StringPooling>true</StringPooling>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>C:\s\cpp\cellular\boost_1_59_0\stage\lib;C:\s\cpp\cellular\tinyxml_2_6_2\tinyxml\x64\Release;C:\s\cpp\cellular\Shark-3.0.0\lib\Release;C:\s\cpp\cellular\FreeImage3170\FreeImage\Dist\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>tinyxml.lib;libboost_program_options-vc120-mt-gd-1_59.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>LIBCMT.lib</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiDiagram.cpp" />
+    <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiEdge.cpp" />
+    <ClCompile Include="Lattice\Phenotype\IrregularRectanglePhenotype.cpp" />
+    <ClCompile Include="Lattice\Phenotype\IrregularSquarePhenotype.cpp" />
+    <ClCompile Include="Lattice\Controllers\FeedForwardANNController.cpp" />
+    <ClCompile Include="Lattice\Controllers\StateController.cpp" />
+    <ClCompile Include="Lattice\Halting\EnergyCriterion.cpp" />
+    <ClCompile Include="Lattice\Halting\EvalNumberCriterion.cpp" />
+    <ClCompile Include="Lattice\Halting\StopCriterion.cpp" />
+    <ClCompile Include="Lattice\Phenotype\VoronoiPhenotype.cpp" />
+    <ClCompile Include="Lattice\TargetPattern.cpp" />
+    <ClCompile Include="Lattice\TargetPatternSvg.cpp" />
+    <ClCompile Include="Main\gnuplot_i.cpp" />
+    <ClCompile Include="Main\Logger.cpp" />
+    <ClCompile Include="Main\Painter.cpp" />
+    <ClCompile Include="Main\Plotter.cpp" />
+    <ClCompile Include="Task\ExperimentCollection.cpp" />
+    <ClCompile Include="Task\Task.cpp" />
+    <ClCompile Include="ObjectiveFunctions\ObjectiveFunction.cpp" />
+    <ClCompile Include="Lattice\Genotype\Genotype.cpp" />
+    <ClCompile Include="Lattice\Phenotype\Cell\Cell.cpp" />
+    <ClCompile Include="Lattice\Phenotype\RegularStructurePhenotype.cpp" />
+    <ClCompile Include="Lattice\Lattice.cpp" />
+    <ClCompile Include="Lattice\Phenotype\Cell\CellType.cpp" />
+    <ClCompile Include="Lattice\LatticeSettings.cpp" />
+    <ClCompile Include="Lattice\State.cpp" />
+    <ClCompile Include="Main\CommonTypes.cpp" />
+    <ClCompile Include="Main\Main.cpp" />
+    <ClCompile Include="Lattice\Phenotype\Phenotype.cpp" />
+    <ClCompile Include="ObjectiveFunctions\CAMultiObjectiveFunction.cpp" />
+    <ClCompile Include="ObjectiveFunctions\ObjectiveSettings.cpp" />
+    <ClCompile Include="Optimizer\MultiObjCMAES.cpp" />
+    <ClCompile Include="Optimizer\Optimizer.cpp" />
+    <ClCompile Include="Optimizer\OptimizerSettings.cpp" />
+    <ClCompile Include="Main\ThreadPool.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Lattice\Headers\Phenotypes\Cell\IrregularRectangleCell.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\Cell\VoronoiCell.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\jc_voronoi.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiDiagram.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\IrregularRectanglePhenotype.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\IrregularSquarePhenotype.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\Cell\IrregularSquareCell.h" />
+    <ClInclude Include="Lattice\Headers\Halting\EnergyCriterion.h" />
+    <ClInclude Include="Lattice\Headers\Halting\EvalNumberCriterion.h" />
+    <ClInclude Include="Lattice\Headers\LatticeStatistics.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\VoronoiPhenotye.h" />
+    <ClInclude Include="Lattice\Headers\TargetPattern.h" />
+    <ClInclude Include="Lattice\Headers\TargetPatternSvg.h" />
+    <ClInclude Include="Main\Headers\gnuplot_i.h" />
+    <ClInclude Include="Main\Headers\Logger.h" />
+    <ClInclude Include="Main\Headers\Painter.h" />
+    <ClInclude Include="Main\Headers\Plotter.h" />
+    <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveFunctionGenerationCount.h" />
+    <ClInclude Include="Task\Headers\Experiment.h" />
+    <ClInclude Include="Task\Headers\ExperimentCollection.h" />
+    <ClInclude Include="Task\Headers\Task.h" />
+    <ClInclude Include="ObjectiveFunctions\Headers\CAMultiObjectiveFunction.h" />
+    <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveFunction.h" />
+    <ClInclude Include="Lattice\Headers\Controllers\FeedForwardANNController.h" />
+    <ClInclude Include="Lattice\Headers\Genotype\Genotype.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\Cell\RegularCell.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\Phenotype.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\RegularStructurePhenotype.h" />
+    <ClInclude Include="Main\Headers\CommonTypes.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\Cell\Cell.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\Cell\CellType.h" />
+    <ClInclude Include="Lattice\Headers\Lattice.h" />
+    <ClInclude Include="Lattice\Headers\LatticeSettings.h" />
+    <ClInclude Include="Lattice\Headers\Halting\StopCriterion.h" />
+    <ClInclude Include="Lattice\Headers\State.h" />
+    <ClInclude Include="Lattice\Headers\Controllers\StateController.h" />
+    <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveFunctionCellCount.h" />
+    <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveFunctionColorDistance.h" />
+    <ClInclude Include="ObjectiveFunctions\Headers\ObjectiveSettings.h" />
+    <ClInclude Include="Optimizer\Headers\MultiObjCMAES.h" />
+    <ClInclude Include="Optimizer\Headers\Optimizer.h" />
+    <ClInclude Include="Optimizer\Headers\OptimizerSettings.h" />
+    <ClInclude Include="Main\Headers\ThreadPool.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiEdge.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Config\confExperiment.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+    <Xml Include="Config\confStopCriterion.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+    <Xml Include="Config\confObjective.xml" />
+    <Xml Include="Config\confOptimizer.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+    <Xml Include="Config\confLattice.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+    <Xml Include="Config\confController.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ffmpeg.exe" />
+    <None Include="ImageUtil.exe" />
+    <None Include="Target\target.svg">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\confExperiment.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\confStopCriterion.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\confObjective.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\confOptimizer.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\confLattice.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\confController.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImageUtil.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Target\target.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

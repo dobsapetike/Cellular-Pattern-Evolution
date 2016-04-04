@@ -37,9 +37,9 @@ Hash code for the voronoi edge
 template <>
 struct std::hash<v_edge>
 {
-	unsigned int operator()(const v_edge& edge) const
+	size_t operator()(const v_edge& edge) const
 	{
-		unsigned int h(0);
+		size_t h(0);
 		boost::hash_combine(h, floor(edge.x1));
 		boost::hash_combine(h, floor(edge.x2));
 		boost::hash_combine(h, floor(edge.y1));

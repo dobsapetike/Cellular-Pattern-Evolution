@@ -76,7 +76,7 @@ namespace lattice
 			for (unsigned int row = 0; row < cell->get_height(); ++row)
 				for (unsigned int col = 0; col < cell->get_width(); ++col)
 				{
-					grid[cell->get_y() + row][cell->get_x() + col] =
+					grid[(size_t)(cell->get_y() + row)][(size_t)(cell->get_x() + col)] =
 						cell_info{ coord{ cell->get_x(), cell->get_y() }, nullptr };
 				}
 			cell->set_state(init_state(get_state_settings()));
