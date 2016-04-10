@@ -34,6 +34,7 @@ namespace task
 			exp->generate_video = atoi(experimentElem->FirstChildElement("GenerateVideo")->GetText());
 			exp->simulate_only = atoi(experimentElem->FirstChildElement("SimulateOnly")->GetText());
 			exp->observed_runs = atoi(experimentElem->FirstChildElement("ObservedRuns")->GetText());
+			exp->plot = atoi(experimentElem->FirstChildElement("Plot")->GetText());
 			exp->rich_video = atoi(experimentElem->FirstChildElement("RichVideo")->GetText());
 			experiments_list.push_back(move(exp));
 

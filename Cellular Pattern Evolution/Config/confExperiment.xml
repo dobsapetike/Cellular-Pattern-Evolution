@@ -13,5 +13,6 @@
     <GenerateVideo>1</GenerateVideo>
     <SimulateOnly>0</SimulateOnly>
     <ObservedRuns>5</ObservedRuns>
+    <Plot>0</Plot>
   </Experiment>
 </Experiments>

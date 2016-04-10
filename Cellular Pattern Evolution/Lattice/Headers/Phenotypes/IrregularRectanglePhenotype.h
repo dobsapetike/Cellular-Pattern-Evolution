@@ -46,7 +46,7 @@ namespace lattice
 			*/
 			virtual bool split(shared_ptr<irregular_rectangle_cell> cell);
 			virtual bool merge(shared_ptr<irregular_rectangle_cell> cell);
-			bool irregular_rectangle_phenotype::merge_side(vector<shared_ptr<lattice_cell>>& neigh,
+			virtual bool merge_side(vector<shared_ptr<lattice_cell>>& neigh,
 				shared_ptr<irregular_rectangle_cell> cell, bool right); 
 
 			virtual void apply_pattern(string pattern);

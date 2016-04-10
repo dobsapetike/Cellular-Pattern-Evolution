@@ -26,10 +26,10 @@ namespace task
 				)
 			);
 
-			this->plotter = std::make_unique<::plotter>();
-			this->painter = std::make_unique<::painter>();
-
 			experiment_ptr = std::make_unique<experiment>(exp);
+
+			this->painter = std::make_unique<::painter>();
+			this->plotter = experiment_ptr->plot ? std::make_unique<::plotter>() : nullptr;
 		}
 		catch (std::invalid_argument& ia)
 		{
@@ -130,7 +130,7 @@ namespace task
 			for (auto& os : log.objective_stats) os.std_dev_fitn = sqrt(os.std_dev_fitn / pareto_sol.size());
 
 			// generate some output and move to the next generation
-			plotter->add_point(log.objective_stats.back().best_fitn);
+			if (plotter) plotter->add_point(log.objective_stats.back().best_fitn);
 			logger::get_logger().log_info("Fitness: " + to_string(log.objective_stats.back().best_fitn));
 
 			lattice->get_genotype().get_controller().set_params(result_params);
