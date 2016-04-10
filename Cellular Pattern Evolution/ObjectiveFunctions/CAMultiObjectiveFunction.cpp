@@ -40,8 +40,8 @@ namespace objective_functions
 	{
 		real_vector params = vector_convert(x);
 		// set new controller parameters and simulate run
-		lattice.get()->get_genotype().get_controller().set_params(params);
-		lattice.get()->simulate();
+		lattice->get_genotype().get_controller().set_params(params);
+		lattice->simulate();
 
 		ResultType result(numberOfObjectives());
 		for (unsigned int i = 0; i < numberOfObjectives(); ++i)

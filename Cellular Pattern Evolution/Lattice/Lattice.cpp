@@ -15,6 +15,7 @@ namespace lattice
 		threads = make_unique<thread_pool>(
 			max(thread::hardware_concurrency(), static_cast<unsigned int>(1))
 		);
+		logger::get_logger().log_info("Will use " + to_string(threads->thread_count()) + " thread(s)!");
 	}
 
 	void lattice::init_evaluator()
@@ -47,7 +48,8 @@ namespace lattice
 	/**
 		Simulates the computation of the CA
 	*/
-	void lattice::simulate(function<void(phenotypes::phenotype&)> callback, bool observed_run)
+	void lattice::simulate(function<void(phenotypes::phenotype&)> callback, 
+		bool observed_run, bool frequentcallback)
 	{
 		statistics->reset();
 		genotype->reset();
@@ -70,8 +72,9 @@ namespace lattice
 			for (auto& cell : cells)
 			{
 				cell->apply_candidate();
+				if (callback && frequentcallback) callback(*phenotype);
 			}
-			if (callback) callback(*phenotype);
+			if (callback && !frequentcallback) callback(*phenotype);
 
 			// also, update topology
 			if (settings->allow_structure_change)

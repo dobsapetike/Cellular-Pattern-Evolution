@@ -10,7 +10,7 @@ namespace lattice
 	{
 		/**
 			Genotype defines the inner representation of the individual,
-			in our case the controller and the grammar for merging and splitting
+			in our case the controller and the stopping criterion
 		*/
 		class genotype
 		{

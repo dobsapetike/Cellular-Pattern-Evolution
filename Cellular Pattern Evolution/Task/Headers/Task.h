@@ -26,8 +26,9 @@ namespace task
 		std::unique_ptr<experiment> experiment_ptr;
 
 		unsigned int run_num = 0;
-		real_vector result;
+		real_vector result_params;
 		double result_fitness = DBL_MAX;
+		optimizer::opt_solution pareto_sol;
 
 		static bool running;
 		static BOOL WINAPI handle_abort(DWORD c_event);
@@ -42,7 +43,7 @@ namespace task
 		*/
 		void finalize();
 		void generate_video();
-		void simulate();
+		void simulate(string folder = default_pic_path + "simulator", string file = "", bool observed = true);
 
 		string experiment_name() const {
 			return experiment_ptr->name + "(" + to_string(run_num) + ")";

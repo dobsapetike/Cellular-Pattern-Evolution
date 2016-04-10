@@ -9,7 +9,7 @@ namespace task
 	experiments::experiments(std::string filepath)
 	{
 		TiXmlDocument doc(filepath.c_str());
-		if (!doc.LoadFile())
+		if (!doc.LoadFile()) 
 			throw std::invalid_argument("Could not parse file: " + filepath);
 
 		auto experimentElem = doc.FirstChild("Experiments")->FirstChild();
@@ -34,6 +34,7 @@ namespace task
 			exp->generate_video = atoi(experimentElem->FirstChildElement("GenerateVideo")->GetText());
 			exp->simulate_only = atoi(experimentElem->FirstChildElement("SimulateOnly")->GetText());
 			exp->observed_runs = atoi(experimentElem->FirstChildElement("ObservedRuns")->GetText());
+			exp->rich_video = atoi(experimentElem->FirstChildElement("RichVideo")->GetText());
 			experiments_list.push_back(move(exp));
 
 			experimentElem = experimentElem->NextSibling();

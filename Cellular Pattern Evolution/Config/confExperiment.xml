@@ -1,6 +1,6 @@
 <Experiments>
   <Experiment>
-    <Name>RECT_COLORxCELLCOUTxGEN_IRREGULAR_2BAND45_32x32</Name> 
+    <Name>TEST</Name> 
     <Id>1</Id>
     <RunCount>1</RunCount>
     <Controller>Config/confController.xml</Controller>
@@ -8,7 +8,8 @@
     <Objective>Config/confObjective.xml</Objective>
     <Optimizer>Config/confOptimizer.xml</Optimizer>
     <StopCriterion>Config/confStopCriterion.xml</StopCriterion>
-    <VideoFPS>30</VideoFPS>
+    <VideoFPS>1</VideoFPS>
+    <RichVideo>0</RichVideo>
     <GenerateVideo>1</GenerateVideo>
     <SimulateOnly>0</SimulateOnly>
     <ObservedRuns>5</ObservedRuns>

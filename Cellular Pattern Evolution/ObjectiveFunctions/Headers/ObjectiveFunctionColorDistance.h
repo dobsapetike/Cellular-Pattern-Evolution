@@ -21,9 +21,9 @@ namespace objective_functions
 		objective_func_color_dist(string name, double importance, shared_ptr<lattice::lattice> const& latt)
 			: objective_func(name, importance, latt)
 		{
-			max_color_diff = lattice->get_settings().width * lattice->get_settings().height * 255 * 3;
+			max_color_diff = lattice->get_settings().width * lattice->get_settings().height 
+				* 255 * 3;
 				//* 255 * 255 * 255; 
-			//(latt->get_genotype().get_controller().get_color_type() == rgb ? 1 : 3);
 		}
 		/**
 			Evaluation returns the sum of the color difference between

@@ -8,7 +8,7 @@
 
 painter::painter()
 {
-	boost::filesystem::create_directory(path);
+	boost::filesystem::create_directory(default_pic_path);
 	FreeImage_Initialise();
 
 	border_color = new RGBQUAD;
@@ -60,7 +60,7 @@ void painter::rasterize_polygon_border(FIBITMAP* bitmap, polygon& p)
 	rasterize_line(bitmap, p.outer()[0], p.outer()[p.outer().size() - 1]);
 }
 
-void painter::paint(string exp, string file, lattice::phenotypes::phenotype const& phenotype)
+void painter::paint(string file, lattice::phenotypes::phenotype const& phenotype, string path)
 {
 	FIBITMAP *bitmap = FreeImage_Allocate(
 		phenotype.get_width() * SCALEFACTOR, phenotype.get_height() * SCALEFACTOR, BPP);
@@ -98,7 +98,7 @@ void painter::paint(string exp, string file, lattice::phenotypes::phenotype cons
 
 	for (auto& poly : sc_polys) rasterize_polygon_border(bitmap, poly);
 
-	string fullPath = path + exp + "/";
+	string fullPath = path + "/";
 	boost::filesystem::create_directory(fullPath);
 	FIBITMAP *scaled = FreeImage_Rescale(bitmap, DESIRED_WIDTH, DESIRED_HEIGHT, FILTER_BOX);
 	FreeImage_Save(FIF_PNG, scaled, (fullPath + file).c_str(), 0);

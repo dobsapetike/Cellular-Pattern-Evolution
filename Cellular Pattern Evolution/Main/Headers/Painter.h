@@ -11,11 +11,12 @@
 struct FIBITMAP;
 struct tagRGBQUAD;
 
+const static string default_pic_path = "pics/";
+
 class painter
 {
 private:
 	tagRGBQUAD* border_color;
-	const std::string path = "pics/";
 
 	void rasterize_polygon_border(FIBITMAP* bitmap, polygon& p);
 	void painter::rasterize_line(FIBITMAP* bitmap,
@@ -23,7 +24,7 @@ private:
 public:
 	painter();
 	~painter();
-	void paint(std::string exp, std::string file, lattice::phenotypes::phenotype const& phenotype);
+	void paint(string file, lattice::phenotypes::phenotype const& phenotype, string path);
 };
 
 #endif

@@ -13,7 +13,6 @@ namespace task
 	class experiments
 	{
 	private:
-		// TODO add master as friend class
 		std::vector<std::shared_ptr<experiment>> experiments_list;
 	public:
 		/**

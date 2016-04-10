@@ -14,7 +14,6 @@ namespace task
 		{
 			lattice = std::make_shared<lattice::lattice>(lattice::load_settings(
 				exp.lattice_file, exp.controller_file, exp.stopcriterion_file));
-
 			obj_func = std::make_shared<objective_functions::ca_multiobj_func>(
 				*objective_functions::load_settings(exp.objective_file),
 				lattice->get_genotype().get_controller().get_param_count(),
@@ -88,15 +87,15 @@ namespace task
 			log.objective_stats = vector<lattice::obj_func_stat>(
 				obj_func->numberOfObjectives() + 1, lattice::obj_func_stat());
 
-			auto sol = optimizer->get_solution();
+			pareto_sol = optimizer->get_solution();
 			vector<double> fitn_all;
-			fitn_all.reserve(sol.size());
+			fitn_all.reserve(pareto_sol.size());
 			// aggregate fitness and start building the statistics
-			for (unsigned int i = 0; i < sol.size(); ++i)
+			for (unsigned int i = 0; i < pareto_sol.size(); ++i)
 			{
-				double fitness(0);
+				double fitness(0.0);
 				unsigned int obj_index(0); 
-				for (auto iter = sol[i].second.begin(); iter != sol[i].second.end(); ++iter) {
+				for (auto iter = pareto_sol[i].second.begin(); iter != pareto_sol[i].second.end(); ++iter) {
 					fitness += *iter;
 					log.objective_stats[obj_index].avg_fitn += *iter;
 					log.objective_stats[obj_index].best_fitn = min(*iter, log.objective_stats[obj_index].best_fitn);
@@ -107,20 +106,20 @@ namespace task
 
 				if (fitness < result_fitness)
 				{
-					RealVector params = vector_convert(sol[i].first);
+					RealVector params = vector_convert(pareto_sol[i].first);
 					obj_func->closestFeasible(params);
 					result_fitness = fitness;
-					result = vector_convert(params);
+					result_params = vector_convert(params);
 				}
 			}
-			log.objective_stats.back().best_fitn = result_fitness;
+			log.objective_stats.back().best_fitn = *min_element(fitn_all.begin(), fitn_all.end());
 
 			// finish computing statistics
-			for (auto& os : log.objective_stats) os.avg_fitn /= sol.size();
-			for (unsigned int i = 0; i < sol.size(); ++i)
+			for (auto& os : log.objective_stats) os.avg_fitn /= pareto_sol.size();
+			for (unsigned int i = 0; i < pareto_sol.size(); ++i)
 			{
 				unsigned int obj_index(0);
-				for (auto iter = sol[i].second.begin(); iter != sol[i].second.end(); ++iter) {
+				for (auto iter = pareto_sol[i].second.begin(); iter != pareto_sol[i].second.end(); ++iter) {
 					log.objective_stats[obj_index].std_dev_fitn += 
 						(*iter - log.objective_stats[obj_index].avg_fitn) * (*iter - log.objective_stats[obj_index].avg_fitn);
 					++obj_index;
@@ -128,13 +127,13 @@ namespace task
 				log.objective_stats.back().std_dev_fitn +=
 					(fitn_all[i] - log.objective_stats.back().avg_fitn) * (fitn_all[i] - log.objective_stats.back().avg_fitn);
 			}
-			for (auto& os : log.objective_stats) os.std_dev_fitn = sqrt(os.std_dev_fitn / sol.size());
+			for (auto& os : log.objective_stats) os.std_dev_fitn = sqrt(os.std_dev_fitn / pareto_sol.size());
 
 			// generate some output and move to the next generation
-			plotter->add_point(result_fitness);
-			logger::get_logger().log_info("Fitness: " + to_string(result_fitness));
+			plotter->add_point(log.objective_stats.back().best_fitn);
+			logger::get_logger().log_info("Fitness: " + to_string(log.objective_stats.back().best_fitn));
 
-			lattice->get_genotype().get_controller().set_params(result);
+			lattice->get_genotype().get_controller().set_params(result_params);
 
 			bool observe = lattice->get_statistics().gen_count == observable_gens.back();
 			if (observe) {
@@ -151,20 +150,21 @@ namespace task
 				break;
 			}
 
-			painter->paint(experiment_name(), "gen" + to_string(optimizer->step_count())
-				+ ".png", lattice->get_phenotype());
+			painter->paint("gen" + to_string(optimizer->step_count())
+				+ ".png", lattice->get_phenotype(), default_pic_path + experiment_name());
 		}
 
 		running = false;
 		logger::get_logger().log_experiment_end(experiment_name());
 
-		lattice->get_genotype().get_controller().set_params(result);
+		lattice->get_genotype().get_controller().set_params(result_params);
 	}
 
-	void task::simulate()
+	void task::simulate(string result_folder, string file, bool observed)
 	{
-		lattice->simulate(nullptr, true);
-		painter->paint("simulator", "sim_" + experiment_name() +".png", lattice->get_phenotype());
+		if (!file.length()) file = "sim_" + experiment_name() + ".png";
+		lattice->simulate(nullptr, observed);
+		painter->paint(file, lattice->get_phenotype(), result_folder);
 	}
 
 	static int eval;
@@ -174,10 +174,12 @@ namespace task
 		logger::get_logger().log_info("Generating video of the simulation of the resulting automaton ... ");
 		eval = 0;
 		auto callback = [&](lattice::phenotypes::phenotype& p) {
-			this->painter->paint(experiment_name() + "_Result",
-				"eval" + to_string(++eval) + "_" + to_string(lattice->get_statistics().sim_eval_count) + ".png", p);
+			for (unsigned int i = 0; i < (experiment_ptr->rich_video ? 1 : 3); ++i)
+				this->painter->paint("eval" + to_string(++eval) + "_" + 
+					to_string(lattice->get_statistics().sim_eval_count) + ".png", p, 
+					default_pic_path + experiment_name() + "_Result");
 		};
-		lattice->simulate(callback);
+		lattice->simulate(callback, false, experiment_ptr->rich_video);
 
 		// print the generation number on the images
 		string command = "ImageUtil.exe " + experiment_name() + "_Result";
@@ -200,13 +202,41 @@ namespace task
 		if (experiment_ptr->generate_video)
 			generate_video();
 
+		// save pareto front
+		string pareto_path = "results/pareto_" + experiment_name() + "/";
+		boost::filesystem::create_directory(pareto_path);
+		for (unsigned int i = 0; i < pareto_sol.size(); ++i)
+		{
+			double fitness(0.0);
+			unsigned int index(0);
+			ofstream ofile;
+			ofile.open(pareto_path + to_string(i + 1) + ".txt");
+			for (auto iter = pareto_sol[i].second.begin(); iter != pareto_sol[i].second.end(); ++iter) {
+				fitness += *iter;
+				ofile << "Objective " << ++index << ": " << *iter << endl;
+			}
+			ofile << "Aggregate: " << fitness << endl << endl;
+
+			RealVector params = vector_convert(pareto_sol[i].first);
+			obj_func->closestFeasible(params);
+			real_vector cparams = vector_convert(params);
+
+			ofile << "Params:" << endl;
+			ofile.precision(numeric_limits<double>::max_digits10);
+			for (auto& param : cparams) ofile << fixed << param << " ";
+			ofile.close();
+
+			lattice->get_genotype().get_controller().set_params(cparams);
+			simulate(pareto_path, to_string(i + 1) + ".png", false);
+		}
+
 		// and save the controller params
 		ofstream ofile;
 		ofile.open("results/" + experiment_name() + ".txt");
 		ofile.precision(numeric_limits<double>::max_digits10);
-		// the controller parameters
-		// for (auto param : result)
-		for (auto param : lattice->get_genotype().get_controller().get_params())
+		// the resulting controller parameters
+		//for (auto param : lattice->get_genotype().get_controller().get_params())
+		for (auto& param : result_params)
 		{
 			ofile << fixed << param << " ";
 		}

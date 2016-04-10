@@ -15,7 +15,7 @@ namespace task
 		unsigned int run_count;
 		unsigned int video_fps;
 		unsigned int observed_runs;
-		bool generate_video, simulate_only;
+		bool generate_video, simulate_only, rich_video;
 		// detailed informations are in their respective files
 		std::string controller_file;
 		std::string lattice_file;
