@@ -16,6 +16,7 @@ namespace optimizer
 	{
 	private:
 		MOCMA mocma;
+		bool initialized = false;
 		unsigned int max_step_count, current_step_count = 0;
 	public:
 		mo_cmaes_optimizer(
@@ -32,6 +33,9 @@ namespace optimizer
 		// Gets the solution of the MO-CMAES optimizer 
 		// and converts it to the solution type used by this framework
 		virtual opt_solution get_solution() override;
+
+		void serialize() override;
+		void deserialize() override;
 	};
 }
 

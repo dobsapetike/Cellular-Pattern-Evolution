@@ -37,6 +37,7 @@ namespace task
 		}
 	}
 
+	bool task::save = false;
 	bool task::running = false;
 	BOOL WINAPI task::handle_abort(DWORD c_event)
 	{
@@ -46,6 +47,10 @@ namespace task
 		{
 			logger::get_logger().log_info(
 				"CTRL + C has been pressed, at the end of current generation the evolution stops!");
+			cout << "Would you like to save your progress? No results in early finealization! [y/n]" << endl;
+			string opt;
+			cin >> opt;
+			save = opt == "y";
 			running = false;
 			return true;
 		}
@@ -59,14 +64,15 @@ namespace task
 	{
 		// subscribe for the break event
 		SetConsoleCtrlHandler(static_cast<PHANDLER_ROUTINE>(handle_abort), true);
-		running = true;
+		running = true, save = false;
 
 		// set observable generation numbers
 		unsigned int observable_gen_count = min(experiment_ptr->observed_runs, optimizer->step_count_limit());
 		unsigned int intervs = optimizer->step_count_limit() / observable_gen_count;
 		vector<unsigned int> observable_gens;
 		for (unsigned int i = 1; i < observable_gen_count; ++i)
-			observable_gens.insert(observable_gens.begin(), i * intervs);
+			if (i * intervs > optimizer->step_count())
+				observable_gens.insert(observable_gens.begin(), i * intervs);
 		observable_gens.insert(observable_gens.begin(), optimizer->step_count_limit());
 
 		auto obj_names = obj_func->get_objectives();
@@ -146,7 +152,7 @@ namespace task
 			logger::get_logger().log_evol_stat(log);
 
 			if (result_fitness == 0) {
-				cout << "Fitness is optimal, evolution terminates!" << endl;
+				logger::get_logger().log_info("Fitness is optimal, evolution terminates!");
 				break;
 			}
 
@@ -156,8 +162,12 @@ namespace task
 
 		running = false;
 		logger::get_logger().log_experiment_end(experiment_name());
-
 		lattice->get_genotype().get_controller().set_params(result_params);
+		if (save) 
+		{
+			logger::get_logger().log_info("Serialization of the current state has been started!");
+			optimizer->serialize();
+		}
 	}
 
 	void task::simulate(string result_folder, string file, bool observed)
@@ -242,5 +252,7 @@ namespace task
 		}
 		ofile << endl << endl;
 		ofile.close();
+
+		logger::get_logger().log_info("Results for " + experiment_name() + " have been saved!");
 	}
 }

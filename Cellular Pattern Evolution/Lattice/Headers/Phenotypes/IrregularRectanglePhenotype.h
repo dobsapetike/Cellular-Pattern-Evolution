@@ -48,6 +48,7 @@ namespace lattice
 			virtual bool merge(shared_ptr<irregular_rectangle_cell> cell);
 			virtual bool merge_side(vector<shared_ptr<lattice_cell>>& neigh,
 				shared_ptr<irregular_rectangle_cell> cell, bool right); 
+			virtual state merge_state(vector<shared_ptr<irregular_rectangle_cell>>& cells);
 
 			virtual void apply_pattern(string pattern);
 

@@ -110,10 +110,29 @@ namespace lattice
 				if (c->get_width() < 1 || c->get_height() < 1) continue;
 
 				c->reset_action();
+				c->set_state(cell->get_state());
 				assign_cell(c);
 			}
 			cell.reset();
 			return true;
+		}
+
+		state irregular_rectangle_phenotype::merge_state(vector<shared_ptr<irregular_rectangle_cell>>& cells)
+		{
+			state s = init_state(get_state_settings());
+			for (unsigned int i = 0; i < cells.size(); ++i)
+			{
+				auto& cinternal = cells[i]->get_state().internal_chemicals;
+				auto& cexternal = cells[i]->get_state().external_chemicals;
+				for (unsigned int inti = 0; inti < s.internal_chemicals.size(); ++inti)
+					s.internal_chemicals[inti] += cinternal[inti];
+				for (unsigned int exti = 0; exti < s.external_chemicals.size(); ++exti)
+					s.external_chemicals[exti] += cexternal[exti];
+			}
+			for (double& ich : s.internal_chemicals) ich /= cells.size();
+			for (double& ech : s.external_chemicals) ech /= cells.size();
+			s.color = cells[0]->get_state().color;
+			return s;
 		}
 
 		bool irregular_rectangle_phenotype::merge_side(vector<shared_ptr<lattice_cell>>& neigh,
@@ -151,6 +170,7 @@ namespace lattice
 				cell->get_x(), cell->get_y(),
 				cell->get_width() + (right ? chunksize : 0), cell->get_height() + (right ? 0 : chunksize),
 				get_state_settings(), self_ptr);
+			merged->set_state(merge_state(n));
 			assign_cell(merged);
 
 			// handle border cells 

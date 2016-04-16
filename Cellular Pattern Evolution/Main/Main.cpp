@@ -19,8 +19,11 @@ int main(int argc, char* argv[])
 			shared_ptr<task::task> t = make_shared<task::task>(exp, run);
 			if (!exp.simulate_only) 
 				t->execute();
-			t->simulate();
-			t->finalize();
+			if (!t->is_saved())
+			{
+				t->simulate();
+				t->finalize();
+			} 
 		}
 	}
 

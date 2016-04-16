@@ -42,6 +42,10 @@ namespace optimizer
 
 		// Returns the current solution
 		virtual opt_solution get_solution() = 0;
+
+		// serialization
+		virtual void serialize() = 0;
+		virtual void deserialize() = 0;
 	};
 
 	/**

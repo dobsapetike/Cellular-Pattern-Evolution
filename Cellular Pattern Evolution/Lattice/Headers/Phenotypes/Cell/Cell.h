@@ -53,7 +53,7 @@ namespace lattice
 			polygon const& get_geometry() const { return geometry; }
 			shared_ptr<phenotype> get_owner() { return owner; }
 			// field setters
-			void set_state(state const& s) { cell_state = move(s); }
+			void set_state(state const& s) { cell_state = s; }
 			void next_candidate(state const& s) { next_state = s; }
 			void apply_candidate() { cell_state = next_state; }
 

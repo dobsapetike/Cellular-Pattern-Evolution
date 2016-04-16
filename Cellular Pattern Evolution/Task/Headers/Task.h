@@ -30,7 +30,7 @@ namespace task
 		double result_fitness = DBL_MAX;
 		optimizer::opt_solution pareto_sol;
 
-		static bool running;
+		static bool running, save;
 		static BOOL WINAPI handle_abort(DWORD c_event);
 	public:
 		explicit task(experiment const& exp, unsigned int num);
@@ -48,6 +48,7 @@ namespace task
 		string experiment_name() const {
 			return experiment_ptr->name + "(" + to_string(run_num) + ")";
 		}
+		static bool is_saved() { return save;  }
 	};
 }
 

@@ -37,9 +37,10 @@ namespace lattice
 			shared_ptr<irregular_square_cell> c4 = make_shared<irregular_square_cell>(x + w, y + w, w, ss, cast_self_ptr());
 
 			vector < shared_ptr<irregular_square_cell> > nc{ c1, c2, c3, c4 };
+			for (auto c : nc) c->set_state(cell->get_state());
 			cell.reset();
 						
-			for (auto& c : nc) assign_cell(c);
+			for (auto c : nc) assign_cell(c);
 			return true;
 		}
 
@@ -64,6 +65,7 @@ namespace lattice
 			// everything clicks, so go for it
 			auto merged = make_shared<irregular_square_cell>(
 				cell->get_x(), cell->get_y(), cell->get_width() * 2, get_state_settings(), cast_self_ptr());
+			merged->set_state(merge_state(mNeigh));
 			cell.reset();
 			assign_cell(merged);
 			return true;
