@@ -174,9 +174,6 @@
     <ClCompile Include="Lattice\Phenotype\IrregularSquarePhenotype.cpp">
       <Filter>Source Files\Lattice\Phenotype</Filter>
     </ClCompile>
-    <ClCompile Include="Lattice\Phenotype\IrregularRectanglePhenotype.cpp">
-      <Filter>Source Files\Lattice\Phenotype</Filter>
-    </ClCompile>
     <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiDiagram.cpp">
       <Filter>Source Files\Lattice\Phenotype\Geometry</Filter>
     </ClCompile>
@@ -185,6 +182,12 @@
     </ClCompile>
     <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiEdge.cpp">
       <Filter>Source Files\Lattice\Phenotype\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Phenotype\IrregularRectanglePhenotype.cpp">
+      <Filter>Source Files\Lattice\Phenotype</Filter>
+    </ClCompile>
+    <ClCompile Include="Lattice\Phenotype\IrregularRectanglePhenotypeStrict.cpp">
+      <Filter>Source Files\Lattice\Phenotype</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -319,6 +322,9 @@
     </ClInclude>
     <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\jc_voronoi.h">
       <Filter>Header Files\Lattice\Phenotypes\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Lattice\Headers\Phenotypes\IrregularRectanglePhenotypeStrict.h">
+      <Filter>Header Files\Lattice\Phenotypes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

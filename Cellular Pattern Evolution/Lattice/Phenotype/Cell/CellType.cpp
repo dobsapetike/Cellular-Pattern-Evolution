@@ -11,6 +11,7 @@ namespace lattice
 			if (type == "regular")				return regular;
 			if (type == "irregularsquare")		return irregular_square;
 			if (type == "irregularrectangle")	return irregular_rectangle;
+			if (type == "irregularrectangle_s")	return irregular_rectangle_strict;
 			if (type == "voronoi")				return voronoi;
 
 			throw std::invalid_argument("Unknown cell type: " + type);

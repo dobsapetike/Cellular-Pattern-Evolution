@@ -184,6 +184,7 @@
     <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiDiagram.cpp" />
     <ClCompile Include="Lattice\Phenotype\Geometry\VoronoiEdge.cpp" />
     <ClCompile Include="Lattice\Phenotype\IrregularRectanglePhenotype.cpp" />
+    <ClCompile Include="Lattice\Phenotype\IrregularRectanglePhenotypeStrict.cpp" />
     <ClCompile Include="Lattice\Phenotype\IrregularSquarePhenotype.cpp" />
     <ClCompile Include="Lattice\Controllers\FeedForwardANNController.cpp" />
     <ClCompile Include="Lattice\Controllers\StateController.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\jc_voronoi.h" />
     <ClInclude Include="Lattice\Headers\Phenotypes\Geometry\VoronoiDiagram.h" />
     <ClInclude Include="Lattice\Headers\Phenotypes\IrregularRectanglePhenotype.h" />
+    <ClInclude Include="Lattice\Headers\Phenotypes\IrregularRectanglePhenotypeStrict.h" />
     <ClInclude Include="Lattice\Headers\Phenotypes\IrregularSquarePhenotype.h" />
     <ClInclude Include="Lattice\Headers\Phenotypes\Cell\IrregularSquareCell.h" />
     <ClInclude Include="Lattice\Headers\Halting\EnergyCriterion.h" />

@@ -47,7 +47,7 @@ namespace task
 		{
 			logger::get_logger().log_info(
 				"CTRL + C has been pressed, at the end of current generation the evolution stops!");
-			cout << "Would you like to save your progress? No results in early finealization! [y/n]" << endl;
+			cout << "Would you like to save your progress? 'No' results in early finalization! [y/N]" << endl;
 			string opt;
 			cin >> opt;
 			save = opt == "y";

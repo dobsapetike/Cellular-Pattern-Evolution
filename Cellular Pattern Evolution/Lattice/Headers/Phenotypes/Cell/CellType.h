@@ -15,6 +15,7 @@ namespace lattice
 			regular,
 			irregular_square,
 			irregular_rectangle,
+			irregular_rectangle_strict,
 			voronoi,
 		};
 
