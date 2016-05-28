@@ -19,12 +19,12 @@ namespace lattice
 
 	struct observed_run_stat
 	{
-		double energy, color_distance;
+		double energy, energy_dev, color_distance;
 		unsigned int cell_count;
 		unsigned int merge_count, split_count;
 
 		void reset() {
-			energy = 0.0;
+			energy = energy_dev = 0.0;
 			merge_count = split_count = 0;
 		}
 	};

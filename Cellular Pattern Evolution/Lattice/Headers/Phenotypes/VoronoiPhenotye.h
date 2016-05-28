@@ -37,6 +37,7 @@ namespace lattice
 			void get_edge_directions(v_edge const& edge, bool* directions) const;
 
 			shared_ptr<voronoi_phenotype> self_ptr;
+			double min_distance = 1.5;
 		public:
 			voronoi_phenotype(lattice_settings const& settings);
 			/**

@@ -271,8 +271,8 @@ void jcv_diagram_free(jcv_diagram* d)
 		internal->memblocks = internal->memblocks->next;
 		freefn(memctx, p);
 	}
-
-	freefn(memctx, internal->mem);
+	if (internal->mem)
+		freefn(memctx, internal->mem);
 }
 
 const jcv_site* jcv_diagram_get_sites(const jcv_diagram* diagram)

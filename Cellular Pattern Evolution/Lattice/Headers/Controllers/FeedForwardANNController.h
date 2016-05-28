@@ -36,7 +36,7 @@ namespace lattice
 			vector<real_vector> compute_neighbour_external_means(
 				phenotypes::neighbourhood& nbh, phenotypes::neighbourhood_compatibility& nbc) const;
 			// Given a lattice cell, returns it's blurred externals using gaussian blur with radius of one
-			real_vector compute_blurred_neighbour_external(phenotypes::lattice_cell& cell) const;
+			void compute_blurred_neighbour_external(phenotypes::lattice_cell& cell) const override;
 			// Computes a vector containing the blurred externals of neighbours in all 4 directions
 			vector<real_vector> compute_externals(phenotypes::lattice_cell& cell) const;
 			// compute the next action based on the generated values

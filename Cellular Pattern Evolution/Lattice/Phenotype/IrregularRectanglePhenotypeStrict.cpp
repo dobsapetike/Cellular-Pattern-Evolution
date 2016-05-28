@@ -1,6 +1,5 @@
 #include "../Headers/Phenotypes/IrregularRectanglePhenotypeStrict.h"
 #include "../Headers/Phenotypes/Cell/IrregularRectangleCell.h"
-#include <numeric> 
 
 namespace lattice
 {
@@ -40,6 +39,7 @@ namespace lattice
 			auto neigh =  right ? grid[cell->get_y()][cell->get_x() + cell->get_width()].cell
 				: grid[cell->get_y() + cell->get_height()][cell->get_x()].cell;
 			if (neigh == nullptr) return false;
+			if (neigh->get_state().action != action::merge) return false;
 			if (right && neigh->get_height() != cell->get_height()) return false;
 			if (!right && neigh->get_width() != cell->get_width()) return false;
 
@@ -60,9 +60,6 @@ namespace lattice
 		{
 			if (cell->get_x() + cell->get_width() >= get_width() ||
 				cell->get_y() + cell->get_height() >= get_height()) return false;
-
-			unsigned int x(cell->get_x()), y(cell->get_y()),
-				w(cell->get_width()), h(cell->get_height());
 
 			// try merge with the surrounding if the dimensionality matches
 			if (try_surround_merge(cell)) return true;

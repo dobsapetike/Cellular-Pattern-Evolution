@@ -337,13 +337,13 @@
     <Xml Include="Config\confObjective.xml">
       <Filter>Resource Files</Filter>
     </Xml>
-    <Xml Include="Config\confOptimizer.xml">
-      <Filter>Resource Files</Filter>
-    </Xml>
     <Xml Include="Config\confStopCriterion.xml">
       <Filter>Resource Files</Filter>
     </Xml>
     <Xml Include="Config\confExperiment.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="Config\confOptimizer.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>

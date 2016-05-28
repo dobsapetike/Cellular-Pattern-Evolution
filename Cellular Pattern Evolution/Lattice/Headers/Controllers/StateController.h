@@ -26,6 +26,7 @@ namespace lattice
 			// vector of real numbers - it's values are altered by the optimizer
 			virtual real_vector get_params() const = 0;
 			virtual void set_params(real_vector const& p) const = 0;
+			virtual void compute_blurred_neighbour_external(phenotypes::lattice_cell& cell) const = 0;
 			// sets the next state of the given cell
 			virtual void set_next_state(phenotypes::lattice_cell& cell) const = 0;
 

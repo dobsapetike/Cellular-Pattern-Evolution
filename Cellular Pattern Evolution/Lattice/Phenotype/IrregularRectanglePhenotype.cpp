@@ -253,7 +253,6 @@ namespace lattice
 			// drop the previous cells collection and 
 			// fill the automaton with new ones based on their action state
 			merge_split_count msc(0, 0);
-			cells.clear();
 			for (unsigned int row = 0; row < get_height(); ++row)
 			{
 				for (unsigned int col = 0; col < get_width(); ++col)
@@ -271,9 +270,15 @@ namespace lattice
 						default:
 							break;
 					}
-					cells.push_back(grid[row][col].cell);
 				}
 			}
+
+			// now refresh the cell list
+			cells.clear();
+			for (unsigned int row = 0; row < get_height(); ++row)
+				for (unsigned int col = 0; col < get_width(); ++col)
+					if (grid[row][col].cell) cells.push_back(grid[row][col].cell);
+
 			return msc;
 		}
 
@@ -309,61 +314,3 @@ namespace lattice
 		}
 	}
 }
-
-
-/*bool irregular_rectangle_phenotype::merge_side(vector<shared_ptr<lattice_cell>>& neigh,
-shared_ptr<irregular_rectangle_cell> cell, bool right)
-{
-// first, convert the vector to rectangle cells
-vector<shared_ptr<irregular_rectangle_cell>> n(neigh.size());
-for (unsigned int i = 0; i < neigh.size(); ++i)
-n[i] = static_pointer_cast<irregular_rectangle_cell>(neigh[i]);
-
-// check them, whether they want to merge
-bool ok = true;
-for (auto& c : n)
-ok &= c->get_state().action == action::merge;
-if (!ok) return false;	// nothing to do
-
-auto size_prop = [right](const shared_ptr<irregular_rectangle_cell> c) {
-return right ? c->get_width() : c->get_height();
-};
-auto dif_prop = [right](const shared_ptr<irregular_rectangle_cell> c) {
-return !right ? c->get_width() : c->get_height();
-};
-if (right && cell->get_y() != n[0]->get_y()) return false;
-if (!right && cell->get_x() != n[0]->get_x()) return false;
-if (dif_prop(cell) != std::accumulate(n.begin(), n.end(), 0, [dif_prop]
-(int curr, const shared_ptr<irregular_rectangle_cell> a) { return curr + dif_prop(a); }) ) return false;
-
-// compute added size
-auto minElem = *std::min_element(n.begin(), n.end(),
-[size_prop](const shared_ptr<irregular_rectangle_cell> a, const shared_ptr<irregular_rectangle_cell> b) -> bool {
-return size_prop(a) < size_prop(b);
-});
-unsigned int chunksize = size_prop(minElem);
-
-// create merged cell
-auto merged = make_shared<irregular_rectangle_cell>(
-cell->get_x(), cell->get_y(),
-cell->get_width() + (right ? chunksize : 0), cell->get_height() + (right ? 0 : chunksize),
-get_state_settings(), self_ptr);
-assign_cell(merged);
-
-// cut chunk from neighbours
-for (auto& nc : n)
-{
-if (size_prop(nc) == chunksize) continue;	// removed entirely
-auto remaining = make_shared<irregular_rectangle_cell>(
-nc->get_x() + (right ? chunksize : 0),
-nc->get_y() + (right ? 0 : chunksize),
-nc->get_width() - (right ? chunksize : 0),
-nc->get_height() - (right ? 0 : chunksize),
-get_state_settings(), self_ptr);
-assign_cell(remaining);
-nc.reset();
-}
-
-cell.reset();
-return true;
-} */

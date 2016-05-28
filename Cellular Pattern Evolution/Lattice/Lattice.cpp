@@ -60,8 +60,9 @@ namespace lattice
 		while (!genotype->get_criterion().should_stop(*this))
 		{
 			auto& cells = phenotype->expose_cells();
-			//for (auto& cell : cells)
-			//	genotype->get_controller().set_next_state(*cell);
+			for (auto cell : cells)
+				genotype->get_controller().compute_blurred_neighbour_external(*cell);
+
 			for (unsigned int order = 0; order < threads->thread_count(); ++order)
 			{
 				threads->enqueue_job([&,order] () -> void { update_cells(order); });

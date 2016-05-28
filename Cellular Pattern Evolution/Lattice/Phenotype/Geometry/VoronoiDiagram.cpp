@@ -36,8 +36,8 @@ vector<shared_ptr<voronoi_region>> voronoi_diagram_factory::create_diagram(
 			static_cast<float>(points[i].get<1>())
 		});
 	}
+
 	jcv_diagram_generate(vpoints.size(), &vpoints[0], width, height, &diagram);
-	
 
 	// wrap them in our edge object
 	float x1, x2, y1, y2;
@@ -55,6 +55,7 @@ vector<shared_ptr<voronoi_region>> voronoi_diagram_factory::create_diagram(
 		if (edges.insert(v_edge{ x2, y2, x1, y1, false, false }).second)
 			place_side_vertice(x2, y2, side_vertices);
 	}
+
 	jcv_diagram_free(&diagram);
 
 	if (!edges.size()) return get_default();

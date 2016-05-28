@@ -95,11 +95,11 @@ namespace lattice
 
 		bool voronoi_phenotype::is_feasible(point p)
 		{
-			if (p.get<0>() < 1.5 || p.get<0>() > get_width() - 1.5
-				|| p.get<1>() < 1.5 || p.get<1>() > get_height() - 1.5) return false;
+			if (p.get<0>() < .2 || p.get<0>() > get_width() - 1.0 - .2
+				|| p.get<1>() < .2 || p.get<1>() > get_height() - 1.0 - .2) return false;
 			for (auto& cell : cells) {
 				point point = static_pointer_cast<voronoi_cell>(cell)->get_region()->generator;
-				if (point_distance(point, p) < 2.0) return false;
+				if (point_distance(point, p) < min_distance) return false;
 			}
 			return true;
 		}
@@ -121,23 +121,26 @@ namespace lattice
 						if (merge(vcell, new_point))
 						{
 							for (auto p : new_points) {
-								if (point_distance(new_point, p) < 2.0) ok = false;
+								if (point_distance(new_point, p) < min_distance) ok = false;
 							}
-							if (!ok) break;
-							new_points.push_back(new_point);
-							state_map[new_point] = vcell->get_state();
-							add = false;
-							msc.first++;
+							if (ok) 
+							{
+								new_points.push_back(new_point);
+								state_map[new_point] = vcell->get_state();
+								add = false;
+								msc.first++;
+							}
 						}
+						vcell->reset_action(nothing);
 						break;
 					case action::split:
 						split(vcell, split_points);
 						if (!split_points.size()) break;
 						for (auto sp : split_points)
 						{
-							if (!boost::geometry::within(sp, vcell->get_region()->polygon)) continue;
+							// if (!boost::geometry::within(sp, vcell->get_region()->polygon)) continue;
 							for (auto p : new_points) {
-								if (point_distance(sp, p) < 2.0) ok = false;
+								if (point_distance(sp, p) < min_distance) ok = false;
 							}
 							if (!ok) {
 								ok = true;

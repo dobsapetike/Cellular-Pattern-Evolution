@@ -153,7 +153,7 @@ namespace lattice
 				real_vector vec = vector<double>(state_params.external_chemical_count, 0.0);
 				if (nbh[d].size() > 0)
 				{
-					// compute the mean of all neighbours in the given direction (TODO weighted mean)
+					// compute the mean of all neighbours in the given direction
 					for (unsigned int extChIndex = 0; extChIndex < state_params.external_chemical_count; ++extChIndex)
 					{
 						double ecSum = 0.0;
@@ -173,7 +173,7 @@ namespace lattice
 		/**
 			Given a lattice cell, returns it's blurred externals using gaussian blur with radius of one
 		*/
-		real_vector feedforward_ann_controller::compute_blurred_neighbour_external(
+		void feedforward_ann_controller::compute_blurred_neighbour_external(
 			phenotypes::lattice_cell& cell) const
 		{
 			auto nbh = cell.get_neighbours();
@@ -189,7 +189,7 @@ namespace lattice
 				   + neighExts[direction::left][extChIndex] / 8.0 + neighExts[direction::right][extChIndex] / 8.0
 				   + neighExts[upper][extChIndex] / 8.0;
 			}
-			return vec;
+			cell.set_blurred_externals(vec);
 		}
 
 		/**
@@ -209,12 +209,12 @@ namespace lattice
 				if (nbh[d].size() > 0)
 				{
 					vector<real_vector> blurredNeighExts;
-					for (auto& neighbour : nbh[d])
+					for (auto neighbour : nbh[d])
 					{
 						// blur each neighbour's externals
-						blurredNeighExts.push_back(compute_blurred_neighbour_external(*neighbour));
+						blurredNeighExts.push_back(neighbour->get_blurred_externals());
 					}
-					// compute the mean of blurred neighbour externals in the given direction (TODO weighted mean)
+					// compute the mean of blurred neighbour externals in the given direction
 					for (unsigned int extChIndex = 0; extChIndex < state_params.external_chemical_count; ++extChIndex)
 					{
 						double ecSum = 0.0;

@@ -32,6 +32,7 @@ namespace lattice
 		protected:
 			state cell_state, next_state;
 			polygon geometry;
+			real_vector blurred_externals;
 			// spacial coordinates of the cell
 			unsigned int coord_x, coord_y;	// !!! should not be used during state computation
 		public:
@@ -51,11 +52,13 @@ namespace lattice
 			unsigned int get_y() const { return coord_y; }
 			state const& get_state() const { return cell_state; }
 			polygon const& get_geometry() const { return geometry; }
+			real_vector const& get_blurred_externals() const { return blurred_externals; }
 			shared_ptr<phenotype> get_owner() { return owner; }
 			// field setters
 			void set_state(state const& s) { cell_state = s; }
-			void next_candidate(state const& s) { next_state = s; }
-			void apply_candidate() { cell_state = next_state; }
+			void set_blurred_externals(real_vector ext) { blurred_externals = move(ext); }
+			void next_candidate(state s) { next_state = move(s); }
+			void apply_candidate() { cell_state = move(next_state); }
 
 			void reset_action() { cell_state.action = nothing; }
 			void reset_action(action a) { cell_state.action = a; }

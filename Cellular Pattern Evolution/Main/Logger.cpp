@@ -125,7 +125,7 @@ void logger::log_experiment_end(string const& exp_name)
 void logger::log_observed_run_start(unsigned int gen)
 {
 	observed_run_stream.open(path + current_experiment + "_observed_gen" + to_string(gen) + ".log");
-	observed_run_stream << "Gen,Energy,Color_dist,Cell_count,Merge_count,Split_count" << endl;
+	observed_run_stream << "Gen,Energy,EneryStd,Color_dist,Cell_count,Merge_count,Split_count" << endl;
 	observed_run_stream.flush();
 }
 
@@ -134,7 +134,7 @@ void logger::log_observed_run_start(unsigned int gen)
 */
 void logger::log_observed_run_gen(unsigned int gen, lattice::observed_run_stat const& stat)
 {
-	observed_run_stream << gen << "," << stat.energy << "," << stat.color_distance << ","
+	observed_run_stream << gen << "," << stat.energy << "," << stat.energy_dev << ","  << stat.color_distance << ","
 		<< stat.cell_count << "," << stat.merge_count << "," << stat.split_count << endl;
 	observed_run_stream.flush();
 }
