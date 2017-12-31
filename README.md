@@ -2,7 +2,7 @@
 
 <h4>About</h4>
 
-Using the CMA-ES evolutionary algorithm for continuous optimization, the core idea of this master thesis was to find the parameters (weights) of a multi-layer perceptron neural net, which encodes the update rule of a non-regular cellular automaton (updating its state as well as its structure), for a raster approximation of a user-defined vector  image. The goal was to implement a modular framework with emphasis on extensibility which allows convenient experimentation, and at the same time to improve on the previous research in the field in regard to cell representation (using rectangular shapes and Voronoi regions as geometric structures of the cells) and topological update methods.
+Using the CMA-ES evolutionary algorithm for continuous optimization, the core idea of this master thesis was to find the parameters (weights) of a multi-layer perceptron neural net, which encodes the update rule of a non-regular cellular automaton (updating its state as well as its structure), for a raster approximation of a user-defined vector  image. The goal was to implement a modular framework with emphasis on extensibility which allows convenient experimentation, and at the same time to improve on the previous research in the field in regard to cell representation (using rectangular shapes and Voronoi regions as geometric structures of the cells) and topological update methods - check the  <a href="https://github.com/dobsapetike/Cellular-Pattern-Evolution/blob/master/msc_praca.pdf">thesis paper</a> for more detail (only Slovak). 
 
 <h4>External dependencies C++</h4>
 
